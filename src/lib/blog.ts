@@ -13,19 +13,26 @@ export interface BlogPost {
     entry: CollectionEntry<'blog'>;
 }
 
-type HeaderMap = Record<string, string>;
+type BlogFrontmatter = {
+    title?: string;
+    summary?: string;
+    description?: string;
+    date?: string | Date;
+    author?: string;
+    tags?: string[] | string;
+    image?: string;
+    featured?: boolean | string;
+};
 
-function normalizeKey(key: string): string {
-    return key.trim().toLowerCase().replace(/\s+/g, '');
-}
-
-function parseBoolean(value: string | undefined, fallback = false): boolean {
+function parseBoolean(value: boolean | string | undefined, fallback = false): boolean {
+    if (typeof value === 'boolean') return value;
     if (!value) return fallback;
     return ['1', 'true', 'yes', 'on'].includes(value.trim().toLowerCase());
 }
 
-function parseDate(value: string | undefined): Date {
+function parseDate(value: string | Date | undefined): Date {
     if (!value) return new Date('1970-01-01');
+    if (value instanceof Date) return value;
     const parsed = new Date(value);
     return Number.isNaN(parsed.getTime()) ? new Date('1970-01-01') : parsed;
 }
@@ -56,48 +63,31 @@ function firstParagraph(markdown: string): string {
     return '';
 }
 
-function parseTags(value: string | undefined): string[] {
+function parseTags(value: string[] | string | undefined): string[] {
     if (!value) return [];
+    if (Array.isArray(value)) {
+        return value.map((tag) => tag.trim()).filter(Boolean);
+    }
     return value
         .split(',')
         .map((tag) => tag.trim())
         .filter(Boolean);
 }
 
-function parseHeader(markdown: string): { header: HeaderMap; body: string } {
-    const headerMatch = markdown.match(/^\s*<!--\s*([\s\S]*?)\s*-->\s*/);
-    if (!headerMatch) {
-        return { header: {}, body: markdown.trimStart() };
-    }
-
-    const header: HeaderMap = {};
-    const headerLines = headerMatch[1].replace(/\r\n/g, '\n').split('\n');
-
-    for (const line of headerLines) {
-        const pair = line.match(/^([A-Za-z][A-Za-z0-9 _-]*):\s*(.+)$/);
-        if (!pair) continue;
-        header[normalizeKey(pair[1])] = pair[2].trim();
-    }
-
-    return {
-        header,
-        body: markdown.slice(headerMatch[0].length).trimStart(),
-    };
-}
-
 function parsePost(entry: CollectionEntry<'blog'>): BlogPost {
     const slug = entry.id;
-    const { header, body } = parseHeader(entry.body);
+    const body = entry.body;
+    const data = (entry.data ?? {}) as BlogFrontmatter;
 
     return {
         slug,
-        title: header.title ?? firstHeading(body) ?? slug,
-        summary: header.summary ?? firstParagraph(body),
-        date: parseDate(header.date),
-        author: header.author ?? 'ElexvxAI Team',
-        tags: parseTags(header.tags),
-        image: header.image ?? firstImage(body),
-        featured: parseBoolean(header.featured, false),
+        title: data.title ?? firstHeading(body) ?? slug,
+        summary: data.summary ?? data.description ?? firstParagraph(body),
+        date: parseDate(data.date),
+        author: data.author ?? 'ElexvxAI Team',
+        tags: parseTags(data.tags),
+        image: data.image ?? firstImage(body),
+        featured: parseBoolean(data.featured, false),
         body,
         entry,
     };

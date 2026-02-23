@@ -1,12 +1,14 @@
-<!--
-Title: Introducing ElexvxAI v1.0
-Summary: Today we are excited to announce the first major release of our platform. It brings a host of new features designed to supercharge your workflow.
-Date: 2026-02-22
-Author: Core Team
-Tags: Release, Product
-Image: https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80
-Featured: true
--->
+---
+title: "Introducing ElexvxAI v1.0"
+summary: "Today we are excited to announce the first major release of our platform. It brings a host of new features designed to supercharge your workflow."
+date: "2026-02-22"
+author: "Core Team"
+tags:
+  - "Release"
+  - "Product"
+image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+featured: true
+---
 
 # Introducing ElexvxAI v1.0
 

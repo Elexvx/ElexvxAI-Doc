@@ -1,12 +1,13 @@
-<!--
-Title: Future Roadmap
-Summary: A look ahead at what's coming to ElexvxAI over the next 6 months, including AI integrations and advanced theming support.
-Date: 2026-01-20
-Author: Product Team
-Tags: Roadmap
-Image: https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80
-Featured: false
--->
+---
+title: "Future Roadmap"
+summary: "A look ahead at what's coming to ElexvxAI over the next 6 months, including AI integrations and advanced theming support."
+date: "2026-01-20"
+author: "Product Team"
+tags:
+  - "Roadmap"
+image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80"
+featured: false
+---
 
 # ElexvxAI Future Roadmap
 

@@ -1,12 +1,15 @@
-<!--
-Title: Astro and React: The Perfect Match
-Summary: Why we chose Astro for our new documentation site and how the React integration provides the best of both static generation and dynamic interactivity.
-Date: 2026-02-01
-Author: John Smith
-Tags: Engineering, Astro, React
-Image: https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=800&q=80
-Featured: false
--->
+---
+title: "Astro and React: The Perfect Match"
+summary: "Why we chose Astro for our new documentation site and how the React integration provides the best of both static generation and dynamic interactivity."
+date: "2026-02-01"
+author: "John Smith"
+tags:
+  - "Engineering"
+  - "Astro"
+  - "React"
+image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=800&q=80"
+featured: false
+---
 
 # Astro and React: The Perfect Match
 

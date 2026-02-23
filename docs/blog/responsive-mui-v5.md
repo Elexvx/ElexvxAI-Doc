@@ -1,12 +1,14 @@
-<!--
-Title: Building Responsive Interfaces with Material UI v5
-Summary: A deep dive into how to leverage MUI's grid and stack components to build interfaces that look gorgeous on any device size.
-Date: 2026-02-15
-Author: Jane Doe
-Tags: Design, Tutorial
-Image: https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80
-Featured: false
--->
+---
+title: "Building Responsive Interfaces with Material UI v5"
+summary: "A deep dive into how to leverage MUI's grid and stack components to build interfaces that look gorgeous on any device size."
+date: "2026-02-15"
+author: "Jane Doe"
+tags:
+  - "Design"
+  - "Tutorial"
+image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80"
+featured: false
+---
 
 # Building Responsive Interfaces with Material UI v5
 
