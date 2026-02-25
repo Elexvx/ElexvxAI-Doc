@@ -1,5 +1,6 @@
 ---
 import '../styles/components/cards.css';
+import { PenTool, Gift, Book, HelpCircle } from '@lucide/astro';
 
 export interface Props {
   items: {
@@ -11,13 +12,36 @@ export interface Props {
 }
 
 const { items = [] } = Astro.props;
+
+const IconMap = {
+  'pen-tool': PenTool,
+  'gift': Gift,
+  'book': Book,
+};
 ---
 
 <div class="cards-grid">
-  {items.map((item) => (
-    <a href={item.href} class="card">
-      <h3 class="card-title">{item.title}</h3>
-      <p class="card-desc">{item.desc}</p>
-    </a>
-  ))}
+  {items.map((item) => {
+    const Icon = item.icon ? IconMap[item.icon as keyof typeof IconMap] : null;
+    return (
+      <a href={item.href} class="card">
+        {Icon && (
+          <div class="card-icon-wrapper">
+            <Icon size={24} stroke-width={1.5} />
+          </div>
+        )}
+        <h3 class="card-title">{item.title}</h3>
+        <p class="card-desc">{item.desc}</p>
+      </a>
+    );
+  })}
 </div>
+
+<style>
+  .card-icon-wrapper {
+    margin-bottom: 1rem;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+  }
+</style>

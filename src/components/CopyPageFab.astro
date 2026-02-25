@@ -1,5 +1,11 @@
-<button class="fab" type="button" id="copyPageFab" aria-live="polite">
-  Copy Page
+---
+import { Copy, Check } from '@lucide/astro';
+---
+
+<button class="copy-page-btn" type="button" id="copyPageFab" aria-live="polite">
+  <span class="icon-idle"><Copy size={16} stroke-width={1.5} /></span>
+  <span class="icon-success"><Check size={16} stroke-width={1.5} /></span>
+  <span class="text">Copy Page</span>
 </button>
 
 <script>
@@ -27,19 +33,20 @@
 
     btn.addEventListener("click", async () => {
       const url = window.location.href;
+      const textSpan = btn.querySelector(".text");
       try {
         await copyText(url);
-        btn.textContent = "Copied";
+        if (textSpan) textSpan.textContent = "Copied";
         btn.setAttribute("data-state", "copied");
         window.setTimeout(() => {
-          btn.textContent = "Copy Page";
+          if (textSpan) textSpan.textContent = "Copy Page";
           btn.removeAttribute("data-state");
         }, 1000);
       } catch {
-        btn.textContent = "Failed";
+        if (textSpan) textSpan.textContent = "Failed";
         btn.setAttribute("data-state", "error");
         window.setTimeout(() => {
-          btn.textContent = "Copy Page";
+          if (textSpan) textSpan.textContent = "Copy Page";
           btn.removeAttribute("data-state");
         }, 1000);
       }
@@ -48,38 +55,57 @@
 </script>
 
 <style>
-  .fab {
+  .copy-page-btn {
     position: fixed;
     right: 16px;
     bottom: 16px;
     z-index: 30;
-    height: 40px;
-    padding: 0 14px;
-    border-radius: 999px;
+    height: 36px;
+    padding: 0 12px;
+    border-radius: var(--radius-md);
     border: 1px solid var(--border);
-    background: color-mix(in srgb, var(--panel), transparent 0%);
+    background: color-mix(in srgb, var(--panel), transparent 5%);
     color: var(--fg);
-    font-size: 0.9rem;
-    font-weight: 550;
+    font-size: 0.85rem;
+    font-weight: 500;
     cursor: pointer;
     box-shadow: var(--shadow-md);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
   }
 
-  .fab:hover {
-    border-color: color-mix(in srgb, var(--accent), transparent 50%);
+  .icon-success {
+    display: none;
   }
 
-  .fab[data-state="copied"] {
-    border-color: color-mix(in srgb, var(--accent), transparent 35%);
-    background: color-mix(in srgb, var(--accent-dim), var(--panel) 70%);
+  .copy-page-btn[data-state="copied"] .icon-idle {
+    display: none;
   }
 
-  .fab[data-state="error"] {
-    border-color: color-mix(in srgb, var(--danger), transparent 35%);
+  .copy-page-btn[data-state="copied"] .icon-success {
+    display: flex;
+    color: var(--accent);
+  }
+
+  .copy-page-btn:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .copy-page-btn[data-state="copied"] {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent-dim), var(--panel) 80%);
+  }
+
+  .copy-page-btn[data-state="error"] {
+    border-color: var(--danger);
   }
   @media (max-width: 900px) {
-    .fab {
+    .copy-page-btn {
       right: 12px;
       bottom: 12px;
     }

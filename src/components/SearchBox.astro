@@ -1,5 +1,6 @@
 ---
 import type { Lang } from "../config/site";
+import { Search } from '@lucide/astro';
 
 type Props = {
   lang: Lang;
@@ -12,6 +13,7 @@ const placeholder = lang === "zh" ? "搜索文档…" : "Search docs…";
 
 <div class="searchWrap">
   <form class="search" method="get" action={action}>
+    <Search class="searchIcon" size={16} stroke-width={1.5} />
     <input
       class="searchInput"
       type="search"
@@ -37,11 +39,21 @@ const placeholder = lang === "zh" ? "搜索文档…" : "Search docs…";
     background: color-mix(in srgb, var(--panel-2), transparent 0%);
     border: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
+    padding-left: 0.75rem;
+  }
+
+  .searchIcon {
+    color: var(--muted-2);
+    flex-shrink: 0;
   }
 
   .search:focus-within {
     border-color: color-mix(in srgb, var(--accent), transparent 40%);
     box-shadow: var(--ring);
+  }
+
+  .search:focus-within .searchIcon {
+    color: var(--accent);
   }
 
   .searchInput {
@@ -50,7 +62,7 @@ const placeholder = lang === "zh" ? "搜索文档…" : "Search docs…";
     border: 0;
     background: transparent;
     color: var(--fg);
-    padding: 0 3.1rem 0 1rem;
+    padding: 0 3.1rem 0 0.5rem;
     font-size: 0.95rem;
     outline: none;
   }

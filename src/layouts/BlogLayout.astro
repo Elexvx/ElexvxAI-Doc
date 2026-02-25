@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Toc from '../components/Toc.astro';
+import Footer from '../components/landing/Footer.astro';
 import type { Lang } from '../config/site';
 
 type Heading = { depth: number; slug: string; text: string };
@@ -45,6 +46,7 @@ const { lang, title, description, slug, headings, pubDate, tags } = Astro.props;
     </main>
     <Toc headings={headings} title={lang === 'zh' ? '本页目录' : 'On this page'} />
   </div>
+  <Footer />
 </BaseLayout>
 
 <style>

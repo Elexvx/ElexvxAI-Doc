@@ -8,154 +8,242 @@ const zh = getDocUrl({ lang: "zh", version: SITE.defaultVersion });
 <section class="hero-section">
   <div class="container">
     <div class="content">
-      <div class="tag">
-        <span class="dot"></span>
-        AI 创新实验室
-      </div>
       <h1 class="headline">
-        推动智能技术
-        <span class="highlight">赋能工业创新</span>
+        <span class="typewriter" data-fulltext="推动智能技术赋能工业创新">
+          <span class="typewriter-content">
+            <span class="highlight" data-fulltext="推动智能技术赋能工业创新"
+            ></span><span class="caret" aria-hidden="true">|</span>
+          </span>
+        </span>
       </h1>
-      <p class="subhead">
-        跨越 AI 理论研究与实际工业应用之间的鸿沟，构建下一代智能系统。
-      </p>
 
       <div class="actions">
-        <a href={zh} class="btn-filled">
-          我们的项目
-        </a>
-        <a href={zh} class="btn-outlined">
-          查看文档
-        </a>
+        <a href={zh} class="btn-primary"> 我们的项目 </a>
+        <a href={zh} class="btn-secondary"> 查看文档 </a>
       </div>
     </div>
-
-
   </div>
 </section>
 
 <style>
   .hero-section {
-    padding: 4rem 1.5rem;
-    background-color: var(--md-sys-color-surface);
-    color: var(--md-sys-color-on-surface);
+    padding: 6rem 1.5rem 2rem; /* Reduced top padding to fit within one screen */
+    /* Removed background-color to respect "do not modify background" instruction, assuming parent handles it or transparent is desired */
+    color: var(--fg);
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - var(--header-h));
+    text-align: center;
   }
 
   .container {
-    max-width: 900px;
+    max-width: 1200px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    gap: 2.5rem;
+    gap: 2rem;
   }
 
-  @media (max-width: 900px) {
-    .container {
-      gap: 2rem;
-    }
-  }
-
-  /* Content */
   .content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2rem;
+    max-width: 900px;
   }
 
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.25rem 0.75rem;
-    background-color: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
-    border-radius: 100px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    width: fit-content;
-  }
-
-  .dot {
-    width: 6px;
-    height: 6px;
-    background-color: currentColor;
-    border-radius: 50%;
-  }
-
+  /* Headline */
   .headline {
-    font-family: var(--md-sys-typescale-display-font);
-    font-size: 3.5rem;
-    line-height: 1.1;
-    font-weight: 600;
+    font-size: 3.75rem; /* Adjusted size for better coordination */
+    line-height: 1.2;
+    font-weight: 600; /* Increased weight slightly */
     margin: 0;
-    color: var(--md-sys-color-on-surface);
+    color: var(--fg);
+    letter-spacing: -0.02em;
+  }
+
+  /* Typewriter & Highlight effect */
+  .typewriter {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    text-align: left;
+  }
+
+  /* 制造占位撑开最大宽度，避免抖动 */
+  .typewriter::before {
+    content: attr(data-fulltext) "|";
+    visibility: hidden;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* 真正的打字容器，绝对定位，不受外部 text-align 居中的拉扯影响 */
+  .typewriter-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: baseline;
+    white-space: nowrap;
   }
 
   .highlight {
-    color: var(--md-sys-color-primary);
-    display: block;
-    font-weight: 700;
+    display: inline-block;
   }
 
-  .subhead {
-    font-family: var(--md-sys-typescale-body-font);
-    font-size: 1.125rem;
-    line-height: 1.5;
-    color: var(--md-sys-color-on-surface-variant);
-    max-width: 600px;
+  .caret {
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 1s step-end infinite;
+    font-weight: 300;
   }
 
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .caret {
+      display: none !important;
+      animation: none !important;
+    }
+  }
+
+  /* Actions (Buttons) */
   .actions {
     display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 1.25rem;
+    margin-top: 0;
     flex-wrap: wrap;
     justify-content: center;
   }
 
-  .btn-filled {
+  .btn-primary {
     display: inline-flex;
+    justify-content: center;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
-    border-radius: 100px;
+    padding: 0.875rem 2rem;
+    background-color: #000;
+    color: #fff;
+    border-radius: 9999px;
     text-decoration: none;
     font-weight: 500;
-    transition: all 0.2s ease;
+    font-size: 1rem;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
-  .btn-filled:hover {
-    background-color: var(--md-sys-color-secondary);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     text-decoration: none;
+    opacity: 0.9;
   }
 
-  .btn-outlined {
+  .btn-secondary {
     display: inline-flex;
+    justify-content: center;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background-color: transparent;
-    border: 1px solid var(--md-sys-color-outline);
-    color: var(--md-sys-color-on-surface);
-    border-radius: 100px;
+    padding: 0.875rem 2rem;
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+    border: none;
+    border-radius: 9999px;
     text-decoration: none;
     font-weight: 500;
-    transition: all 0.2s ease;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
   }
 
-  .btn-outlined:hover {
-    background-color: var(--md-sys-color-surface-variant);
-    border-color: var(--md-sys-color-outline-variant);
+  .btn-secondary:hover {
+    background-color: #e8e8ed;
     text-decoration: none;
+    color: #1d1d1f;
+  }
+
+  @media (max-width: 768px) {
+    .headline {
+      font-size: 2.5rem;
+    }
+
+    .hero-section {
+      padding: 2.5rem 1rem;
+    }
   }
 </style>
+
+<script type="module" is:inline>
+  const initTypewriter = () => {
+    // 检查是否有 reduced-motion 偏好
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const highlight = document.querySelector(".highlight");
+    const caret = document.querySelector(".caret");
+
+    if (!highlight || !caret || highlight.dataset.initialized === "true")
+      return;
+
+    const fullText = highlight.getAttribute("data-fulltext");
+    if (!fullText) return;
+
+    if (prefersReducedMotion) {
+      // 降级：直接显示完整文本并隐藏光标，无动画
+      highlight.textContent = fullText;
+      caret.style.display = "none";
+      highlight.dataset.initialized = "true";
+      return;
+    }
+
+    // 初始清空文本
+    highlight.textContent = "";
+
+    // 逐字输入逻辑
+    const startTyping = () => {
+      let i = 0;
+      // 增加随机延迟，让打字看起来更自然平滑，而不是僵硬的匀速
+      const getDelay = () => 120 + Math.random() * 80;
+
+      const typeChar = () => {
+        if (i < fullText.length) {
+          i++;
+          highlight.textContent = fullText.slice(0, i);
+          setTimeout(typeChar, getDelay());
+        } else {
+          // 打完后隐藏光标，避免后续闪烁干扰
+          caret.style.display = "none";
+          highlight.dataset.initialized = "true";
+        }
+      };
+
+      // 略微延迟再开始打字，防止首屏加载后立刻瞬间闪烁
+      setTimeout(typeChar, 300);
+    };
+
+    // 使用 IntersectionObserver：只在首屏/进入视口时开始
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // 开始后立即解绑保证只播一次，不循环
+            observer.disconnect();
+            startTyping();
+          }
+        });
+      },
+      { threshold: 0.2 },
+    );
+
+    observer.observe(highlight);
+  };
+
+  // 支持首次加载
+  initTypewriter();
+  // 支持 Astro View Transitions
+  document.addEventListener("astro:page-load", initTypewriter);
+</script>

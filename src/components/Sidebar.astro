@@ -1,9 +1,19 @@
 ---
-import type { SidebarGroup } from "../lib/docs";
+import { type SidebarGroup, getDocUrl } from "../lib/docs";
 import SearchBox from "./SearchBox.astro";
-import type { Lang } from "../config/site";
+import { SITE, type Lang } from "../config/site";
 import { t } from "../i18n/ui";
 import { getBlogUrl } from "../lib/blog";
+import {
+  Home,
+  Download,
+  Settings,
+  Tag,
+  Database,
+  Share2,
+  FileText,
+  X,
+} from "@lucide/astro";
 
 type Props = {
   groups: SidebarGroup[];
@@ -13,21 +23,27 @@ type Props = {
 
 const { groups, currentPath, lang } = Astro.props;
 
-function getIcon(title: string) {
+const IconMap = {
+  intro: Home,
+  install: Download,
+  config: Settings,
+  api: Tag,
+  sdk: Tag,
+  data: Database,
+  model: Share2,
+  neural: Share2,
+  default: FileText,
+};
+
+function getIconKey(title: string): keyof typeof IconMap {
   const t = title.toLowerCase();
-  if (t.includes("intro"))
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" class="sidebar-icon" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
-  if (t.includes("install"))
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" class="sidebar-icon" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>`;
-  if (t.includes("config"))
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" class="sidebar-icon" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`;
-  if (t.includes("api") || t.includes("sdk"))
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" class="sidebar-icon" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>`;
-  if (t.includes("data"))
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" class="sidebar-icon" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="3" x2="21" y1="9" y2="9"/><line x1="9" x2="9" y1="21" y2="9"/></svg>`;
-  if (t.includes("model") || t.includes("neural"))
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" class="sidebar-icon" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" class="sidebar-icon" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`;
+  if (t.includes("intro")) return "intro";
+  if (t.includes("install")) return "install";
+  if (t.includes("config")) return "config";
+  if (t.includes("api") || t.includes("sdk")) return "api";
+  if (t.includes("data")) return "data";
+  if (t.includes("model") || t.includes("neural")) return "model";
+  return "default";
 }
 ---
 
@@ -36,18 +52,18 @@ function getIcon(title: string) {
   <div class="mobileHeader">
     <span class="mobileTitle">Menu</span>
     <button class="closeBtn" id="sidebarClose" aria-label="Close menu">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M18 6 6 18"/>
-        <path d="m6 6 12 12"/>
-      </svg>
+      <X size={20} stroke-width={1.5} />
     </button>
   </div>
-  
+
   <nav class="mobile-nav">
     <a class="mobile-nav-item" href="/">{t(lang, "home")}</a>
-    <a class="mobile-nav-item" href="#">{t(lang, "services")}</a>
-    <a class="mobile-nav-item" href={getBlogUrl({ lang })}>{t(lang, "articles")}</a>
-    <a class="mobile-nav-item" href="#">{t(lang, "company")}</a>
+    <a
+      class="mobile-nav-item"
+      href={getDocUrl({ lang, version: SITE.defaultVersion })}
+      >{t(lang, "docs")}</a
+    >
+    <a class="mobile-nav-item" href={getBlogUrl({ lang })}>{t(lang, "blog")}</a>
   </nav>
 
   <SearchBox lang={lang} />
@@ -64,10 +80,17 @@ function getIcon(title: string) {
           {g.items.map((it) => {
             const active =
               it.href === currentPath || it.href === `${currentPath}/`;
+            const IconComponent = IconMap[getIconKey(it.title)];
             return (
               <li>
                 <a class:list={["item", active && "active"]} href={it.href}>
-                  <span class="icon" set:html={getIcon(it.title)} />
+                  <span class="icon">
+                    <IconComponent
+                      class="sidebar-icon"
+                      size={16}
+                      stroke-width={1.5}
+                    />
+                  </span>
                   <span class="text">{it.title}</span>
                 </a>
               </li>
@@ -85,7 +108,7 @@ function getIcon(title: string) {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 40;
+    z-index: 140;
     opacity: 0;
     transition: opacity 0.2s ease;
   }
@@ -278,7 +301,7 @@ function getIcon(title: string) {
       height: 100vh;
       width: 300px;
       max-width: 85vw;
-      z-index: 50;
+      z-index: 150;
       transform: translateX(-100%);
       transition: transform 0.25s ease;
       border-right: 1px solid var(--border-2);

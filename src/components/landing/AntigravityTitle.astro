@@ -1,0 +1,277 @@
+---
+interface Props {
+  text?: string;
+  className?: string;
+}
+
+const { text = "ElexvxAI Lab", className = "huge-title" } = Astro.props;
+const chars = text.split("").map((char) => (char === " " ? "\u00A0" : char));
+---
+
+<div class="antigravity-wrapper" id="antigravity-wrapper">
+  <div class="physics-canvas"></div>
+  <div class="text-container">
+    {
+      chars.map((char, index) => (
+        <span class="char-item" data-char={char}>
+          {char}
+        </span>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  import Matter from "matter-js";
+
+  function initAntigravity() {
+    const wrapper = document.getElementById("antigravity-wrapper");
+    if (!wrapper) return;
+
+    // Prevent double initialization
+    if (wrapper.dataset.initialized === "true") return;
+    wrapper.dataset.initialized = "true";
+
+    const textContainer = wrapper.querySelector(
+      ".text-container",
+    ) as HTMLElement;
+    const charElements = Array.from(
+      wrapper.querySelectorAll(".char-item"),
+    ) as HTMLElement[];
+
+    if (!textContainer || charElements.length === 0) return;
+
+    // Module aliases
+    const Engine = Matter.Engine,
+      Render = Matter.Render,
+      Runner = Matter.Runner,
+      Bodies = Matter.Bodies,
+      Composite = Matter.Composite,
+      Mouse = Matter.Mouse,
+      MouseConstraint = Matter.MouseConstraint,
+      Events = Matter.Events,
+      Body = Matter.Body;
+
+    // Create engine
+    const engine = Engine.create();
+    const world = engine.world;
+
+    // Create renderer (optional, for debugging or mouse interaction area)
+    const render = Render.create({
+      element: wrapper.querySelector(".physics-canvas") as HTMLElement,
+      engine: engine,
+      options: {
+        width: wrapper.clientWidth,
+        height: wrapper.clientHeight,
+        background: "transparent",
+        wireframes: false,
+        showAngleIndicator: false,
+      },
+    });
+
+    // Create bodies for each character
+    const bodies: Matter.Body[] = [];
+    const wallThickness = 100;
+
+    // Get initial positions and dimensions from DOM
+    // We need to position them absolutely for physics to take over
+    const containerRect = textContainer.getBoundingClientRect();
+
+    charElements.forEach((el, index) => {
+      const rect = el.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+
+      // Calculate relative position in container
+      const x = rect.left - containerRect.left + width / 2;
+      const y = rect.top - containerRect.top + height / 2;
+
+      const body = Bodies.rectangle(x, y, width, height, {
+        restitution: 0.8, // Bounciness
+        friction: 0.1,
+        frictionAir: 0.01,
+        render: { visible: false }, // We render via DOM
+      });
+
+      bodies.push(body);
+
+      // Set initial styles for absolute positioning
+      el.style.position = "absolute";
+      el.style.left = "0";
+      el.style.top = "0";
+      el.style.width = `${width}px`;
+      el.style.height = `${height}px`;
+      el.style.transformOrigin = "50% 50%";
+    });
+
+    // Add bodies to world
+    Composite.add(world, bodies);
+
+    // Create boundaries
+    const createBoundaries = () => {
+      const width = wrapper.clientWidth;
+      const height = wrapper.clientHeight;
+
+      return [
+        // Ground
+        Bodies.rectangle(
+          width / 2,
+          height + wallThickness / 2 - 10,
+          width,
+          wallThickness,
+          {
+            isStatic: true,
+            render: { visible: false },
+          },
+        ),
+        // Left wall
+        Bodies.rectangle(
+          0 - wallThickness / 2,
+          height / 2,
+          wallThickness,
+          height * 2,
+          {
+            isStatic: true,
+            render: { visible: false },
+          },
+        ),
+        // Right wall
+        Bodies.rectangle(
+          width + wallThickness / 2,
+          height / 2,
+          wallThickness,
+          height * 2,
+          {
+            isStatic: true,
+            render: { visible: false },
+          },
+        ),
+      ];
+    };
+
+    let boundaries = createBoundaries();
+    Composite.add(world, boundaries);
+
+    // Add mouse control — attach to the WRAPPER, not the canvas,
+    // so the canvas can stay pointer-events:none and not block scrolling.
+    const mouse = Mouse.create(wrapper);
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: { visible: false },
+      },
+    });
+
+    // Ensure mouse offset is 0 (wrapper is the reference element)
+    Mouse.setOffset(mouse, { x: 0, y: 0 });
+
+    Composite.add(world, mouseConstraint);
+
+    // CRITICAL: Matter.Mouse attaches a non-passive 'mousewheel' listener that
+    // calls preventDefault(), which prevents the page from scrolling when the
+    // cursor is over this section. Remove it immediately after creation.
+    wrapper.removeEventListener("mousewheel", (mouse as any).mousewheel);
+    wrapper.removeEventListener("DOMMouseScroll", (mouse as any).mousewheel);
+    // Re-add as passive so Matter.js still gets zoom/scale info without blocking scroll
+    wrapper.addEventListener(
+      "wheel",
+      (e) => {
+        // Allow the page to scroll — do NOT call e.preventDefault()
+      },
+      { passive: true },
+    );
+
+    // Sync physics to DOM
+    Events.on(engine, "afterUpdate", () => {
+      bodies.forEach((body, index) => {
+        const el = charElements[index];
+        if (!el) return;
+
+        const { x, y } = body.position;
+        const angle = body.angle;
+
+        el.style.transform = `translate(${x - el.offsetWidth / 2}px, ${y - el.offsetHeight / 2}px) rotate(${angle}rad)`;
+      });
+    });
+
+    // Run engine
+    Runner.run(Runner.create(), engine);
+    Render.run(render);
+
+    // Handle resize
+    window.addEventListener("resize", () => {
+      render.canvas.width = wrapper.clientWidth;
+      render.canvas.height = wrapper.clientHeight;
+
+      // Remove old boundaries and add new ones
+      Composite.remove(world, boundaries);
+      boundaries = createBoundaries();
+      Composite.add(world, boundaries);
+    });
+  }
+
+  // Initialize on load
+  document.addEventListener("astro:page-load", initAntigravity);
+  // Fallback for initial load
+  if (document.readyState === "complete") {
+    initAntigravity();
+  } else {
+    document.addEventListener("DOMContentLoaded", initAntigravity);
+  }
+</script>
+
+<style>
+  .antigravity-wrapper {
+    position: relative;
+    width: 100%;
+    height: 30vw; /* Responsive height */
+    min-height: 200px;
+    max-height: 500px;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .physics-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Canvas must NOT receive pointer events — mouse is attached to the wrapper */
+  .antigravity-wrapper :global(canvas) {
+    pointer-events: none;
+  }
+
+  .text-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* Elements are moved by physics */
+  }
+
+  .char-item {
+    display: inline-block;
+    font-size: 12.5vw;
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--fg);
+    white-space: nowrap;
+    will-change: transform;
+    /* Initial static layout styles */
+  }
+
+  @media (min-width: 1400px) {
+    .char-item {
+      font-size: 175px;
+    }
+  }
+</style>

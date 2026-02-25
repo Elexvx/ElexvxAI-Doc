@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
+    "@lucide/astro": "^0.575.0",
     "astro": "^5.17.1",
     "estree-util-value-to-estree": "^3.5.0",
+    "matter-js": "^0.20.0",
     "remark-directive": "^4.0.0"
   },
   "devDependencies": {
+    "@types/matter-js": "^0.20.2",
     "pagefind": "^1.4.0",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-slug": "^6.0.0"

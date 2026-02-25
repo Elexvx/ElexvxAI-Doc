@@ -1,18 +1,20 @@
 ---
+import { PenTool, Gift, Book } from "@lucide/astro";
+
 const features = [
   {
     title: "核心研究",
-    icon: "science",
+    icon: "pen-tool",
     desc: "深度学习算法与基础模型，拓展生成式任务的 AI 能力边界。",
   },
   {
     title: "开源贡献",
-    icon: "code",
+    icon: "gift",
     desc: "向全球研究社区贡献最前沿的代码、预训练模型和大规模数据集。",
   },
   {
     title: "工业应用",
-    icon: "factory",
+    icon: "book",
     desc: "部署可扩展的 AI 解决方案，优化制造、物流和供应链。",
   },
 ];
@@ -22,30 +24,27 @@ const features = [
   <div class="container">
     <div class="grid">
       {
-        features.map((feature) => (
-          <div class="card">
+        features.map((feature, index) => (
+          <a href="#" class="card group">
+            <div class={`card-hover-bg preset-${index + 1}`} />
             <div class="card-content">
               <div class="icon-container">
-                {feature.icon === "science" && (
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.4-.81H9.05c-.43 0-.66.48-.4.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z" />
-                  </svg>
+                {feature.icon === "pen-tool" && (
+                  <PenTool size={24} stroke-width={1.5} />
                 )}
-                {feature.icon === "code" && (
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
-                  </svg>
+                {feature.icon === "gift" && (
+                  <Gift size={24} stroke-width={1.5} />
                 )}
-                {feature.icon === "factory" && (
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M22 22H2V11l7-3v2h5v-2l5 3v-2l3 3z" />
-                  </svg>
+                {feature.icon === "book" && (
+                  <Book size={24} stroke-width={1.5} />
                 )}
               </div>
-              <h3 class="headline-small">{feature.title}</h3>
-              <p class="body-medium">{feature.desc}</p>
+              <div class="text-wrapper">
+                <h3 class="headline-small">{feature.title}</h3>
+                <p class="body-medium">{feature.desc}</p>
+              </div>
             </div>
-          </div>
+          </a>
         ))
       }
     </div>
@@ -54,9 +53,9 @@ const features = [
 
 <style>
   .features-section {
-    padding: 6rem 1.5rem;
-    background-color: var(--md-sys-color-surface);
-    color: var(--md-sys-color-on-surface);
+    padding: 2rem 1.5rem 4rem; /* Reduced top and bottom padding */
+    background-color: var(--bg);
+    color: var(--fg);
     display: flex;
     justify-content: center;
   }
@@ -74,55 +73,133 @@ const features = [
     gap: 1.5rem;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 767px) {
     .grid {
       grid-template-columns: 1fr;
     }
   }
 
+  /* 1:1 OpenAI Primary Card Style */
   .card {
-    background-color: var(--md-sys-color-surface-container-low);
-    border-radius: 12px;
+    position: relative;
+    background-color: #f9f9f9;
+    border-radius: 8px; /* OpenAI uses 8px */
+    border: none;
     overflow: hidden;
-    border: 1px solid var(--md-sys-color-outline-variant);
+    text-decoration: none;
+    min-height: 260px; /* Exact height matching OpenAI */
     display: flex;
     flex-direction: column;
+  }
+
+  :global(.dark) .card {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  /* The hidden gradient background that fades in on hover */
+  .card-hover-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+    z-index: 1;
+  }
+
+  /* Overlay to make text legible on bright gradients and add a subtle noise texture */
+  .card-hover-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  /* Soft, elegant mesh gradients */
+  .preset-1 {
+    background-color: #1e1b4b; /* deep indigo base */
+    background-image:
+      radial-gradient(at 0% 0%, #4338ca 0px, transparent 60%),
+      radial-gradient(at 100% 0%, #3b82f6 0px, transparent 60%),
+      radial-gradient(at 100% 100%, #8b5cf6 0px, transparent 60%);
+  }
+
+  .preset-2 {
+    background-color: #2e1065; /* deep purple base */
+    background-image:
+      radial-gradient(at 0% 100%, #6366f1 0px, transparent 60%),
+      radial-gradient(at 50% 0%, #a855f7 0px, transparent 60%),
+      radial-gradient(at 100% 100%, #ec4899 0px, transparent 60%);
+  }
+
+  .preset-3 {
+    background-color: #064e3b; /* deep emerald base */
+    background-image:
+      radial-gradient(at 0% 0%, #10b981 0px, transparent 60%),
+      radial-gradient(at 100% 100%, #0ea5e9 0px, transparent 60%),
+      radial-gradient(at 0% 100%, #3b82f6 0px, transparent 60%);
+  }
+
+  /* Activation on Hover */
+  .card:hover .card-hover-bg {
+    opacity: 1;
   }
 
   .card-content {
-    padding: 2.5rem;
+    position: relative;
+    z-index: 2; /* above the hover bg */
+    padding: 2rem; /* 32px padding per OpenAI design */
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    flex: 1;
+    height: 100%;
   }
 
   .icon-container {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--md-sys-color-primary);
+    color: var(--fg);
+    transition: color 0.7s ease;
   }
 
-  .icon-container svg {
-    width: 24px;
-    height: 24px;
+  .card:hover .icon-container {
+    color: #ffffff;
+  }
+
+  /* Push text to the bottom to match OpenAI layout */
+  .text-wrapper {
+    margin-top: auto;
   }
 
   .headline-small {
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin: 0;
-    color: var(--md-sys-color-on-surface);
+    font-size: 1.125rem; /* 18px */
+    font-weight: 600; /* slightly bolder, looks precise */
+    margin: 0 0 0.5rem 0; /* slight gap to description */
+    color: var(--fg);
+    transition: color 0.7s ease;
+  }
+
+  .card:hover .headline-small {
+    color: #ffffff;
   }
 
   .body-medium {
-    font-size: 1rem;
+    font-size: 0.9375rem; /* 15px */
     line-height: 1.6;
-    color: var(--md-sys-color-on-surface-variant);
+    color: var(--muted);
     margin: 0;
-    flex: 1;
+    transition: color 0.7s ease;
+  }
+
+  :global(.dark) .body-medium {
+    color: rgba(
+      255,
+      255,
+      255,
+      0.7
+    ); /* ensure legibility in dark mode before hover */
+  }
+
+  .card:hover .body-medium {
+    color: rgba(255, 255, 255, 0.9);
   }
 </style>

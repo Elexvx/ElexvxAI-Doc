@@ -1,11 +1,12 @@
 ---
+import { LifeBuoy, Users, Sparkles, Rss } from '@lucide/astro';
 ---
 
 <div class="help-section">
   <div class="help-container">
     <a href="#" class="help-card">
       <div class="icon-wrapper">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-life-buoy"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" x2="9.17" y1="4.93" y2="9.17"/><line x1="14.83" x2="19.07" y1="14.83" y2="19.07"/><line x1="14.83" x2="19.07" y1="9.17" y2="4.93"/><line x1="14.83" x2="9.17" y1="14.83" y2="19.07"/></svg>
+        <LifeBuoy size={24} stroke-width={1.5} />
       </div>
       <h3>Help center</h3>
       <p>Frequently asked account and billing questions</p>
@@ -13,7 +14,7 @@
 
     <a href="#" class="help-card">
       <div class="icon-wrapper">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <Users size={24} stroke-width={1.5} />
       </div>
       <h3>Developer forum</h3>
       <p>Discuss topics with other developers</p>
@@ -21,7 +22,7 @@
 
     <a href="#" class="help-card">
       <div class="icon-wrapper">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+        <Sparkles size={24} stroke-width={1.5} />
       </div>
       <h3>OpenAI for startups</h3>
       <p>Resources for ambitious founders building with OpenAI</p>
@@ -29,7 +30,7 @@
 
     <a href="#" class="help-card">
       <div class="icon-wrapper">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+        <Rss size={24} stroke-width={1.5} />
       </div>
       <h3>Status</h3>
       <p>Check the status of OpenAI services</p>
@@ -59,12 +60,8 @@
     text-align: center;
     text-decoration: none;
     color: inherit;
-    transition: transform 0.2s ease;
   }
-  
-  .help-card:hover {
-    transform: translateY(-2px);
-  }
+
 
   .icon-wrapper {
     margin-bottom: 1rem;

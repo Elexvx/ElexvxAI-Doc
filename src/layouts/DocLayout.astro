@@ -3,10 +3,12 @@ import BaseLayout from "./BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Sidebar from "../components/Sidebar.astro";
 import Toc from "../components/Toc.astro";
+import MobileToc from "../components/MobileToc.astro";
 import CopyPageFab from "../components/CopyPageFab.astro";
 import { t } from "../i18n/ui";
 import type { Lang } from "../config/site";
 import type { SidebarGroup } from "../lib/docs";
+import { ChevronRight } from "@lucide/astro";
 
 type Heading = { depth: number; slug: string; text: string };
 
@@ -64,19 +66,7 @@ if (breadcrumbs.length === 0) {
           breadcrumbs.map((crumb) => (
             <>
               <span class="sep">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="m9 18 6-6-6-6" />
-                </svg>
+                <ChevronRight size={12} />
               </span>
               <span class={`crumb ${crumb.href ? "active" : ""}`}>
                 {crumb.text}
@@ -89,6 +79,7 @@ if (breadcrumbs.length === 0) {
       <article class="article">
         <h1 data-pagefind-meta="title">{title}</h1>
         {description ? <p class="desc">{description}</p> : null}
+        <MobileToc headings={headings} title={t(lang, "onThisPage")} />
         <div class="article-content">
           <slot />
         </div>
@@ -318,9 +309,6 @@ if (breadcrumbs.length === 0) {
     .wrap {
       grid-template-columns: 1fr;
       padding: 0 12px;
-    }
-    :global(.side) {
-      display: none;
     }
     .content {
       padding: 1.5rem 0 3rem;

@@ -11,11 +11,11 @@
   --accent: #5aa6ff;
   --accent-dim: rgba(90, 166, 255, 0.14);
   --danger: #ff5a72;
-  --radius-sm: 10px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --shadow-sm: 0 1px 1px rgba(0, 0, 0, 0.24);
-  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --ring: 0 0 0 3px rgba(90, 166, 255, 0.25);
   --header-h: 56px;
   --sidebar-w: 296px;
@@ -23,6 +23,7 @@
   --content-max: 860px;
   color-scheme: dark;
   font-family:
+    "Inter",
     ui-sans-serif,
     system-ui,
     -apple-system,
@@ -31,9 +32,20 @@
     Roboto,
     "Helvetica Neue",
     Arial,
+    "Noto Sans",
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
     sans-serif;
   --mono:
-    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    "JetBrains Mono",
+    ui-monospace,
+    SFMono-Regular,
+    "SF Mono",
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    "Courier New",
     monospace;
 }
 
@@ -50,8 +62,8 @@
   --accent: #2563eb;
   --accent-dim: rgba(37, 99, 235, 0.12);
   --danger: #dc2626;
-  --shadow-sm: 0 1px 1px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --ring: 0 0 0 3px rgba(37, 99, 235, 0.2);
   color-scheme: light;
 }
