@@ -1,0 +1,23 @@
+---
+import '../styles/components/cards.css';
+
+export interface Props {
+  items: {
+    title: string;
+    desc: string;
+    href: string;
+    icon?: string;
+  }[];
+}
+
+const { items = [] } = Astro.props;
+---
+
+<div class="cards-grid">
+  {items.map((item) => (
+    <a href={item.href} class="card">
+      <h3 class="card-title">{item.title}</h3>
+      <p class="card-desc">{item.desc}</p>
+    </a>
+  ))}
+</div>

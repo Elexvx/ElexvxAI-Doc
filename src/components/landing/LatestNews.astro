@@ -1,0 +1,235 @@
+---
+import { getCollection } from "astro:content";
+import { getBlogUrl, parseBlogId, sortBlog } from "../../lib/blog";
+
+type Props = {
+  lang?: string;
+  limit?: number;
+  title?: string;
+};
+
+const { lang = "zh", limit = 6, title = "Latest" } = Astro.props;
+
+const entries = (await getCollection("blog"))
+  .filter((e) => parseBlogId(e.id).lang === lang && !e.data.draft)
+  .sort(sortBlog)
+  .slice(0, limit);
+
+// Helper to get gradient based on index
+const getGradient = (index: number) => {
+  const gradients = [
+    "linear-gradient(135deg, #E2F38D 0%, #D8E76C 100%)", // Yellow-Green
+    "linear-gradient(135deg, #FF6B00 0%, #FF8800 100%)", // Orange
+    "linear-gradient(135deg, #BFA3FF 0%, #A888FF 100%)", // Purple
+    "linear-gradient(135deg, #9CECFB 0%, #65C7F7 100%)", // Cyan-Blue
+    "linear-gradient(135deg, #FCCF31 0%, #F55555 100%)", // Yellow-Red
+    "linear-gradient(135deg, #ABDCFF 0%, #0396FF 100%)", // Blue
+  ];
+  return gradients[index % gradients.length];
+};
+
+// Helper to get icon based on category
+const getIcon = (category: string = "") => {
+  const cat = category.toLowerCase();
+  if (cat.includes("video")) return "play";
+  if (cat.includes("guide") || cat.includes("tutorial")) return "book";
+  if (cat.includes("code") || cat.includes("engineering")) return "code";
+  return "doc";
+};
+---
+
+{entries.length > 0 && (
+  <section class="latest-section">
+    <div class="container">
+      <div class="header">
+        <h2 class="title">{title}</h2>
+        <a class="view-all" href={getBlogUrl({ lang })}>
+          View all
+        </a>
+      </div>
+
+      <div class="grid">
+        {entries.map((e, index) => {
+          const p = parseBlogId(e.id);
+          const href = getBlogUrl({ lang, slug: p.slug });
+          const cat = e.data.category || "Blog";
+          const iconType = getIcon(cat);
+          
+          return (
+            <a class="card" href={href}>
+              <div class="thumb" style={`background: ${getGradient(index)}`}>
+                <div class="thumb-icon">
+                  {iconType === "play" && (
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  )}
+                  {iconType === "book" && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                  )}
+                  {iconType === "code" && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                  )}
+                  {iconType === "doc" && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="4" y1="10" x2="20" y2="10"/></svg>
+                  )}
+                </div>
+              </div>
+
+              <div class="body">
+                <h3 class="card-title">{e.data.title}</h3>
+                {e.data.description && <p class="desc">{e.data.description}</p>}
+                <div class="meta">
+                  {iconType === "play" ? (
+                    <svg class="meta-ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                  ) : (
+                    <svg class="meta-ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  )}
+                  <span class="meta-text">{cat}</span>
+                </div>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .latest-section {
+    padding: 4rem 1.5rem 5rem;
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    display: flex;
+    justify-content: center;
+  }
+
+  .container {
+    max-width: 1000px;
+    width: 100%;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  .title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--md-sys-color-on-surface);
+    letter-spacing: -0.01em;
+  }
+
+  .view-all {
+    color: var(--md-sys-color-on-surface-variant);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+
+  .view-all:hover {
+    color: var(--md-sys-color-primary);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 3rem;
+    row-gap: 2.5rem;
+  }
+
+  .card {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    text-decoration: none;
+    color: inherit;
+    background: transparent;
+    padding: 0;
+    border: none;
+    transition: opacity 0.2s;
+  }
+
+  .card:hover {
+    opacity: 0.9;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .thumb {
+    flex: 0 0 72px;
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .thumb-icon {
+    width: 28px;
+    height: 28px;
+    color: #fff;
+    display: flex;
+  }
+  
+  .thumb-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .card-title {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface);
+    letter-spacing: -0.01em;
+  }
+
+  .desc {
+    margin: 0;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .meta {
+    margin-top: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.85rem;
+  }
+
+  .meta-ic {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    .latest-section {
+      padding: 3rem 1.5rem;
+    }
+  }
+</style>

@@ -11,6 +11,9 @@ const UI = {
     language: '语言',
     version: '版本',
     home: '首页',
+    theme: '主题',
+    light: '浅色',
+    dark: '深色',
   },
   en: {
     docs: 'Docs',
@@ -22,6 +25,9 @@ const UI = {
     language: 'Language',
     version: 'Version',
     home: 'Home',
+    theme: 'Theme',
+    light: 'Light',
+    dark: 'Dark',
   },
 } as const;
 

@@ -1,75 +1,31 @@
 ---
 const features = [
   {
-    title: "Core Research",
+    title: "核心研究",
     icon: "science",
-    desc: "Deep learning algorithms and foundation models pushing the boundaries of AI capabilities in generative tasks.",
-    action: "Learn more",
-    imageColor:
-      "linear-gradient(135deg, var(--md-sys-color-primary-container) 0%, var(--md-sys-color-surface-container-high) 100%)",
-    iconBg: "var(--md-sys-color-primary-container)",
-    iconColor: "var(--md-sys-color-on-primary-container)",
+    desc: "深度学习算法与基础模型，拓展生成式任务的 AI 能力边界。",
   },
   {
-    title: "Open Source",
+    title: "开源贡献",
     icon: "code",
-    desc: "Contributing state-of-the-art code, pretrained models, and large-scale datasets to the global research community.",
-    action: "View Repos",
-    imageColor:
-      "linear-gradient(135deg, var(--md-sys-color-secondary-container) 0%, var(--md-sys-color-surface-container-high) 100%)",
-    iconBg: "var(--md-sys-color-secondary-container)",
-    iconColor: "var(--md-sys-color-on-secondary-container)",
+    desc: "向全球研究社区贡献最前沿的代码、预训练模型和大规模数据集。",
   },
   {
-    title: "Industrial",
+    title: "工业应用",
     icon: "factory",
-    desc: "Deploying scalable AI solutions for manufacturing, logistics, and supply chain optimization.",
-    action: "Case Studies",
-    imageColor:
-      "linear-gradient(135deg, var(--md-sys-color-tertiary-container) 0%, var(--md-sys-color-surface-container-high) 100%)",
-    iconBg: "var(--md-sys-color-tertiary-container)",
-    iconColor: "var(--md-sys-color-on-tertiary-container)",
+    desc: "部署可扩展的 AI 解决方案，优化制造、物流和供应链。",
   },
 ];
 ---
 
 <section class="features-section">
   <div class="container">
-    <div class="header">
-      <h2 class="display-small">Research Focus</h2>
-      <p class="body-large">
-        Exploring the frontiers of machine intelligence through rigorous
-        experimentation.
-      </p>
-      <a href="#" class="link-arrow">
-        View all research areas
-        <svg class="arrow-icon" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-          ></path>
-        </svg>
-      </a>
-    </div>
-
     <div class="grid">
       {
         features.map((feature) => (
           <div class="card">
-            <div class="card-media" style={`background: ${feature.imageColor}`}>
-              {feature.icon === "science" && (
-                <div class="visual-placeholder lines" />
-              )}
-              {feature.icon === "code" && (
-                <div class="visual-placeholder code" />
-              )}
-              {feature.icon === "factory" && (
-                <div class="visual-placeholder arm" />
-              )}
-            </div>
             <div class="card-content">
-              <div
-                class="icon-container"
-                style={`background-color: ${feature.iconBg}; color: ${feature.iconColor};`}
-              >
+              <div class="icon-container">
                 {feature.icon === "science" && (
                   <svg viewBox="0 0 24 24" fill="currentColor">
                     <path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.4-.81H9.05c-.43 0-.66.48-.4.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z" />
@@ -88,7 +44,6 @@ const features = [
               </div>
               <h3 class="headline-small">{feature.title}</h3>
               <p class="body-medium">{feature.desc}</p>
-              <button class="btn-tonal">{feature.action}</button>
             </div>
           </div>
         ))
@@ -99,7 +54,7 @@ const features = [
 
 <style>
   .features-section {
-    padding: 4rem 1.5rem;
+    padding: 6rem 1.5rem;
     background-color: var(--md-sys-color-surface);
     color: var(--md-sys-color-on-surface);
     display: flex;
@@ -111,52 +66,25 @@ const features = [
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 3rem;
-  }
-
-  .header {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 600px;
-    position: relative;
-  }
-
-  .link-arrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--md-sys-color-primary);
-    text-decoration: none;
-    font-weight: 500;
-    margin-top: 0.5rem;
-  }
-
-  .link-arrow:hover {
-    text-decoration: underline;
-  }
-
-  .arrow-icon {
-    width: 18px;
-    height: 18px;
   }
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
   }
 
-  /* M3 Card */
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
   .card {
-    background-color: var(
-      --md-sys-color-surface-container-low
-    ); /* Slightly lighter than bg */
-    border-radius: 16px;
+    background-color: var(--md-sys-color-surface-container-low);
+    border-radius: 12px;
     overflow: hidden;
-    transition:
-      transform 0.2s,
-      box-shadow 0.2s;
+    transition: transform 0.2s;
     border: 1px solid var(--md-sys-color-outline-variant);
     display: flex;
     flex-direction: column;
@@ -164,77 +92,23 @@ const features = [
 
   .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.15);
-  }
-
-  .card-media {
-    height: 200px;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .visual-placeholder {
-    width: 100%;
-    height: 100%;
-    opacity: 0.6;
-  }
-
-  .visual-placeholder.lines {
-    background-image: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(255, 255, 255, 0.4) 10px,
-      rgba(255, 255, 255, 0.4) 20px
-    );
-  }
-
-  .visual-placeholder.code {
-    background-image:
-      radial-gradient(
-        circle at 20% 30%,
-        rgba(255, 255, 255, 0.6) 3px,
-        transparent 3px
-      ),
-      radial-gradient(
-        circle at 60% 70%,
-        rgba(255, 255, 255, 0.6) 4px,
-        transparent 4px
-      ),
-      radial-gradient(
-        circle at 80% 30%,
-        rgba(255, 255, 255, 0.6) 2px,
-        transparent 2px
-      );
-    background-size: 50% 50%;
-  }
-
-  .visual-placeholder.arm {
-    background: linear-gradient(
-      90deg,
-      transparent 40%,
-      rgba(255, 255, 255, 0.5) 40%,
-      rgba(255, 255, 255, 0.5) 60%,
-      transparent 60%
-    );
   }
 
   .card-content {
-    padding: 1.5rem;
+    padding: 2.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
     flex: 1;
   }
 
   .icon-container {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--md-sys-color-primary);
   }
 
   .icon-container svg {
@@ -243,34 +117,17 @@ const features = [
   }
 
   .headline-small {
-    font-size: 1.5rem;
-    font-weight: 400;
+    font-size: 1.25rem;
+    font-weight: 500;
     margin: 0;
     color: var(--md-sys-color-on-surface);
   }
 
   .body-medium {
     font-size: 1rem;
-    line-height: 1.5;
+    line-height: 1.6;
     color: var(--md-sys-color-on-surface-variant);
     margin: 0;
     flex: 1;
-  }
-
-  .btn-tonal {
-    align-self: flex-start;
-    padding: 0.75rem 1.5rem;
-    background-color: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
-    border: 1px solid var(--md-sys-color-outline-variant);
-    border-radius: 100px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .btn-tonal:hover {
-    background-color: var(--md-sys-color-surface-variant);
-    border-color: var(--md-sys-color-outline);
   }
 </style>

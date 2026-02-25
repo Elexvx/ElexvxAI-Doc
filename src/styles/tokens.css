@@ -1,8 +1,8 @@
 :root {
-  --bg: #0b0d10;
-  --bg-elev: #0f1217;
-  --panel: #10141b;
-  --panel-2: #0d1117;
+  --bg: #000000;
+  --bg-elev: #000000;
+  --panel: #000000;
+  --panel-2: #000000;
   --fg: #e7edf5;
   --muted: rgba(231, 237, 245, 0.72);
   --muted-2: rgba(231, 237, 245, 0.56);
@@ -39,9 +39,9 @@
 
 :root[data-theme="light"] {
   --bg: #ffffff;
-  --bg-elev: #fbfbfc;
+  --bg-elev: #ffffff;
   --panel: #ffffff;
-  --panel-2: #f6f7f9;
+  --panel-2: #ffffff;
   --fg: #0b0d10;
   --muted: rgba(11, 13, 16, 0.72);
   --muted-2: rgba(11, 13, 16, 0.56);

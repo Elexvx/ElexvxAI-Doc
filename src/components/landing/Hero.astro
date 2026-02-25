@@ -10,92 +10,27 @@ const zh = getDocUrl({ lang: "zh", version: SITE.defaultVersion });
     <div class="content">
       <div class="tag">
         <span class="dot"></span>
-        AI Innovation Lab
+        AI 创新实验室
       </div>
       <h1 class="headline">
-        Advancing Intelligence for
-        <span class="highlight">Industrial Innovation</span>
+        推动智能技术
+        <span class="highlight">赋能工业创新</span>
       </h1>
       <p class="subhead">
-        Bridging the gap between theoretical AI research and real-world
-        industrial application. Building the next generation of intelligent
-        systems.
+        跨越 AI 理论研究与实际工业应用之间的鸿沟，构建下一代智能系统。
       </p>
 
       <div class="actions">
         <a href={zh} class="btn-filled">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"
-            ></path>
-          </svg>
-          Our Projects
+          我们的项目
         </a>
         <a href={zh} class="btn-outlined">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-            ></path>
-          </svg>
-          View Docs
+          查看文档
         </a>
       </div>
-
-      <div class="features-list">
-        <div class="feature-item">
-          <svg class="check-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
-          </svg>
-          <span>Open Source</span>
-        </div>
-        <div class="feature-item">
-          <svg class="check-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
-          </svg>
-          <span>Enterprise Ready</span>
-        </div>
-        <div class="feature-item">
-          <svg class="check-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
-          </svg>
-          <span>Research Backed</span>
-        </div>
-      </div>
     </div>
 
-    <div class="visual">
-      <div class="card-visual">
-        <div class="network-grid">
-          <!-- Abstract grid visualization using CSS -->
-          <div class="grid-line horizontal"></div>
-          <div class="grid-line horizontal"></div>
-          <div class="grid-line horizontal"></div>
-          <div class="grid-line vertical"></div>
-          <div class="grid-line vertical"></div>
-          <div class="grid-line vertical"></div>
-          <div class="node n1"></div>
-          <div class="node n2"></div>
-          <div class="node n3"></div>
-          <div class="node n4"></div>
-          <div class="connection c1"></div>
-          <div class="connection c2"></div>
-        </div>
 
-        <div class="stat-float">
-          <div class="icon-circle">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"
-              ></path>
-            </svg>
-          </div>
-          <div class="stat-text">
-            <div class="stat-label">MODEL PERFORMANCE</div>
-            <div class="stat-value">99.8% Accuracy</div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -109,29 +44,26 @@ const zh = getDocUrl({ lang: "zh", version: SITE.defaultVersion });
   }
 
   .container {
-    max-width: 1200px;
+    max-width: 900px;
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    gap: 2.5rem;
   }
 
   @media (max-width: 900px) {
     .container {
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
-
-    .visual {
-      order: -1;
+      gap: 2rem;
     }
   }
 
-  /* Left Content */
+  /* Content */
   .content {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1.5rem;
   }
 
@@ -183,6 +115,7 @@ const zh = getDocUrl({ lang: "zh", version: SITE.defaultVersion });
     gap: 1rem;
     margin-top: 1rem;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   .btn-filled {
@@ -222,150 +155,5 @@ const zh = getDocUrl({ lang: "zh", version: SITE.defaultVersion });
     background-color: var(--md-sys-color-surface-variant);
     border-color: var(--md-sys-color-outline-variant);
     text-decoration: none;
-  }
-
-  .features-list {
-    display: flex;
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
-  }
-
-  .feature-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--md-sys-color-on-surface-variant);
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  .check-icon {
-    width: 20px;
-    height: 20px;
-    color: var(--md-sys-color-primary);
-    background: transparent;
-    border: 1.5px solid var(--md-sys-color-primary);
-    border-radius: 50%;
-    padding: 3px;
-  }
-
-  /* Right Visual */
-  .visual {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .card-visual {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4/3;
-    background: linear-gradient(
-      135deg,
-      var(--md-sys-color-primary-container) 0%,
-      var(--md-sys-color-tertiary-container) 100%
-    );
-    border-radius: 24px;
-    overflow: visible;
-    box-shadow:
-      0 20px 25px -5px rgba(0, 0, 0, 0.1),
-      0 8px 10px -6px rgba(0, 0, 0, 0.1);
-  }
-
-  .network-grid {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    border-radius: 24px;
-    background-image: radial-gradient(
-      circle at 50% 50%,
-      rgba(255, 255, 255, 0.8) 0%,
-      rgba(255, 255, 255, 0) 70%
-    );
-  }
-
-  /* Abstract network simulation */
-  .node {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: white;
-    border-radius: 50%;
-    box-shadow: 0 0 10px white;
-  }
-  .n1 {
-    top: 30%;
-    left: 30%;
-  }
-  .n2 {
-    top: 20%;
-    left: 60%;
-  }
-  .n3 {
-    top: 60%;
-    left: 70%;
-  }
-  .n4 {
-    top: 70%;
-    left: 40%;
-  }
-
-  .connection {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.4);
-    height: 1px;
-    transform-origin: left center;
-  }
-  .c1 {
-    top: 30%;
-    left: 30%;
-    width: 34%;
-    transform: rotate(-15deg);
-  }
-
-  .stat-float {
-    position: absolute;
-    bottom: -32px;
-    left: 32px;
-    right: 32px;
-    background: var(--md-sys-color-surface-container-high);
-    border-radius: 20px;
-    padding: 1.25rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    box-shadow:
-      0 10px 15px -3px rgba(0, 0, 0, 0.1),
-      0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  }
-
-  .icon-circle {
-    width: 40px;
-    height: 40px;
-    background: #ffd8e4; /* Pinkish container */
-    color: #31111d;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-  }
-
-  .stat-text {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .stat-label {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--md-sys-color-on-surface-variant);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-
-  .stat-value {
-    font-size: 1.125rem;
-    font-weight: 700;
-    color: var(--md-sys-color-on-surface);
   }
 </style>
