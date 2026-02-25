@@ -2,6 +2,8 @@
 import type { SidebarGroup } from "../lib/docs";
 import SearchBox from "./SearchBox.astro";
 import type { Lang } from "../config/site";
+import { t } from "../i18n/ui";
+import { getBlogUrl } from "../lib/blog";
 
 type Props = {
   groups: SidebarGroup[];
@@ -40,6 +42,14 @@ function getIcon(title: string) {
       </svg>
     </button>
   </div>
+  
+  <nav class="mobile-nav">
+    <a class="mobile-nav-item" href="/">{t(lang, "home")}</a>
+    <a class="mobile-nav-item" href="#">{t(lang, "services")}</a>
+    <a class="mobile-nav-item" href={getBlogUrl({ lang })}>{t(lang, "articles")}</a>
+    <a class="mobile-nav-item" href="#">{t(lang, "company")}</a>
+  </nav>
+
   <SearchBox lang={lang} />
   {
     groups.map((g) => (
@@ -90,6 +100,36 @@ function getIcon(title: string) {
     justify-content: space-between;
     padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--border-2);
+  }
+
+  .mobile-nav {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .mobile-nav {
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem 0.5rem 1rem;
+      gap: 0.25rem;
+      border-bottom: 1px solid var(--border-2);
+      margin-bottom: 0.5rem;
+    }
+
+    .mobile-nav-item {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .mobile-nav-item:hover {
+      color: var(--fg);
+      background: var(--panel-2);
+    }
   }
 
   .mobileTitle {
