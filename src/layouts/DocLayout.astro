@@ -52,9 +52,9 @@ if (breadcrumbs.length === 0) {
   description={description}
 >
   <Header lang={lang} version={version} slug={slug} />
-  <div class="wrap container">
+  <div class="doc-shell container">
     <Sidebar groups={sidebarGroups} currentPath={path} lang={lang} />
-    <main class="content" data-pagefind-body>
+    <main class="doc-main" data-pagefind-body>
       <span class="pf" data-pagefind-filter="Type">Docs</span>
       <span class="pf" data-pagefind-filter="Version">{version}</span>
       <span class="pf" data-pagefind-filter="Language">{lang}</span>
@@ -159,6 +159,18 @@ if (breadcrumbs.length === 0) {
       });
       container.appendChild(btn);
     });
+
+    // 3. Setup Table Wrapping
+    const tables = document.querySelectorAll(".article-content table");
+    tables.forEach((table) => {
+      const parent = table.parentElement;
+      if (parent?.classList.contains("table-wrap")) return;
+
+      const container = document.createElement("div");
+      container.className = "table-wrap";
+      parent?.insertBefore(container, table);
+      container.appendChild(table);
+    });
   }
 
   function initFeatures() {
@@ -174,17 +186,6 @@ if (breadcrumbs.length === 0) {
 </script>
 
 <style>
-  .wrap {
-    display: grid;
-    grid-template-columns: var(--sidebar-w) minmax(0, 1fr) var(--rail-w);
-  }
-
-  .content {
-    padding-block: 2rem 4rem;
-    padding-inline: clamp(16px, 2vw, 48px);
-    min-height: calc(100vh - var(--header-h));
-  }
-
   .breadcrumbs {
     display: flex;
     align-items: center;
@@ -462,26 +463,7 @@ if (breadcrumbs.length === 0) {
     white-space: nowrap;
   }
 
-  @media (max-width: 1024px) {
-    .wrap {
-      grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
-    }
-    :global(.toc) {
-      display: none;
-    }
-    .content {
-      padding: 1.5rem 2rem 3rem;
-    }
-  }
-
   @media (max-width: 768px) {
-    .wrap {
-      grid-template-columns: 1fr;
-      padding: 0 12px;
-    }
-    .content {
-      padding: 1.5rem 0 3rem;
-    }
     .article h1 {
       font-size: 2rem;
     }
@@ -491,12 +473,6 @@ if (breadcrumbs.length === 0) {
   }
 
   @media (max-width: 600px) {
-    .wrap {
-      padding: 0 8px;
-    }
-    .content {
-      padding: 1rem 0 2rem;
-    }
     .article h1 {
       font-size: 1.75rem;
     }

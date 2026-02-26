@@ -1,8 +1,25 @@
 ---
-import { FlaskConical } from "@lucide/astro";
+import { FlaskConical, ChevronDown } from "@lucide/astro";
 import "../../styles/footer.css";
 
-const year = new Date().getFullYear();
+const navGroups = [
+  {
+    title: "研究",
+    links: ["发表论文", "开源项目", "开放数据"],
+  },
+  {
+    title: "资源",
+    links: ["技术文档", "API 参考", "官方博客"],
+  },
+  {
+    title: "开发者",
+    links: ["开发者社区", "模型代码"],
+  },
+  {
+    title: "关于",
+    links: ["研究成果", "项目合作", "联系我们"],
+  },
+];
 ---
 
 <footer class="site-footer">
@@ -11,20 +28,28 @@ const year = new Date().getFullYear();
       <div class="footer-tagline">
         <h2>探索智能边界</h2>
       </div>
-      <div class="footer-nav">
-        <ul class="nav-column">
-          <li><a href="#">发表论文</a></li>
-          <li><a href="#">开源项目</a></li>
-          <li><a href="#">开放数据</a></li>
-          <li><a href="#">模型代码</a></li>
-          <li><a href="#">研究成果</a></li>
-        </ul>
-        <ul class="nav-column">
-          <li><a href="#">技术文档</a></li>
-          <li><a href="#">API 参考</a></li>
-          <li><a href="#">开发者社区</a></li>
-          <li><a href="#">官方博客</a></li>
-        </ul>
+
+      <div class="footer-nav" id="footerAccordion">
+        {navGroups.map((group, index) => (
+          <section class="footer-group" data-footer-group data-open="false">
+            <button
+              class="footer-group-trigger"
+              type="button"
+              data-footer-trigger
+              aria-expanded="false"
+              aria-controls={`footer-links-${index}`}
+            >
+              <span>{group.title}</span>
+              <ChevronDown class="footer-chevron" size={16} stroke-width={1.8} />
+            </button>
+
+            <ul class="footer-group-links" id={`footer-links-${index}`} data-footer-panel>
+              {group.links.map((label) => (
+                <li><a href="#">{label}</a></li>
+              ))}
+            </ul>
+          </section>
+        ))}
       </div>
     </div>
 
@@ -46,3 +71,64 @@ const year = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<script>
+  function initFooterAccordion() {
+    const accordion = document.getElementById("footerAccordion");
+    if (!accordion) return;
+
+    const groups = Array.from(
+      accordion.querySelectorAll("[data-footer-group]"),
+    ) as HTMLElement[];
+    const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
+
+    const sync = () => {
+      const mobile = isMobile();
+      groups.forEach((group) => {
+        const trigger = group.querySelector(
+          "[data-footer-trigger]",
+        ) as HTMLButtonElement | null;
+        const panel = group.querySelector(
+          "[data-footer-panel]",
+        ) as HTMLElement | null;
+
+        if (!trigger || !panel) return;
+
+        if (mobile) {
+          const open = group.getAttribute("data-open") === "true";
+          trigger.setAttribute("aria-expanded", String(open));
+          panel.hidden = !open;
+        } else {
+          trigger.setAttribute("aria-expanded", "true");
+          panel.hidden = false;
+        }
+      });
+    };
+
+    if (!accordion.hasAttribute("data-accordion-init")) {
+      accordion.setAttribute("data-accordion-init", "true");
+
+      groups.forEach((group) => {
+        const trigger = group.querySelector(
+          "[data-footer-trigger]",
+        ) as HTMLButtonElement | null;
+        group.setAttribute("data-open", "false");
+
+        if (!trigger) return;
+        trigger.addEventListener("click", () => {
+          if (!isMobile()) return;
+          const open = group.getAttribute("data-open") === "true";
+          group.setAttribute("data-open", open ? "false" : "true");
+          sync();
+        });
+      });
+
+      window.addEventListener("resize", sync);
+    }
+
+    sync();
+  }
+
+  document.addEventListener("astro:page-load", initFooterAccordion);
+  initFooterAccordion();
+</script>

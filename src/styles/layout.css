@@ -1,0 +1,169 @@
+/* Document Layout Shell Variables */
+:root {
+    --drawer-w-mobile: 300px;
+    --drawer-max-w: 85vw;
+}
+
+/* Document Shell Grid */
+.doc-shell {
+    display: grid;
+    grid-template-columns: var(--sidebar-w) minmax(0, 1fr) var(--rail-w);
+    width: 100%;
+}
+
+.doc-sidebar {
+    position: sticky;
+    top: var(--header-h);
+    height: calc(100vh - var(--header-h));
+    overflow: auto;
+    padding: 0.75rem 0.75rem 1.5rem 0;
+    border-right: 1px solid var(--border-2);
+    display: flex;
+    flex-direction: column;
+}
+
+.doc-main {
+    padding-block: 2rem 4rem;
+    padding-inline: clamp(16px, 2vw, 48px);
+    min-height: calc(100vh - var(--header-h));
+    overflow-wrap: anywhere;
+    /* Handle long links breaking bounds */
+}
+
+.doc-toc {
+    position: sticky;
+    top: var(--header-h);
+    max-height: calc(100vh - var(--header-h) - 1rem);
+    /* Will override list inner scroll in component */
+    overflow-y: hidden;
+    padding: 1.5rem 1.5rem 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Content Overflow Handling */
+.article-content pre {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1.25rem 0;
+}
+
+.table-wrap table {
+    margin: 0;
+    min-width: max-content;
+}
+
+/* Common Drawer Overlay */
+.doc-drawer-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 140;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.doc-drawer-overlay.open {
+    opacity: 1;
+}
+
+.doc-drawer-header {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-2);
+}
+
+/* Responsive Rules */
+/* Tablet Layout: Content + Sidebar, hidden TOC */
+@media (max-width: 1024px) {
+    .doc-shell {
+        grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+    }
+
+    .doc-main {
+        padding: 1.5rem 2rem 3rem;
+    }
+
+    /* ToC becomes a Drawer */
+    .doc-toc {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        max-height: 100vh;
+        width: var(--drawer-w-mobile);
+        max-width: var(--drawer-max-w);
+        z-index: 150;
+        transform: translateX(100%);
+        transition: transform 0.25s ease;
+        background: var(--bg);
+        border-left: 1px solid var(--border-2);
+        padding: 0 1rem 1.5rem;
+    }
+
+    .doc-toc.open {
+        transform: translateX(0);
+    }
+
+    .doc-toc .doc-drawer-header {
+        display: flex;
+    }
+}
+
+/* Mobile Layout: Single column */
+@media (max-width: 768px) {
+    .doc-shell {
+        grid-template-columns: 1fr;
+        padding: 0;
+    }
+
+    .doc-main {
+        padding: 1.5rem 16px 3rem;
+        /* 16px uniform padding on mobile */
+    }
+
+    /* Sidebar becomes a Drawer */
+    .doc-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        max-height: 100vh;
+        width: var(--drawer-w-mobile);
+        max-width: var(--drawer-max-w);
+        z-index: 150;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        border-right: 1px solid var(--border-2);
+        background: var(--bg);
+        padding: 0 0.75rem 1.5rem;
+    }
+
+    .doc-sidebar.open {
+        transform: translateX(0);
+    }
+
+    .doc-sidebar .doc-drawer-header {
+        display: flex;
+    }
+}
+@media (max-width: 1024px) {
+  .doc-drawer-overlay {
+    display: block;
+    pointer-events: none;
+  }
+  .doc-drawer-overlay.open {
+    pointer-events: auto;
+  }
+}
+

@@ -8,39 +8,39 @@ import { LifeBuoy, Users, Sparkles, Rss } from "@lucide/astro";
       <div class="icon-wrapper">
         <LifeBuoy size={24} stroke-width={1.5} />
       </div>
-      <h3>Help center</h3>
-      <p>Frequently asked account and billing questions</p>
+      <h3>帮助中心</h3>
+      <p>常见问题与使用指南</p>
     </a>
 
     <a href="#" class="help-card">
       <div class="icon-wrapper">
         <Users size={24} stroke-width={1.5} />
       </div>
-      <h3>Developer forum</h3>
-      <p>Discuss topics with other developers</p>
+      <h3>开发者社区</h3>
+      <p>与开发者交流实践经验</p>
     </a>
 
     <a href="#" class="help-card">
       <div class="icon-wrapper">
         <Sparkles size={24} stroke-width={1.5} />
       </div>
-      <h3>OpenAI for startups</h3>
-      <p>Resources for ambitious founders building with OpenAI</p>
+      <h3>项目合作</h3>
+      <p>了解联合研发与合作方案</p>
     </a>
 
     <a href="#" class="help-card">
       <div class="icon-wrapper">
         <Rss size={24} stroke-width={1.5} />
       </div>
-      <h3>Status</h3>
-      <p>Check the status of OpenAI services</p>
+      <h3>系统状态</h3>
+      <p>查看服务运行状态与公告</p>
     </a>
   </div>
 </div>
 
 <style>
   .help-section {
-    padding: 4rem 1.5rem;
+    padding: 3rem 1.5rem;
     background-color: var(--bg);
     border-top: 1px solid var(--border);
   }
@@ -48,7 +48,7 @@ import { LifeBuoy, Users, Sparkles, Rss } from "@lucide/astro";
   .help-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
   .help-card {
@@ -58,10 +58,11 @@ import { LifeBuoy, Users, Sparkles, Rss } from "@lucide/astro";
     text-align: center;
     text-decoration: none;
     color: inherit;
+    gap: 0.35rem;
   }
 
   .icon-wrapper {
-    margin-bottom: 1rem;
+    margin-bottom: 0.4rem;
     color: var(--fg);
   }
 
@@ -80,16 +81,24 @@ import { LifeBuoy, Users, Sparkles, Rss } from "@lucide/astro";
   }
 
   @media (max-width: 900px) {
+    .help-section {
+      padding: 2.75rem 1rem;
+    }
+
     .help-container {
       grid-template-columns: repeat(2, 1fr);
-      gap: 3rem 2rem;
+      gap: 1.25rem;
     }
   }
 
   @media (max-width: 600px) {
+    .help-section {
+      padding: 2.5rem 1rem;
+    }
+
     .help-container {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1rem;
     }
   }
 </style>

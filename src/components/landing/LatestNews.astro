@@ -9,22 +9,24 @@ type Props = {
   title?: string;
 };
 
-const { lang = "zh", limit = 6, title = "Latest" } = Astro.props;
+const { lang = "zh", limit = 6, title } = Astro.props;
+const isZh = lang === "zh";
+const resolvedTitle = title ?? (isZh ? "最新文章" : "Latest");
+const viewAllText = isZh ? "查看全部" : "View all";
 
 const entries = (await getCollection("blog"))
   .filter((e) => parseBlogId(e.id).lang === lang && !e.data.draft)
   .sort(sortBlog)
   .slice(0, limit);
 
-// 1:1 OpenAI Style Gradients
 const getGradient = (index: number) => {
   const gradients = [
-    "linear-gradient(135deg, #DCEB7A 0%, #C8DB5A 100%)", // Soft Lime
-    "linear-gradient(135deg, #FF9B26 0%, #FF7A00 100%)", // OpenAI Orange
-    "linear-gradient(135deg, #C4B5FD 0%, #A78BFA 100%)", // Soft Purple
-    "linear-gradient(135deg, #A8EDDF 0%, #68D391 100%)", // Teal/Green
-    "linear-gradient(135deg, #FFB086 0%, #FA897B 100%)", // Peach/Pink
-    "linear-gradient(135deg, #93C5FD 0%, #60A5FA 100%)", // Sky Blue
+    "linear-gradient(135deg, #DCEB7A 0%, #C8DB5A 100%)",
+    "linear-gradient(135deg, #FF9B26 0%, #FF7A00 100%)",
+    "linear-gradient(135deg, #C4B5FD 0%, #A78BFA 100%)",
+    "linear-gradient(135deg, #A8EDDF 0%, #68D391 100%)",
+    "linear-gradient(135deg, #FFB086 0%, #FA897B 100%)",
+    "linear-gradient(135deg, #93C5FD 0%, #60A5FA 100%)",
   ];
   return gradients[index % gradients.length];
 };
@@ -37,6 +39,17 @@ const getIcon = (category: string = "") => {
   if (cat.includes("app") || cat.includes("mobile")) return "smartphone";
   return "doc";
 };
+
+const getCategoryLabel = (category: string, zh: boolean) => {
+  if (!zh) return category;
+  const cat = category.toLowerCase();
+  if (cat.includes("research")) return "研究";
+  if (cat.includes("engineering") || cat.includes("code")) return "工程";
+  if (cat.includes("guide") || cat.includes("tutorial")) return "指南";
+  if (cat.includes("video")) return "视频";
+  if (cat.includes("app") || cat.includes("mobile")) return "应用";
+  return category;
+};
 ---
 
 {
@@ -44,9 +57,9 @@ const getIcon = (category: string = "") => {
     <section class="latest-section">
       <div class="container">
         <div class="header">
-          <h2 class="title">{title}</h2>
+          <h2 class="title">{resolvedTitle}</h2>
           <a class="view-all" href={getBlogUrl({ lang })}>
-            View all
+            {viewAllText}
           </a>
         </div>
 
@@ -54,8 +67,9 @@ const getIcon = (category: string = "") => {
           {entries.map((e, index) => {
             const p = parseBlogId(e.id);
             const href = getBlogUrl({ lang, slug: p.slug });
-            const cat = e.data.category || "Research";
+            const cat = e.data.category || (isZh ? "研究" : "Research");
             const iconType = getIcon(cat);
+            const catLabel = getCategoryLabel(cat, isZh);
 
             return (
               <a class="card group" href={href}>
@@ -93,7 +107,7 @@ const getIcon = (category: string = "") => {
                     ) : (
                       <FileText class="meta-ic" size={14} stroke-width={1.5} />
                     )}
-                    <span class="meta-text">{cat}</span>
+                    <span class="meta-text">{catLabel}</span>
                   </div>
                 </div>
               </a>
@@ -107,25 +121,23 @@ const getIcon = (category: string = "") => {
 
 <style>
   .latest-section {
-    padding: 6rem 1.5rem;
+    padding: 4rem 1.5rem;
     background-color: var(--bg);
     color: var(--fg);
     display: flex;
     justify-content: center;
   }
 
-  .container {
-  }
-
   .header {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin-bottom: 2.5rem;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
   }
 
   .title {
-    font-size: 1.25rem; /* 20px */
+    font-size: 1.25rem;
     font-weight: 600;
     margin: 0;
     color: var(--fg);
@@ -135,27 +147,21 @@ const getIcon = (category: string = "") => {
   .view-all {
     color: var(--muted);
     text-decoration: none;
-    font-size: 0.875rem; /* 14px */
+    font-size: 0.875rem;
     transition: color 0.2s;
   }
 
-  .view-all:hover {
-    color: var(--accent);
+  @media (hover: hover) and (pointer: fine) {
+    .view-all:hover {
+      color: var(--accent);
+    }
   }
 
   .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 4rem;
-    row-gap: 3rem;
-  }
-
-  @media (max-width: 768px) {
-    .grid {
-      grid-template-columns: 1fr;
-      column-gap: 0;
-      row-gap: 2.5rem;
-    }
+    row-gap: 2.25rem;
   }
 
   .card {
@@ -167,20 +173,27 @@ const getIcon = (category: string = "") => {
     background: transparent;
     border: none;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    .card:active {
+      transform: scale(0.99);
+    }
   }
 
   .thumb {
-    flex: 0 0 100px; /* Precise size matching OpenAI */
+    flex: 0 0 100px;
     width: 100px;
     height: 100px;
-    border-radius: 8px; /* Slight rounding for a modern feel */
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .thumb-icon {
-    color: rgba(255, 255, 255, 0.9); /* Pure white icon */
+    color: rgba(255, 255, 255, 0.9);
     display: flex;
   }
 
@@ -189,27 +202,33 @@ const getIcon = (category: string = "") => {
     min-width: 0;
     display: flex;
     flex-direction: column;
-    padding-top: 0.25rem; /* Optical alignment with the top of the box */
+    padding-top: 0.25rem;
   }
 
   .card-title {
     margin: 0 0 0.5rem 0;
-    font-size: 1.05rem; /* ~17px */
+    font-size: 1.05rem;
     line-height: 1.4;
     font-weight: 600;
     color: var(--fg);
     letter-spacing: -0.01em;
     transition: color 0.2s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
-  .card:hover .card-title {
-    color: var(--accent);
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover .card-title {
+      color: var(--accent);
+    }
   }
 
   .desc {
     margin: 0 0 1rem 0;
     color: var(--muted);
-    font-size: 0.875rem; /* 14px */
+    font-size: 0.875rem;
     line-height: 1.5;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -218,12 +237,12 @@ const getIcon = (category: string = "") => {
   }
 
   .meta {
-    margin-top: auto; /* Push meta to bottom if description is short */
+    margin-top: auto;
     display: flex;
     align-items: center;
     gap: 0.375rem;
     color: var(--muted);
-    font-size: 0.8125rem; /* 13px */
+    font-size: 0.8125rem;
   }
 
   .meta-ic {
@@ -232,5 +251,70 @@ const getIcon = (category: string = "") => {
 
   .meta-text {
     opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    .latest-section {
+      padding: 3rem 1rem;
+    }
+
+    .grid {
+      grid-template-columns: 1fr;
+      column-gap: 0;
+      row-gap: 1.5rem;
+    }
+
+    .header {
+      margin-bottom: 1.25rem;
+    }
+
+    .card {
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .latest-section {
+      padding: 2.5rem 1rem;
+    }
+
+    .title {
+      font-size: 1.125rem;
+    }
+
+    .view-all {
+      font-size: 0.8125rem;
+    }
+
+    .grid {
+      row-gap: 1.125rem;
+    }
+
+    .thumb {
+      flex: 0 0 64px;
+      width: 64px;
+      height: 64px;
+      border-radius: 7px;
+    }
+
+    .thumb-icon :global(svg) {
+      width: 18px;
+      height: 18px;
+    }
+
+    .card-title {
+      margin-bottom: 0.3rem;
+      font-size: 1rem;
+      line-height: 1.35;
+    }
+
+    .desc {
+      margin-bottom: 0.6rem;
+      -webkit-line-clamp: 1;
+    }
+
+    .meta {
+      gap: 0.3rem;
+    }
   }
 </style>

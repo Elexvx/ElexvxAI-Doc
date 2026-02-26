@@ -6,7 +6,6 @@ import Hero from '../components/landing/Hero.astro';
 import LatestNews from '../components/landing/LatestNews.astro';
 import Features from '../components/landing/Features.astro';
 import Footer from '../components/landing/Footer.astro';
-import HelpSection from '../components/HelpSection.astro';
 ---
 
 <BaseLayout lang="zh" title={SITE.title} description="推动智能技术 赋能工业创新">
@@ -15,9 +14,6 @@ import HelpSection from '../components/HelpSection.astro';
     <Hero />
     <Features />
     <LatestNews lang="zh" />
-    <div class="help-wrapper">
-      <HelpSection />
-    </div>
     <Footer />
   </main>
 </BaseLayout>
@@ -36,11 +32,11 @@ import HelpSection from '../components/HelpSection.astro';
     border-bottom: 1px solid var(--border) !important;
   }
 
-  /* Map MD3 colors to HelpSection variables */
-  .help-wrapper {
-    --bg: var(--panel);
-    --fg: var(--fg);
-    --muted: var(--muted);
-    --border: var(--border);
+  @media (max-width: 768px) {
+    .landing-page .container {
+      width: 100%;
+      margin-inline: 0;
+    }
   }
+
 </style>

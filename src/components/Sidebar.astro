@@ -47,9 +47,9 @@ function getIconKey(title: string): keyof typeof IconMap {
 }
 ---
 
-<div class="mobileOverlay" id="sidebarOverlay"></div>
-<aside class="side" id="sidebar" transition:persist="sidebar">
-  <div class="mobileHeader">
+<div class="doc-drawer-overlay" id="sidebarOverlay"></div>
+<aside class="doc-sidebar" id="sidebar" transition:persist="sidebar">
+  <div class="doc-drawer-header">
     <span class="mobileTitle">Menu</span>
     <button class="closeBtn" id="sidebarClose" aria-label="Close menu">
       <X size={20} stroke-width={1.5} />
@@ -103,28 +103,6 @@ function getIconKey(title: string): keyof typeof IconMap {
 </aside>
 
 <style>
-  .mobileOverlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 140;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-
-  .mobileOverlay.open {
-    opacity: 1;
-  }
-
-  .mobileHeader {
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--border-2);
-  }
-
   .mobile-nav {
     display: none;
   }
@@ -176,17 +154,6 @@ function getIconKey(title: string): keyof typeof IconMap {
   .closeBtn:hover {
     color: var(--fg);
     background: var(--panel-2);
-  }
-
-  .side {
-    position: sticky;
-    top: var(--header-h);
-    height: calc(100vh - var(--header-h));
-    overflow: auto;
-    padding: 0.75rem 0.75rem 1.5rem 0;
-    border-right: 1px solid var(--border-2);
-    display: flex;
-    flex-direction: column;
   }
 
   .group {
@@ -283,47 +250,13 @@ function getIconKey(title: string): keyof typeof IconMap {
     justify-content: center;
     opacity: 0.8;
   }
-
-  @media (max-width: 1024px) {
-    .mobileOverlay {
-      display: block;
-      pointer-events: none;
-    }
-
-    .mobileOverlay.open {
-      pointer-events: auto;
-    }
-
-    .side {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 300px;
-      max-width: 85vw;
-      z-index: 150;
-      transform: translateX(-100%);
-      transition: transform 0.25s ease;
-      border-right: 1px solid var(--border-2);
-      background: var(--bg);
-      padding: 0 0.75rem 1.5rem;
-    }
-
-    .side.open {
-      transform: translateX(0);
-    }
-
-    .mobileHeader {
-      display: flex;
-    }
-  }
 </style>
 
 <script>
   function initSidebar() {
     const sidebar = document.getElementById("sidebar");
     const overlay = document.getElementById("sidebarOverlay");
-    const menuToggle = document.getElementById("menuToggle");
+    const menuToggle = document.getElementById("sidebarToggle");
     const closeBtn = document.getElementById("sidebarClose");
 
     if (!sidebar || !overlay) return;

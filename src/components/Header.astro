@@ -3,7 +3,7 @@ import { SITE, type Lang } from "../config/site";
 import { t } from "../i18n/ui";
 import { getDocUrl } from "../lib/docs";
 import { getBlogUrl } from "../lib/blog";
-import { Sun, Moon, Rss, Menu, ListTree } from "@lucide/astro";
+import { Sun, Moon, Rss, Menu, ListTree, PanelLeft, X } from "@lucide/astro";
 
 type Props = {
   lang: Lang;
@@ -37,6 +37,11 @@ const brandHref =
     : kind === "search"
       ? getDocUrl({ lang, version: docsVersion })
       : getDocUrl({ lang, version: docsVersion });
+
+const menuLabel = lang === "zh" ? "菜单" : "Menu";
+const closeMenuLabel = lang === "zh" ? "关闭菜单" : "Close menu";
+const tocLabel = lang === "zh" ? "目录" : "Table of Contents";
+const sidebarLabel = lang === "zh" ? "文档导航" : "Sidebar";
 ---
 
 <header class="hdr" transition:persist="header">
@@ -73,14 +78,24 @@ const brandHref =
         <Moon class="moon" size={20} stroke-width={1.5} />
       </button>
 
-      <a class="icon-btn" href="/rss.xml" aria-label="RSS">
+      <a class="icon-btn rss-btn" href="/rss.xml" aria-label="RSS">
         <Rss size={20} stroke-width={1.5} />
       </a>
 
       <button
+        class="icon-btn sidebar-btn"
+        id="sidebarToggle"
+        aria-label={sidebarLabel}
+        data-hidden="true"
+      >
+        <PanelLeft size={20} stroke-width={1.5} />
+      </button>
+
+      <button
         class="icon-btn toc-btn"
         id="tocToggle"
-        aria-label="Table of Contents"
+        aria-label={tocLabel}
+        data-hidden="true"
       >
         <ListTree size={20} stroke-width={1.5} />
       </button>
@@ -88,49 +103,177 @@ const brandHref =
       <button
         class="icon-btn menu-btn"
         id="menuToggle"
-        aria-label="Toggle menu"
+        aria-label={menuLabel}
+        aria-expanded="false"
+        aria-controls="mobileDrawer"
       >
         <Menu size={20} stroke-width={1.5} />
       </button>
     </div>
   </div>
+
+  <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" data-open="false">
+  </div>
+  <aside
+    class="mobile-drawer"
+    id="mobileDrawer"
+    data-open="false"
+    aria-hidden="true"
+  >
+    <div class="drawer-header">
+      <span class="drawer-title">{menuLabel}</span>
+      <button
+        class="icon-btn drawer-close"
+        type="button"
+        id="mobileDrawerClose"
+        aria-label={closeMenuLabel}
+      >
+        <X size={20} stroke-width={1.5} />
+      </button>
+    </div>
+
+    <nav class="drawer-nav">
+      <a class="drawer-link" data-drawer-link href="/">{t(lang, "home")}</a>
+      <a
+        class="drawer-link"
+        data-drawer-link
+        href={getDocUrl({ lang, version: docsVersion })}
+      >
+        {t(lang, "docs")}
+      </a>
+      <a class="drawer-link" data-drawer-link href={getBlogUrl({ lang })}>
+        {t(lang, "blog")}
+      </a>
+      <a class="drawer-link" data-drawer-link href="/rss.xml">{t(lang, "rss")}</a>
+      <button
+        class="drawer-link drawer-theme"
+        type="button"
+        id="drawerThemeToggle"
+        data-drawer-link
+      >
+        {t(lang, "theme")}
+      </button>
+    </nav>
+  </aside>
 </header>
 
 <script>
-  import { t } from "../i18n/ui";
+  function initHeader() {
+    const toggleTheme = () => {
+      const key = "theme";
+      const cur = document.documentElement.dataset.theme || "dark";
+      const next = cur === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem(key, next);
+    };
 
-  // The Header is persisted across view transitions, so we need to run initialization logic on every page load
-  // to ensure state (like current language/version) correctly reflects the URL.
-  document.addEventListener("astro:page-load", () => {
-    // Theme toggle Logic
-    const btn = document.getElementById("themeToggle");
-    if (btn && !btn.hasAttribute("data-theme-listener")) {
-      btn.setAttribute("data-theme-listener", "true");
-      btn.addEventListener("click", () => {
-        const key = "theme";
-        const cur = document.documentElement.dataset.theme || "dark";
-        const next = cur === "dark" ? "light" : "dark";
-        document.documentElement.dataset.theme = next;
-        localStorage.setItem(key, next);
-      });
-    }
+    const themeBtns = [
+      document.getElementById("themeToggle"),
+      document.getElementById("drawerThemeToggle"),
+    ];
+    themeBtns.forEach((btn) => {
+      if (btn && !btn.hasAttribute("data-theme-listener")) {
+        btn.setAttribute("data-theme-listener", "true");
+        btn.addEventListener("click", toggleTheme);
+      }
+    });
 
-    // Toggle context buttons
     const tocBtn = document.getElementById("tocToggle");
-    const menuBtn = document.getElementById("menuToggle");
+    const sidebarBtn = document.getElementById("sidebarToggle");
+    const hasToc = Boolean(document.getElementById("tocSidebar"));
+    const hasSidebar = Boolean(document.getElementById("sidebar"));
     if (tocBtn) {
-      const hasToc = document.querySelector(".toc");
       hasToc
         ? tocBtn.removeAttribute("data-hidden")
         : tocBtn.setAttribute("data-hidden", "true");
     }
-    if (menuBtn) {
-      const hasSidebar = document.querySelector(".side");
+    if (sidebarBtn) {
       hasSidebar
-        ? menuBtn.removeAttribute("data-hidden")
-        : menuBtn.setAttribute("data-hidden", "true");
+        ? sidebarBtn.removeAttribute("data-hidden")
+        : sidebarBtn.setAttribute("data-hidden", "true");
     }
-  });
+
+    const menuBtn = document.getElementById("menuToggle");
+    const overlay = document.getElementById("mobileDrawerOverlay");
+    const drawer = document.getElementById("mobileDrawer");
+    const closeBtn = document.getElementById("mobileDrawerClose");
+    if (!menuBtn || !overlay || !drawer || !closeBtn) return;
+
+    const setDrawerOpen = (open) => {
+      overlay.setAttribute("data-open", open ? "true" : "false");
+      drawer.setAttribute("data-open", open ? "true" : "false");
+      drawer.setAttribute("aria-hidden", open ? "false" : "true");
+      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      document.body.style.overflow = open ? "hidden" : "";
+    };
+
+    const toggleDrawer = () => {
+      const isOpen = drawer.getAttribute("data-open") === "true";
+      setDrawerOpen(!isOpen);
+    };
+
+    if (!menuBtn.hasAttribute("data-drawer-listener")) {
+      menuBtn.setAttribute("data-drawer-listener", "true");
+      menuBtn.addEventListener("click", toggleDrawer);
+    }
+    if (!overlay.hasAttribute("data-drawer-listener")) {
+      overlay.setAttribute("data-drawer-listener", "true");
+      overlay.addEventListener("click", () => setDrawerOpen(false));
+    }
+    if (!closeBtn.hasAttribute("data-drawer-listener")) {
+      closeBtn.setAttribute("data-drawer-listener", "true");
+      closeBtn.addEventListener("click", () => setDrawerOpen(false));
+    }
+
+    const drawerLinks = drawer.querySelectorAll("[data-drawer-link]");
+    drawerLinks.forEach((link) => {
+      if (!link.hasAttribute("data-drawer-listener")) {
+        link.setAttribute("data-drawer-listener", "true");
+        link.addEventListener("click", () => setDrawerOpen(false));
+      }
+    });
+
+    if (!document.documentElement.hasAttribute("data-drawer-esc-listener")) {
+      document.documentElement.setAttribute("data-drawer-esc-listener", "true");
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        const currentDrawer = document.getElementById("mobileDrawer");
+        const isOpen = currentDrawer?.getAttribute("data-open") === "true";
+        if (!isOpen) return;
+        const currentOverlay = document.getElementById("mobileDrawerOverlay");
+        const currentMenuBtn = document.getElementById("menuToggle");
+        currentOverlay?.setAttribute("data-open", "false");
+        currentDrawer?.setAttribute("data-open", "false");
+        currentDrawer?.setAttribute("aria-hidden", "true");
+        currentMenuBtn?.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+      });
+    }
+
+    if (!document.documentElement.hasAttribute("data-drawer-resize-listener")) {
+      document.documentElement.setAttribute(
+        "data-drawer-resize-listener",
+        "true",
+      );
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 1025) {
+          const currentOverlay = document.getElementById("mobileDrawerOverlay");
+          const currentDrawer = document.getElementById("mobileDrawer");
+          const currentMenuBtn = document.getElementById("menuToggle");
+          currentOverlay?.setAttribute("data-open", "false");
+          currentDrawer?.setAttribute("data-open", "false");
+          currentDrawer?.setAttribute("aria-hidden", "true");
+          currentMenuBtn?.setAttribute("aria-expanded", "false");
+          document.body.style.overflow = "";
+        }
+      });
+    }
+
+    setDrawerOpen(false);
+  }
+
+  document.addEventListener("astro:page-load", initHeader);
+  initHeader();
 </script>
 
 <style>
@@ -204,7 +347,7 @@ const brandHref =
   .controls {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.4rem;
     justify-self: end;
   }
 
@@ -212,9 +355,9 @@ const brandHref =
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 0.375rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
     color: var(--muted);
     background: transparent;
     border: none;
@@ -228,19 +371,136 @@ const brandHref =
     background-color: var(--panel);
   }
 
+  .rss-btn {
+    display: none;
+  }
+
+  @media (min-width: 769px) {
+    .rss-btn {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .icon-btn {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 0.625rem;
+    }
+  }
+
+  .sidebar-btn,
   .menu-btn,
   .toc-btn {
     display: flex;
   }
 
-  .menu-btn[data-hidden="true"],
+  .sidebar-btn[data-hidden="true"],
   .toc-btn[data-hidden="true"] {
     display: none !important;
   }
 
   @media (min-width: 1025px) {
+    .sidebar-btn,
     .menu-btn,
     .toc-btn {
+      display: none !important;
+    }
+  }
+
+  .mobile-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 130;
+    background: color-mix(in srgb, #000, transparent 48%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .mobile-drawer-overlay[data-open="true"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-drawer {
+    position: fixed;
+    right: 0.75rem;
+    top: calc(var(--header-h) + 0.5rem);
+    width: min(320px, calc(100vw - 1.5rem));
+    z-index: 140;
+    border-radius: 0.9rem;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+    padding: 0.75rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(16px);
+    transition:
+      opacity 0.22s ease,
+      transform 0.22s ease;
+  }
+
+  :global([data-theme="light"]) .mobile-drawer {
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+  }
+
+  .mobile-drawer[data-open="true"] {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 0.25rem 0.5rem;
+  }
+
+  .drawer-title {
+    color: var(--fg);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .drawer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .drawer-link {
+    min-height: 44px;
+    border-radius: 0.625rem;
+    display: flex;
+    align-items: center;
+    padding: 0 0.9rem;
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .drawer-link:hover {
+    background: var(--panel);
+    color: var(--fg);
+  }
+
+  @media (max-width: 1024px) {
+    .drawer-link:active {
+      transform: scale(0.99);
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .mobile-drawer-overlay,
+    .mobile-drawer {
       display: none !important;
     }
   }
