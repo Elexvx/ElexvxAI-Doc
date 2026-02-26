@@ -23,13 +23,21 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.2;
   letter-spacing: -0.02em;
   font-weight: 600;
 }
 
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font-family: inherit;
   font-size: inherit;
 }
@@ -127,17 +135,23 @@ blockquote p {
   border-radius: 10px;
 }
 
+@media (max-width: 1024px) {
+
+  table,
+  pre,
+  .code-group__tabs {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 @media (max-width: 600px) {
   pre {
     padding: 0.85rem 0.9rem;
     font-size: 0.85rem;
     border-radius: var(--radius-md);
-  }
-
-  table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
   }
 
   th,

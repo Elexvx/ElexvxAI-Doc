@@ -1,5 +1,5 @@
 ---
-import { Github, MessageSquare } from "@lucide/astro";
+import { Github, MessageSquare, X } from "@lucide/astro";
 
 type Heading = { depth: number; slug: string; text: string };
 
@@ -12,7 +12,14 @@ const { headings, title } = Astro.props;
 const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 ---
 
-<aside class="toc">
+<div class="mobileOverlay" id="tocOverlay"></div>
+<aside class="toc" id="tocSidebar">
+  <div class="tocMobileHeader">
+    <span class="mobileTitle">{title}</span>
+    <button class="closeBtn" id="tocClose" aria-label="Close table of contents">
+      <X size={20} stroke-width={1.5} />
+    </button>
+  </div>
   <div class="tocTitle">{title}</div>
   <ul class="tocList" id="toc-list">
     {
@@ -48,14 +55,16 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 
 <script>
   function setupToc() {
-    const updateToc = () => {
-      const headings = Array.from(
-        document.querySelectorAll(
-          ".article-content h2, .article-content h3, article h2, article h3",
-        ),
-      ) as HTMLElement[];
-      const tocItems = Array.from(document.querySelectorAll(".tocItem"));
+    const headings = Array.from(
+      document.querySelectorAll(
+        ".article-content h2, .article-content h3, article h2, article h3",
+      ),
+    ) as HTMLElement[];
+    const tocItems = Array.from(document.querySelectorAll(".tocItem"));
 
+    let ticking = false;
+
+    const updateToc = () => {
       if (headings.length === 0 || tocItems.length === 0) return;
 
       let current = headings[0];
@@ -68,38 +77,120 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
       tocItems.forEach((item) => {
         item.classList.remove("active");
         const href = item.querySelector("a")?.getAttribute("href");
-        if (href === `#${current.id}`) {
+        if (href === `#${current?.id}`) {
           item.classList.add("active");
         }
       });
+      ticking = false;
     };
 
-    window.addEventListener("scroll", updateToc, { passive: true });
-    setTimeout(updateToc, 100);
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateToc);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    updateToc();
+
+    // Mobile Drawer Logic
+    const tocSidebar = document.getElementById("tocSidebar");
+    const overlay = document.getElementById("tocOverlay");
+    const tocToggle = document.getElementById("tocToggle");
+    const closeBtn = document.getElementById("tocClose");
+
+    const openToc = () => {
+      tocSidebar?.classList.add("open");
+      overlay?.classList.add("open");
+      document.body.style.overflow = "hidden";
+    };
+
+    const closeToc = () => {
+      tocSidebar?.classList.remove("open");
+      overlay?.classList.remove("open");
+      document.body.style.overflow = "";
+    };
+
+    tocToggle?.addEventListener("click", openToc);
+    closeBtn?.addEventListener("click", closeToc);
+    overlay?.addEventListener("click", closeToc);
+
+    const links = document.querySelectorAll(".tocItem a");
+    links.forEach((link) => {
+      link.addEventListener("click", () => {
+        if (window.innerWidth <= 1024) closeToc();
+      });
+    });
   }
 
   document.addEventListener("astro:page-load", setupToc);
-  // Also run on first load if View Transitions aren't taking over initially
   setupToc();
 </script>
 
 <style>
+  .mobileOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 140;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .mobileOverlay.open {
+    opacity: 1;
+  }
+
+  .tocMobileHeader {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-2);
+  }
+
+  .mobileTitle {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--fg);
+  }
+
+  .closeBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 0.5rem;
+  }
+
+  .closeBtn:hover {
+    color: var(--fg);
+    background: var(--panel-2);
+  }
+
   .toc {
     position: sticky;
     top: var(--header-h);
-    height: calc(100vh - var(--header-h));
-    overflow: auto;
-    padding: 1.25rem 0 1.5rem 1rem;
-    border-left: 1px solid var(--border-2);
+    max-height: calc(100vh - var(--header-h) - 1rem); /* Fix cutoff bug */
+    overflow-y: auto;
+    padding: 1.5rem 1.5rem 2rem 1rem;
     display: flex;
     flex-direction: column;
   }
 
   .tocTitle {
     font-size: 0.75rem;
-    font-weight: 650;
-    color: var(--muted-2);
-    padding: 0.25rem 0.25rem 0.75rem;
+    font-weight: 600; /* slightly lighter than 650 for a cleaner look */
+    color: var(--fg); /* Darker heading for product feel */
+    padding: 0 0 1rem 0; /* Align with track */
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -108,39 +199,70 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
     list-style: none;
     padding: 0;
     margin: 0 0 2rem;
+    position: relative;
+  }
+
+  /* Add continuous vertical track line */
+  .tocList::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    background-color: var(--border-2); /* Light track line */
+    z-index: 0;
   }
 
   .tocItem {
     position: relative;
-    padding: 0.25rem 0 0.25rem 1rem;
-    border-left: 2px solid transparent;
-    transition: all 0.2s ease;
-    margin-bottom: 4px;
+    padding: 0.35rem 0 0.35rem 1.2rem;
+    margin-bottom: 2px;
+    z-index: 1; /* keep above track */
+  }
+
+  /* Dot on the track */
+  .tocItem::before {
+    content: "";
+    position: absolute;
+    left: -2px; /* Center on the 1px line */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+  }
+
+  .tocItem.active::before {
+    background-color: var(--accent); /* Highlight dot */
   }
 
   .tocItem.active {
-    border-left-color: var(--accent);
+    /* No border-left anymore, relying on dot and text color */
   }
 
   .tocItem.active a {
     color: var(--fg);
-    font-weight: 550;
+    font-weight: 600; /* Stronger active state */
   }
 
   .tocItem.d3 {
-    padding-left: 1.5rem;
+    padding-left: 1.75rem;
   }
 
   .tocItem a {
-    color: var(--muted);
+    color: var(--muted-2); /* Lighter default color */
     text-decoration: none;
     font-size: 0.85rem;
+    line-height: 1.4;
     transition: color 0.2s ease;
     display: block;
   }
 
   .tocItem a:hover {
-    color: var(--fg);
+    color: var(--muted);
   }
 
   .railLinks {
@@ -148,7 +270,8 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    padding: 0.75rem 0.25rem 0;
+    padding: 0.75rem 0 0;
+    border-top: 1px solid var(--border-2); /* Divider above links */
   }
 
   .railLink {
@@ -159,15 +282,47 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
     align-items: center;
     gap: 0.5rem;
     text-decoration: none;
+    transition: color 0.15s ease;
   }
 
   .railLink:hover {
     color: var(--fg);
   }
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1024px) {
+    .mobileOverlay {
+      display: block;
+      pointer-events: none;
+    }
+    .mobileOverlay.open {
+      pointer-events: auto;
+    }
     .toc {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      max-height: 100vh;
+      width: 300px;
+      max-width: 85vw;
+      z-index: 150;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      background: var(--bg);
+      border-left: 1px solid var(--border-2);
+      padding: 0 1rem 1.5rem;
+    }
+    .toc.open {
+      transform: translateX(0);
+    }
+    .tocMobileHeader {
+      display: flex;
+    }
+    .tocTitle {
       display: none;
+    }
+    .tocList {
+      margin-top: 1rem;
     }
   }
 </style>

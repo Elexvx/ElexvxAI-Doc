@@ -69,9 +69,24 @@ export function buildSidebar(entries: DocEntry[], opts: { lang: Lang; version: s
     groups.set(groupKey, list);
   }
 
+  const zhGroupMap: Record<string, string> = {
+    'getting-started': '快速入门',
+    'guides': '指南',
+    'models': '模型',
+    'api': 'API',
+    'resources': '图书馆',
+    'library': '图书馆',
+  };
+
   const out: SidebarGroup[] = [];
   for (const [key, items] of groups) {
-    const title = key === 'root' ? 'Overview' : key.replace(/-/g, ' ');
+    let title = key === 'root' ? 'Overview' : key.replace(/-/g, ' ');
+
+    if (opts.lang === 'zh') {
+      if (key === 'root') title = '概览';
+      else if (zhGroupMap[key]) title = zhGroupMap[key];
+    }
+
     out.push({ title, items });
   }
 

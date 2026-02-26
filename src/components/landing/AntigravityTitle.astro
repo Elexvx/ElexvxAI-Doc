@@ -168,19 +168,16 @@ const chars = text.split("").map((char) => (char === " " ? "\u00A0" : char));
 
     Composite.add(world, mouseConstraint);
 
-    // CRITICAL: Matter.Mouse attaches a non-passive 'mousewheel' listener that
-    // calls preventDefault(), which prevents the page from scrolling when the
-    // cursor is over this section. Remove it immediately after creation.
+    // CRITICAL: Matter.js attaches non-passive event listeners for scroll and touch
+    // that call e.preventDefault(), which locks the page scrolling when hovering
+    // or touching the physics simulation. We must remove them explicitly.
     wrapper.removeEventListener("mousewheel", (mouse as any).mousewheel);
     wrapper.removeEventListener("DOMMouseScroll", (mouse as any).mousewheel);
-    // Re-add as passive so Matter.js still gets zoom/scale info without blocking scroll
-    wrapper.addEventListener(
-      "wheel",
-      (e) => {
-        // Allow the page to scroll — do NOT call e.preventDefault()
-      },
-      { passive: true },
-    );
+    wrapper.removeEventListener("wheel", (mouse as any).mousewheel);
+
+    wrapper.removeEventListener("touchmove", (mouse as any).mousemove);
+    wrapper.removeEventListener("touchstart", (mouse as any).mousedown);
+    wrapper.removeEventListener("touchend", (mouse as any).mouseup);
 
     // Sync physics to DOM
     Events.on(engine, "afterUpdate", () => {
@@ -225,10 +222,6 @@ const chars = text.split("").map((char) => (char === " " ? "\u00A0" : char));
   .antigravity-wrapper {
     position: relative;
     width: 100%;
-    height: 30vw; /* Responsive height */
-    min-height: 200px;
-    max-height: 500px;
-    overflow: hidden;
     user-select: none;
   }
 
@@ -250,28 +243,21 @@ const chars = text.split("").map((char) => (char === " " ? "\u00A0" : char));
   .text-container {
     position: relative;
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end; /* Align characters to bottom */
     pointer-events: none; /* Elements are moved by physics */
   }
 
   .char-item {
     display: inline-block;
-    font-size: 12.5vw;
-    font-weight: 800;
+    font-size: clamp(56px, 14vw, 220px);
+    font-weight: 900;
     line-height: 0.9;
     letter-spacing: -0.04em;
     color: var(--fg);
     white-space: nowrap;
     will-change: transform;
     /* Initial static layout styles */
-  }
-
-  @media (min-width: 1400px) {
-    .char-item {
-      font-size: 175px;
-    }
   }
 </style>

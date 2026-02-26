@@ -1,9 +1,9 @@
 ---
-import BaseLayout from './BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Toc from '../components/Toc.astro';
-import Footer from '../components/landing/Footer.astro';
-import type { Lang } from '../config/site';
+import BaseLayout from "./BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Toc from "../components/Toc.astro";
+import Footer from "../components/landing/Footer.astro";
+import type { Lang } from "../config/site";
 
 type Heading = { depth: number; slug: string; text: string };
 
@@ -30,21 +30,28 @@ const { lang, title, description, slug, headings, pubDate, tags } = Astro.props;
         <header class="meta">
           <h1 data-pagefind-meta="title">{title}</h1>
           <div class="row">
-            <time datetime={pubDate.toISOString()}>{pubDate.toISOString().slice(0, 10)}</time>
-            {tags?.length ? (
-              <div class="tags">
-                {tags.map((t) => (
-                  <span class="tag">{t}</span>
-                ))}
-              </div>
-            ) : null}
+            <time datetime={pubDate.toISOString()}
+              >{pubDate.toISOString().slice(0, 10)}</time
+            >
+            {
+              tags?.length ? (
+                <div class="tags">
+                  {tags.map((t) => (
+                    <span class="tag">{t}</span>
+                  ))}
+                </div>
+              ) : null
+            }
           </div>
           {description ? <p class="desc">{description}</p> : null}
         </header>
         <slot />
       </article>
     </main>
-    <Toc headings={headings} title={lang === 'zh' ? '本页目录' : 'On this page'} />
+    <Toc
+      headings={headings}
+      title={lang === "zh" ? "本页目录" : "On this page"}
+    />
   </div>
   <Footer />
 </BaseLayout>
@@ -108,7 +115,7 @@ const { lang, title, description, slug, headings, pubDate, tags } = Astro.props;
     white-space: nowrap;
   }
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1024px) {
     .wrap {
       grid-template-columns: 1fr;
     }

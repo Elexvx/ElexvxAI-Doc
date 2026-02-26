@@ -92,11 +92,11 @@ const features = [
     flex-direction: column;
   }
 
-  :global(.dark) .card {
+  /* The hidden gradient background that fades in on hover */
+  :global([data-theme="dark"]) .card {
     background-color: rgba(255, 255, 255, 0.05);
   }
 
-  /* The hidden gradient background that fades in on hover */
   .card-hover-bg {
     position: absolute;
     inset: 0;
@@ -190,7 +190,7 @@ const features = [
     transition: color 0.7s ease;
   }
 
-  :global(.dark) .body-medium {
+  :global([data-theme="dark"]) .body-medium {
     color: rgba(
       255,
       255,

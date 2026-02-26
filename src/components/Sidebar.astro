@@ -129,7 +129,7 @@ function getIconKey(title: string): keyof typeof IconMap {
     display: none;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
     .mobile-nav {
       display: flex;
       flex-direction: column;
@@ -284,7 +284,7 @@ function getIconKey(title: string): keyof typeof IconMap {
     opacity: 0.8;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
     .mobileOverlay {
       display: block;
       pointer-events: none;
@@ -347,7 +347,7 @@ function getIconKey(title: string): keyof typeof IconMap {
     const sidebarLinks = sidebar.querySelectorAll(".item");
     sidebarLinks.forEach((link) => {
       link.addEventListener("click", () => {
-        if (window.innerWidth <= 900) {
+        if (window.innerWidth <= 1024) {
           closeSidebar();
         }
       });

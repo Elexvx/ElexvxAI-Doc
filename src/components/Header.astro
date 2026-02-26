@@ -3,7 +3,7 @@ import { SITE, type Lang } from "../config/site";
 import { t } from "../i18n/ui";
 import { getDocUrl } from "../lib/docs";
 import { getBlogUrl } from "../lib/blog";
-import { Sun, Moon, Rss, Menu } from "@lucide/astro";
+import { Sun, Moon, Rss, Menu, ListTree } from "@lucide/astro";
 
 type Props = {
   lang: Lang;
@@ -78,6 +78,14 @@ const brandHref =
       </a>
 
       <button
+        class="icon-btn toc-btn"
+        id="tocToggle"
+        aria-label="Table of Contents"
+      >
+        <ListTree size={20} stroke-width={1.5} />
+      </button>
+
+      <button
         class="icon-btn menu-btn"
         id="menuToggle"
         aria-label="Toggle menu"
@@ -98,8 +106,6 @@ const brandHref =
     const btn = document.getElementById("themeToggle");
     if (btn && !btn.hasAttribute("data-theme-listener")) {
       btn.setAttribute("data-theme-listener", "true");
-      // Initial state is handled by CSS (sun/moon visibility) or inline script in Head if present
-      // But we can ensure correct aria-label
       btn.addEventListener("click", () => {
         const key = "theme";
         const cur = document.documentElement.dataset.theme || "dark";
@@ -107,6 +113,22 @@ const brandHref =
         document.documentElement.dataset.theme = next;
         localStorage.setItem(key, next);
       });
+    }
+
+    // Toggle context buttons
+    const tocBtn = document.getElementById("tocToggle");
+    const menuBtn = document.getElementById("menuToggle");
+    if (tocBtn) {
+      const hasToc = document.querySelector(".toc");
+      hasToc
+        ? tocBtn.removeAttribute("data-hidden")
+        : tocBtn.setAttribute("data-hidden", "true");
+    }
+    if (menuBtn) {
+      const hasSidebar = document.querySelector(".side");
+      hasSidebar
+        ? menuBtn.removeAttribute("data-hidden")
+        : menuBtn.setAttribute("data-hidden", "true");
     }
   });
 </script>
@@ -132,7 +154,7 @@ const brandHref =
     max-width: 100%;
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: 1025px) {
     .inner {
       padding: 0 2rem;
       display: grid;
@@ -157,7 +179,7 @@ const brandHref =
     display: none;
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: 1025px) {
     .nav {
       display: flex;
       align-items: center;
@@ -210,13 +232,20 @@ const brandHref =
     background-color: var(--panel);
   }
 
-  .menu-btn {
+  .menu-btn,
+  .toc-btn {
     display: flex;
   }
 
-  @media (min-width: 900px) {
-    .menu-btn {
-      display: none;
+  .menu-btn[data-hidden="true"],
+  .toc-btn[data-hidden="true"] {
+    display: none !important;
+  }
+
+  @media (min-width: 1025px) {
+    .menu-btn,
+    .toc-btn {
+      display: none !important;
     }
   }
 

@@ -135,7 +135,14 @@ const zh = getDocUrl({ lang: "zh", version: SITE.defaultVersion });
     font-size: 1rem;
     transition:
       transform 0.2s ease,
-      box-shadow 0.2s ease;
+      box-shadow 0.2s ease,
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  :global([data-theme="dark"]) .btn-primary {
+    background-color: #fff;
+    color: #000;
   }
 
   .btn-primary:hover {
@@ -143,6 +150,10 @@ const zh = getDocUrl({ lang: "zh", version: SITE.defaultVersion });
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     text-decoration: none;
     opacity: 0.9;
+  }
+
+  :global([data-theme="dark"]) .btn-primary:hover {
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
   }
 
   .btn-secondary {
@@ -157,13 +168,25 @@ const zh = getDocUrl({ lang: "zh", version: SITE.defaultVersion });
     text-decoration: none;
     font-weight: 500;
     font-size: 1rem;
-    transition: background-color 0.2s ease;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  :global([data-theme="dark"]) .btn-secondary {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
   }
 
   .btn-secondary:hover {
     background-color: #e8e8ed;
     text-decoration: none;
     color: #1d1d1f;
+  }
+
+  :global([data-theme="dark"]) .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
   }
 
   @media (max-width: 768px) {
