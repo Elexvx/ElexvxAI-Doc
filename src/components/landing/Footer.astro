@@ -18,7 +18,15 @@ const navGroups = [
   },
   {
     title: "关于",
-    links: ["研究成果", "项目合作", "联系我们"],
+    links: [
+      "研究成果",
+      "项目合作",
+      "联系我们",
+      "关于我们",
+      "加入我们",
+      "隐私政策",
+      "服务条款",
+    ],
   },
 ];
 ---
@@ -61,14 +69,7 @@ const navGroups = [
 
     <div class="footer-bottom">
       <div class="footer-brand">
-        <FlaskConical size={20} stroke-width={2} class="brand-icon" />
-        <span class="brand-text">ElexvxAI Lab</span>
-      </div>
-      <div class="footer-meta-links">
-        <a href="#">关于我们</a>
-        <a href="#">加入我们</a>
-        <a href="#">隐私政策</a>
-        <a href="#">服务条款</a>
+        <span class="brand-text">Copyright © 2024 ElexvxAI Lab</span>
       </div>
     </div>
   </div>
@@ -99,7 +100,7 @@ const navGroups = [
         if (mobile) {
           const open = group.getAttribute("data-open") === "true";
           trigger.setAttribute("aria-expanded", String(open));
-          panel.hidden = !open;
+          panel.hidden = false; // Let CSS handle visibility
         } else {
           trigger.setAttribute("aria-expanded", "true");
           panel.hidden = false;
@@ -119,8 +120,18 @@ const navGroups = [
         if (!trigger) return;
         trigger.addEventListener("click", () => {
           if (!isMobile()) return;
-          const open = group.getAttribute("data-open") === "true";
-          group.setAttribute("data-open", open ? "false" : "true");
+          const isOpen = group.getAttribute("data-open") === "true";
+          
+          // Close other groups to enforce accordion behavior
+          if (!isOpen) {
+            groups.forEach((g) => {
+              if (g !== group) {
+                g.setAttribute("data-open", "false");
+              }
+            });
+          }
+
+          group.setAttribute("data-open", isOpen ? "false" : "true");
           sync();
         });
       });

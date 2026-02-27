@@ -221,6 +221,10 @@
     gap: 0.1rem;
   }
 
+  .footer-group[data-open="false"] .footer-group-links {
+    display: none;
+  }
+
   .footer-group-links li {
     margin: 0;
   }
