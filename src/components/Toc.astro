@@ -1,5 +1,6 @@
 ---
 import { Github, MessageSquare, X } from "@lucide/astro";
+import IconButton from "./ui/IconButton.astro";
 
 type Heading = { depth: number; slug: string; text: string };
 
@@ -16,9 +17,9 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 <aside class="doc-toc" id="tocSidebar">
   <div class="doc-drawer-header">
     <span class="mobileTitle">{title}</span>
-    <button class="closeBtn" id="tocClose" aria-label="Close table of contents">
+    <IconButton id="tocClose" aria-label="Close table of contents" size="sm">
       <X size={20} stroke-width={1.5} />
-    </button>
+    </IconButton>
   </div>
   <div class="tocTitle">{title}</div>
   <ul class="doc-toc-list" id="toc-list">
@@ -150,7 +151,7 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
     color: var(--fg);
   }
 
-  .closeBtn {
+  .doc-drawer-header :global(.ui-ibtn) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -163,7 +164,7 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
     border-radius: 10px;
   }
 
-  .closeBtn:hover {
+  .doc-drawer-header :global(.ui-ibtn:hover) {
     color: var(--fg);
     background: var(--panel-2);
   }

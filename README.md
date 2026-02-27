@@ -1,43 +1,38 @@
-# Astro Starter Kit: Minimal
+# ElexvxAI Docs
 
-```sh
-npm create astro@latest -- --template minimal
+## Source Of Truth
+
+- Docs content source: `src/content/docs/**`
+- Blog content source: `src/content/blog/**`
+
+## Legacy Content
+
+- Old root `docs/` has been moved to `legacy/docs/`.
+- `legacy/docs/` is archival only and is not used by build/runtime.
+
+## UI Conventions
+
+- Page/component code should not use raw `<button class="...">` outside UI primitives.
+- Reuse `src/components/ui/Button.astro` and `src/components/ui/IconButton.astro`.
+- Validate with:
+
+```bash
+npm run lint:ui-buttons
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## React Islands Conventions
 
-## 🚀 Project Structure
+- React components must live under `src/components/ui-react/**`.
+- Default hydration strategy: `client:visible`.
+- Do not import React islands in global/docs layout layers.
+- Use `src/pages/ui.astro` as the showcase entry for interactive demos.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Commands
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Command | Action |
+| :-- | :-- |
+| `npm install` | Install dependencies |
+| `npm run dev` | Run local dev server |
+| `npm run build` | Build production artifacts |
+| `npm run preview` | Preview production build |
+| `npm run lint:ui-buttons` | Enforce UI button and islands conventions |

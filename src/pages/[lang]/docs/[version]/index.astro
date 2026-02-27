@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { parseDocId } from "../../../../lib/docs";
+import RedirectPage from "../../../../components/RedirectPage.astro";
 
 export async function getStaticPaths() {
   const entries = await getCollection("docs");
@@ -19,13 +20,4 @@ export async function getStaticPaths() {
 const { lang, version } = Astro.params;
 const target = `/${lang}/${version}/`;
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="refresh" content={`0;url=${target}`} />
-    <link rel="canonical" href={target} />
-  </head>
-  <body>
-    <a href={target}>Moved to {target}</a>
-  </body>
-</html>
+<RedirectPage target={target} lang={lang} />

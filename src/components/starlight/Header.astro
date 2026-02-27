@@ -1,116 +1,24 @@
 ---
-import config from "virtual:starlight/user-config";
-import LanguageSelect from "virtual:starlight/components/LanguageSelect";
-import Search from "virtual:starlight/components/Search";
-import ThemeSelect from "virtual:starlight/components/ThemeSelect";
-
-const shouldRenderSearch =
-  config.pagefind || config.components.Search !== "@astrojs/starlight/components/Search.astro";
+import Header from "../Header.astro";
 
 const route = Astro.locals.starlightRoute;
-const locale = route?.locale ?? "zh";
+const locale = route?.locale === "en" ? "en" : "zh";
 const entryId = route?.entry?.id ?? "";
+const segments = entryId.split("/").filter(Boolean);
 
 const version =
-  entryId
-    .split("/")
-    .find((segment) => /^v\d+$/i.test(segment))
-    ?.toLowerCase() ?? "v2";
-
-const navText =
-  locale === "zh"
-    ? { home: "首页", docs: "文档", blog: "博客" }
-    : { home: "Home", docs: "Docs", blog: "Blog" };
-
-const docsHref = `/${locale}/${version}/`;
-const blogHref = `/${locale}/blog/`;
+  segments.find((segment) => /^v\d+$/i.test(segment))?.toLowerCase() ?? "v2";
+const versionIndex = segments.findIndex((segment) => /^v\d+$/i.test(segment));
+const rest = versionIndex >= 0 ? segments.slice(versionIndex + 1) : [];
+const normalizedRest =
+  rest.length > 0 && rest[rest.length - 1] === "index" ? rest.slice(0, -1) : rest;
+const slug = normalizedRest.join("/");
 ---
 
-<div class="header">
-  <a class="brand" href="/">
-    <img src="/logo/favicon.svg" alt="ElexvxAI Logo" class="brand-logo" />
-  </a>
-
-  <nav class="top-nav" aria-label="Main navigation">
-    <a href="/">{navText.home}</a>
-    <a href={docsHref}>{navText.docs}</a>
-    <a href={blogHref}>{navText.blog}</a>
-  </nav>
-
-  <div class="actions sl-flex print:hidden">
-    {shouldRenderSearch && <Search />}
-    <div class="prefs sl-hidden md:sl-flex">
-      <ThemeSelect />
-      <LanguageSelect />
-    </div>
-  </div>
-</div>
-
-<style>
-  @layer starlight.core {
-    .header {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 1rem;
-      height: 100%;
-      min-width: 0;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      text-decoration: none;
-      flex: 0 0 auto;
-    }
-
-    .brand-logo {
-      width: auto;
-      height: 1.7rem;
-      display: block;
-    }
-
-    .top-nav {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 1.4rem;
-      min-width: 0;
-    }
-
-    .top-nav a {
-      color: var(--sl-color-gray-2);
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
-      border-radius: var(--radius-sm);
-      padding: 0.3rem 0.62rem;
-      transition:
-        color 0.2s ease,
-        background-color 0.2s ease;
-    }
-
-    .top-nav a:hover {
-      color: var(--sl-color-text);
-      background: var(--sl-color-bg-sidebar);
-    }
-
-    .actions {
-      align-items: center;
-      justify-self: end;
-      gap: 0.75rem;
-      min-width: 0;
-    }
-
-    .prefs {
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    @media (min-width: 64rem) {
-      .top-nav {
-        display: flex;
-      }
-    }
-  }
-</style>
+<Header
+  lang={locale}
+  version={version}
+  slug={slug || undefined}
+  as="div"
+  sticky={false}
+/>

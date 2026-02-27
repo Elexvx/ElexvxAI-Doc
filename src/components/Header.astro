@@ -5,16 +5,27 @@ import { getDocUrl } from "../lib/docs";
 import { getBlogUrl } from "../lib/blog";
 import { Sun, Moon, Rss, Menu, ListTree, PanelLeft, X } from "@lucide/astro";
 import IconButton from "./ui/IconButton.astro";
+import Button from "./ui/Button.astro";
 
 type Props = {
   lang: Lang;
   version?: string;
   slug?: string;
   kind?: "docs" | "blog" | "search";
+  as?: "header" | "div";
+  sticky?: boolean;
 };
 
-const { lang, version, slug, kind = "docs" } = Astro.props;
+const {
+  lang,
+  version,
+  slug,
+  kind = "docs",
+  as = "header",
+  sticky = true,
+} = Astro.props;
 const otherLang = lang === "zh" ? "en" : "zh";
+const RootTag = as;
 
 const docsVersion = version ?? SITE.defaultVersion;
 
@@ -45,7 +56,11 @@ const tocLabel = lang === "zh" ? "目录" : "Table of Contents";
 const sidebarLabel = lang === "zh" ? "文档导航" : "Sidebar";
 ---
 
-<header class="hdr" transition:persist="header">
+<RootTag
+  class="hdr"
+  data-sticky={sticky ? "true" : "false"}
+  transition:persist="header"
+>
   <div class="inner container">
     <!-- Logo -->
     <a class="logo" href="/">
@@ -74,9 +89,15 @@ const sidebarLabel = lang === "zh" ? "文档导航" : "Sidebar";
         <Moon class="moon" size={20} stroke-width={1.5} />
       </IconButton>
 
-      <a class="ui-icon-btn ui-icon-btn--md rss-btn" href="/sitemap-index.xml" aria-label="Sitemap">
+      <IconButton
+        as="a"
+        href="/sitemap-index.xml"
+        size="md"
+        class="rss-btn"
+        aria-label="Sitemap"
+      >
         <Rss size={20} stroke-width={1.5} />
-      </a>
+      </IconButton>
 
       <IconButton
         class="sidebar-btn"
@@ -140,17 +161,18 @@ const sidebarLabel = lang === "zh" ? "文档导航" : "Sidebar";
         {t(lang, "blog")}
       </a>
       <a class="drawer-link" data-drawer-link href="/sitemap-index.xml">Sitemap</a>
-      <button
-        class="drawer-link drawer-theme"
-        type="button"
+      <Button
         id="drawerThemeToggle"
+        variant="ghost"
+        size="md"
         data-drawer-link
+        class="drawer-theme-btn"
       >
         {t(lang, "theme")}
-      </button>
+      </Button>
     </nav>
   </aside>
-</header>
+</RootTag>
 
 <script>
   function initHeader() {
@@ -276,13 +298,20 @@ const sidebarLabel = lang === "zh" ? "文档导航" : "Sidebar";
 
 <style>
   .hdr {
-    position: sticky;
-    top: 0;
     z-index: 100;
     height: var(--header-h);
     background: color-mix(in srgb, var(--bg), transparent 20%);
     border-bottom: 1px solid var(--border);
     backdrop-filter: blur(12px);
+  }
+
+  .hdr[data-sticky="true"] {
+    position: sticky;
+    top: 0;
+  }
+
+  .hdr[data-sticky="false"] {
+    position: relative;
   }
 
   .inner {
@@ -486,6 +515,24 @@ const sidebarLabel = lang === "zh" ? "文档导航" : "Sidebar";
   }
 
   .drawer-link:hover {
+    background: var(--panel);
+    color: var(--fg);
+  }
+
+  .drawer-nav :global(.drawer-theme-btn) {
+    width: 100%;
+    min-height: 44px;
+    border-radius: 0.625rem;
+    justify-content: flex-start;
+    padding-inline: 0.9rem;
+    border: none;
+    background: transparent;
+    color: var(--fg);
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .drawer-nav :global(.drawer-theme-btn:hover) {
     background: var(--panel);
     color: var(--fg);
   }

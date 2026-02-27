@@ -12,6 +12,7 @@ import {
 } from "../../../lib/blog";
 import { ArrowRight } from "@lucide/astro";
 import Footer from "../../../components/landing/Footer.astro";
+import Button from "../../../components/ui/Button.astro";
 
 export function getStaticPaths() {
   return SITE.langs.map((lang) => ({ params: { lang } }));
@@ -90,11 +91,24 @@ const formatDate = (date: Date) => {
 
     <div class="filter-section">
       <div class="filter-tabs" id="blog-filters">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="Product">Product</button>
-        <button class="filter-btn" data-filter="Engineering">Engineering</button
+        <Button variant="link" size="sm" data-filter-btn data-active="true" data-filter="all">
+          All
+        </Button>
+        <Button variant="link" size="sm" data-filter-btn data-active="false" data-filter="Product">
+          Product
+        </Button>
+        <Button
+          variant="link"
+          size="sm"
+          data-filter-btn
+          data-active="false"
+          data-filter="Engineering"
         >
-        <button class="filter-btn" data-filter="Research">Research</button>
+          Engineering
+        </Button>
+        <Button variant="link" size="sm" data-filter-btn data-active="false" data-filter="Research">
+          Research
+        </Button>
       </div>
     </div>
 
@@ -134,7 +148,7 @@ const formatDate = (date: Date) => {
 
 <script>
   function initBlogFilters() {
-    const filters = document.querySelectorAll(".filter-btn");
+    const filters = document.querySelectorAll("[data-filter-btn]");
     const cards = document.querySelectorAll(".blog-card-item");
 
     filters.forEach((btn) => {
@@ -143,8 +157,8 @@ const formatDate = (date: Date) => {
 
       btn.addEventListener("click", () => {
         // Update active state
-        filters.forEach((f) => f.classList.remove("active"));
-        btn.classList.add("active");
+        filters.forEach((f) => f.setAttribute("data-active", "false"));
+        btn.setAttribute("data-active", "true");
 
         const filterValue = btn.getAttribute("data-filter");
 
@@ -291,7 +305,7 @@ const formatDate = (date: Date) => {
     gap: 2rem;
   }
 
-  .filter-btn {
+  [data-filter-btn] {
     background: transparent;
     border: none;
     padding: 0;
@@ -303,15 +317,15 @@ const formatDate = (date: Date) => {
     transition: color 0.2s;
   }
 
-  .filter-btn:hover {
+  [data-filter-btn]:hover {
     color: var(--fg);
   }
 
-  .filter-btn.active {
+  [data-filter-btn][data-active="true"] {
     color: var(--fg);
   }
 
-  .filter-btn.active::after {
+  [data-filter-btn][data-active="true"]::after {
     content: "";
     position: absolute;
     bottom: calc((clamp(14px, 2vw, 20px) * -1) - 1px);
@@ -422,7 +436,7 @@ const formatDate = (date: Date) => {
       padding-bottom: 4px; /* for scrollbar */
     }
 
-    .filter-btn {
+    [data-filter-btn] {
       scroll-snap-align: start;
       white-space: nowrap;
     }

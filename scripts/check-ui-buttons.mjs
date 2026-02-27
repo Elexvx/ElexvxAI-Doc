@@ -25,6 +25,14 @@ const files = collectFiles(join(root, "src"));
 
 const bannedClassPatterns = [/(?<![\w-])icon-btn(?![\w-])/, /(?<![\w-])copy-page-btn(?![\w-])/];
 const failures = [];
+const nonUiButtonClassPattern = /<button\b[^>]*\bclass(?:Name)?\s*=/;
+const buttonClassNameAssignmentPattern = /\b(?:btn|button)\.className\s*=/;
+
+const isUiFile = (file) =>
+  file.includes(`${join("src", "components", "ui")}${"/"}`) ||
+  file.includes(`${join("src", "components", "ui-react")}${"/"}`);
+
+const isTsxFile = (file) => file.endsWith(".tsx");
 
 for (const file of files) {
   const source = readFileSync(file, "utf8");
@@ -32,6 +40,24 @@ for (const file of files) {
     if (pattern.test(source)) {
       failures.push(`${file}: contains banned class pattern "${pattern.source}"`);
     }
+  }
+
+  if (!isUiFile(file) && nonUiButtonClassPattern.test(source)) {
+    failures.push(
+      `${file}: contains disallowed "<button class=...>" outside src/components/ui and src/components/ui-react`,
+    );
+  }
+
+  if (!isUiFile(file) && buttonClassNameAssignmentPattern.test(source)) {
+    failures.push(
+      `${file}: contains disallowed "btn.className =" assignment outside src/components/ui and src/components/ui-react`,
+    );
+  }
+
+  if (isTsxFile(file) && !file.includes(`${join("src", "components", "ui-react")}${"/"}`)) {
+    failures.push(
+      `${file}: React TSX files must live under src/components/ui-react`,
+    );
   }
 }
 

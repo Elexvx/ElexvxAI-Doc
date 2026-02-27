@@ -4,14 +4,20 @@ import type { HTMLAttributes } from "astro/types";
 type ButtonVariant = "default" | "secondary" | "ghost" | "destructive" | "link";
 type ButtonSize = "sm" | "md" | "lg" | "icon";
 
-type Props = HTMLAttributes<"button"> & {
+type Props = (HTMLAttributes<"button"> | HTMLAttributes<"a">) & {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  as?: "button" | "a";
+  href?: string;
+  disabled?: boolean;
 };
 
 const {
   variant = "default",
   size = "md",
+  as = "button",
+  href,
+  disabled = false,
   class: className,
   type = "button",
   ...rest
@@ -31,15 +37,44 @@ const sizeClasses: Record<ButtonSize, string> = {
   lg: "ui-btn--lg",
   icon: "ui-btn--icon",
 };
+
+const isLink = as === "a" || typeof href === "string";
 ---
 
-<button
-  type={type}
-  class:list={["ui-btn", variantClasses[variant], sizeClasses[size], className]}
-  {...rest}
->
-  <slot />
-</button>
+{
+  isLink ? (
+    <a
+      href={href}
+      class:list={[
+        "ui-btn",
+        variantClasses[variant],
+        sizeClasses[size],
+        disabled && "ui-btn--disabled",
+        className,
+      ]}
+      aria-disabled={disabled ? "true" : undefined}
+      tabindex={disabled ? -1 : undefined}
+      {...rest}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button
+      type={type}
+      disabled={disabled}
+      class:list={[
+        "ui-btn",
+        variantClasses[variant],
+        sizeClasses[size],
+        disabled && "ui-btn--disabled",
+        className,
+      ]}
+      {...rest}
+    >
+      <slot />
+    </button>
+  )
+}
 
 <style>
   .ui-btn {
@@ -58,6 +93,7 @@ const sizeClasses: Record<ButtonSize, string> = {
       border-color 0.2s ease,
       opacity 0.2s ease;
     cursor: pointer;
+    text-decoration: none;
   }
 
   .ui-btn:focus-visible {
@@ -65,7 +101,8 @@ const sizeClasses: Record<ButtonSize, string> = {
     box-shadow: var(--ring);
   }
 
-  .ui-btn:disabled {
+  .ui-btn:disabled,
+  .ui-btn--disabled {
     opacity: 0.5;
     pointer-events: none;
   }
@@ -79,6 +116,10 @@ const sizeClasses: Record<ButtonSize, string> = {
     opacity: 0.9;
   }
 
+  .ui-btn--default:active {
+    opacity: 0.85;
+  }
+
   .ui-btn--secondary {
     background: var(--panel);
     color: var(--fg);
@@ -87,6 +128,10 @@ const sizeClasses: Record<ButtonSize, string> = {
 
   .ui-btn--secondary:hover {
     background: var(--panel-2);
+  }
+
+  .ui-btn--secondary:active {
+    background: color-mix(in srgb, var(--panel-2), #000 6%);
   }
 
   .ui-btn--ghost {
@@ -99,6 +144,10 @@ const sizeClasses: Record<ButtonSize, string> = {
     background: var(--panel);
   }
 
+  .ui-btn--ghost:active {
+    background: var(--panel-2);
+  }
+
   .ui-btn--destructive {
     background: var(--danger);
     color: #fff;
@@ -106,6 +155,10 @@ const sizeClasses: Record<ButtonSize, string> = {
 
   .ui-btn--destructive:hover {
     opacity: 0.9;
+  }
+
+  .ui-btn--destructive:active {
+    opacity: 0.85;
   }
 
   .ui-btn--link {
@@ -117,6 +170,10 @@ const sizeClasses: Record<ButtonSize, string> = {
     text-decoration: underline;
     text-underline-offset: 4px;
     border-radius: 0;
+  }
+
+  .ui-btn--link:hover {
+    color: color-mix(in srgb, var(--accent), var(--fg) 16%);
   }
 
   .ui-btn--sm {

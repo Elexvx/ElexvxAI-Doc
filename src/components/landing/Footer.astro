@@ -1,5 +1,6 @@
 ---
 import { FlaskConical, ChevronDown } from "@lucide/astro";
+import Button from "../ui/Button.astro";
 import "../../styles/footer.css";
 
 const navGroups = [
@@ -32,16 +33,17 @@ const navGroups = [
       <div class="footer-nav" id="footerAccordion">
         {navGroups.map((group, index) => (
           <section class="footer-group" data-footer-group data-open="false">
-            <button
+            <Button
               class="footer-group-trigger"
-              type="button"
+              variant="ghost"
+              size="sm"
               data-footer-trigger
               aria-expanded="false"
               aria-controls={`footer-links-${index}`}
             >
               <span>{group.title}</span>
               <ChevronDown class="footer-chevron" size={16} stroke-width={1.8} />
-            </button>
+            </Button>
 
             <ul class="footer-group-links" id={`footer-links-${index}`} data-footer-panel>
               {group.links.map((label) => (

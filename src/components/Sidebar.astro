@@ -5,6 +5,7 @@ import { SITE, type Lang } from "../config/site";
 import { t } from "../i18n/ui";
 import { getBlogUrl } from "../lib/blog";
 import { X } from "@lucide/astro";
+import IconButton from "./ui/IconButton.astro";
 
 type Props = {
   groups: SidebarGroup[];
@@ -19,9 +20,9 @@ const { groups, currentPath, lang } = Astro.props;
 <aside class="doc-sidebar" id="sidebar" transition:persist="sidebar">
   <div class="doc-drawer-header">
     <span class="mobileTitle">Menu</span>
-    <button class="closeBtn" id="sidebarClose" aria-label="Close menu">
+    <IconButton id="sidebarClose" aria-label="Close menu" size="sm">
       <X size={20} stroke-width={1.5} />
-    </button>
+    </IconButton>
   </div>
 
   <nav class="mobile-nav">
@@ -99,7 +100,7 @@ const { groups, currentPath, lang } = Astro.props;
     color: var(--fg);
   }
 
-  .closeBtn {
+  .doc-drawer-header :global(.ui-ibtn) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -112,7 +113,7 @@ const { groups, currentPath, lang } = Astro.props;
     border-radius: 10px;
   }
 
-  .closeBtn:hover {
+  .doc-drawer-header :global(.ui-ibtn:hover) {
     color: var(--fg);
     background: var(--panel-2);
   }

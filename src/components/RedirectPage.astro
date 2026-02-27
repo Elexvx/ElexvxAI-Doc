@@ -1,0 +1,23 @@
+---
+type Props = {
+  target: string;
+  lang?: string;
+};
+
+const { target, lang = "en" } = Astro.props;
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={target} />
+    <script is:inline define:vars={{ target }}>
+      window.location.replace(target);
+    </script>
+  </head>
+  <body data-pagefind-ignore="all">
+    <a href={target}>Moved to {target}</a>
+  </body>
+</html>

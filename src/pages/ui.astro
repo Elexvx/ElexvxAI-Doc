@@ -7,9 +7,24 @@ import DialogDemo from "../components/ui-react/DialogDemo";
 <BaseLayout lang="zh" title="UI Islands Demo">
   <Header lang="zh" version="v2" kind="search" />
   <main class="ui-wrap">
-    <h1>UI React Islands Demo</h1>
-    <p>Dialog demo is loaded on visibility only.</p>
-    <DialogDemo client:visible />
+    <h1>UI Islands Showcase</h1>
+    <p>所有 React 交互组件集中放在这里按需加载，默认使用 <code>client:visible</code>。</p>
+
+    <section class="ui-section">
+      <h2>Live Demo</h2>
+      <DialogDemo client:visible />
+    </section>
+
+    <section class="ui-section">
+      <h2>Roadmap</h2>
+      <ul>
+        <li>Dialog</li>
+        <li>DropdownMenu</li>
+        <li>Tabs</li>
+        <li>Toast</li>
+        <li>Command</li>
+      </ul>
+    </section>
   </main>
 </BaseLayout>
 
@@ -26,6 +41,26 @@ import DialogDemo from "../components/ui-react/DialogDemo";
 
   .ui-wrap p {
     margin: 0 0 1.25rem;
+    color: var(--muted);
+  }
+
+  .ui-wrap code {
+    font-family: var(--mono);
+    font-size: 0.9em;
+  }
+
+  .ui-section + .ui-section {
+    margin-top: 2rem;
+  }
+
+  .ui-section h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.15rem;
+  }
+
+  .ui-section ul {
+    margin: 0;
+    padding-left: 1rem;
     color: var(--muted);
   }
 </style>
