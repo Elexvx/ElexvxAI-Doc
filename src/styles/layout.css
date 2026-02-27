@@ -26,7 +26,7 @@
 
 .doc-main {
   min-height: calc(100vh - var(--header-h));
-  padding: 0 clamp(1rem, 2.5vw, 2rem);
+  padding: 0;
   overflow-wrap: anywhere;
 }
 
@@ -97,7 +97,7 @@
   }
 
   .doc-main {
-    padding: 0 clamp(0.9rem, 2.8vw, 1.5rem);
+    padding: 0;
   }
 
   .doc-toc {
@@ -131,7 +131,7 @@
   }
 
   .doc-main {
-    padding: 0 12px 1.75rem;
+    padding: 0;
   }
 
   .doc-sidebar {

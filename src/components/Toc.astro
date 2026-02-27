@@ -14,6 +14,7 @@ const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 const isZh = /[\u4e00-\u9fff]/.test(title);
 const resourceGroupTitle = isZh ? "示例 / 资源" : "Examples / Resources";
 const dropdownItems = items.filter((h) => h.depth === 2);
+const hasPicker = dropdownItems.length > 1;
 
 function isResourceHeading(text: string): boolean {
   const value = text.trim();
@@ -40,25 +41,28 @@ for (const heading of items) {
       <X size={20} stroke-width={1.5} />
     </IconButton>
   </div>
-  <details class="tocPicker" id="tocPicker">
-    <summary>
-      <span class="pickerLabel">{title}</span>
-      <span class="pickerValue" id="tocPickerValue">{title}</span>
-    </summary>
-    <div class="tocPickerPanel">
-      {
-        dropdownItems.map((h) => (
-          <button class="tocPickBtn" type="button" data-toc-target={h.slug}>
-            {h.text}
-          </button>
-        ))
-      }
-    </div>
-  </details>
+  {
+    hasPicker ? (
+      <details class="tocPicker" id="tocPicker">
+        <summary>
+          <span class="pickerLabel">{title}</span>
+          <span class="pickerValue" id="tocPickerValue">{title}</span>
+        </summary>
+        <div class="tocPickerPanel">
+          {
+            dropdownItems.map((h) => (
+              <button class="tocPickBtn" type="button" data-toc-target={h.slug}>
+                {h.text}
+              </button>
+            ))
+          }
+        </div>
+      </details>
+    ) : null
+  }
 
   <div class="tocScroll" id="toc-list">
     <section class="tocGroup">
-      <div class="tocGroupTitle">{title}</div>
       <ul class="doc-toc-list">
         {
           primaryItems.map((h) => (
@@ -266,6 +270,7 @@ for (const heading of items) {
   }
 
   .tocPicker {
+    display: none;
     margin: 0 0 0.75rem;
     border: 1px solid var(--divider);
     border-radius: 10px;
@@ -429,6 +434,10 @@ for (const heading of items) {
   }
 
   @media (max-width: 1024px) {
+    .tocPicker {
+      display: block;
+    }
+
     .tocScroll {
       max-height: calc(100vh - 240px);
     }
