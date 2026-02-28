@@ -28,6 +28,7 @@
   min-height: calc(100vh - var(--header-h));
   padding: 0;
   overflow-wrap: anywhere;
+  background: var(--content-bg);
 }
 
 .article {
@@ -43,7 +44,7 @@
   border-left: 1px solid var(--divider);
   display: flex;
   flex-direction: column;
-  background: var(--rail-bg);
+  background: var(--content-bg);
 }
 
 /* Content overflow handling */

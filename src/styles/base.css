@@ -28,9 +28,10 @@ body {
   margin: 0;
   min-height: 100vh;
   background: var(--app-bg);
-  color: var(--text);
-  font-size: 15.5px;
-  line-height: 1.7;
+  color: var(--type-color-body);
+  font-size: var(--type-size-body);
+  line-height: var(--type-lh-body);
+  font-weight: var(--type-weight-regular);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -41,9 +42,10 @@ h3,
 h4,
 h5,
 h6 {
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  font-weight: 600;
+  color: var(--type-color-title);
+  line-height: var(--type-lh-heading);
+  letter-spacing: var(--type-tracking-heading);
+  font-weight: var(--type-weight-semibold);
 }
 
 input,

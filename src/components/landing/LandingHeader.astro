@@ -148,7 +148,7 @@ const apiReferenceDescription =
       apiToggle.setAttribute("data-api-nav-listener", "true");
       const apiNav = apiToggle.closest(".api-nav");
       const isDesktop = () => window.matchMedia("(min-width: 1025px)").matches;
-      const setApiOpen = (open) => {
+      const setApiOpen = (open: boolean) => {
         apiMenu.setAttribute("data-open", open ? "true" : "false");
         apiToggle.setAttribute("aria-expanded", open ? "true" : "false");
       };
@@ -182,8 +182,8 @@ const apiReferenceDescription =
           const currentMenu = document.getElementById("landingApiNavMenu");
           if (!currentToggle || !currentMenu) return;
           if (
-            currentToggle.contains(event.target) ||
-            currentMenu.contains(event.target)
+            currentToggle.contains(event.target as Node) ||
+            currentMenu.contains(event.target as Node)
           ) {
             return;
           }
@@ -210,7 +210,7 @@ const apiReferenceDescription =
     const closeBtn = document.getElementById("landingMobileDrawerClose");
     if (!menuBtn || !overlay || !drawer || !closeBtn) return;
 
-    const setDrawerOpen = (open) => {
+    const setDrawerOpen = (open: boolean) => {
       overlay.setAttribute("data-open", open ? "true" : "false");
       drawer.setAttribute("data-open", open ? "true" : "false");
       drawer.setAttribute("aria-hidden", open ? "false" : "true");
@@ -365,7 +365,7 @@ const apiReferenceDescription =
     width: min(380px, 60vw);
     border-radius: 0.75rem;
     border: 1px solid var(--border);
-    background: color-mix(in srgb, var(--bg), #16181d 10%);
+    background: var(--panel);
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
     padding: 0.45rem;
     opacity: 0;
@@ -393,7 +393,7 @@ const apiReferenceDescription =
   }
 
   .api-menu-item:hover {
-    background: color-mix(in srgb, var(--panel), transparent 10%);
+    background: color-mix(in srgb, var(--fg), transparent 94%);
   }
 
   .api-menu-title {

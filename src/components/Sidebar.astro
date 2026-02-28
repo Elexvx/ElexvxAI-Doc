@@ -100,6 +100,13 @@ const currentSlug =
     font-weight: 600;
     font-size: 0.95rem;
     color: var(--text);
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .mobileTitle {
+      display: block;
+    }
   }
 
   .sidebarTop {
@@ -107,8 +114,8 @@ const currentSlug =
     top: 0;
     z-index: 10;
     background: var(--sidebar-bg);
-    border-bottom: 1px solid var(--divider);
-    padding: 0.8rem 0.85rem 0.75rem;
+    border-bottom: 1px solid transparent;
+    padding: 1.2rem 1.2rem 0.5rem;
   }
 
   .sidebarTop :global(.searchWrap) {
@@ -117,35 +124,42 @@ const currentSlug =
   }
 
   .versionWrap {
-    padding: 0 0.35rem;
+    padding: 0;
     display: grid;
     gap: 0.35rem;
+    margin-bottom: 0.5rem;
   }
 
   .versionLabel {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.2;
     color: var(--muted);
     letter-spacing: 0.05em;
     text-transform: uppercase;
     font-weight: 600;
+    margin-bottom: 0.2rem;
   }
 
   .versionSelect {
     width: 100%;
     border: 1px solid var(--divider);
-    border-radius: 10px;
+    border-radius: 6px;
     background: var(--content-bg);
     color: var(--text);
-    min-height: 36px;
+    min-height: 32px;
     padding: 0 0.55rem;
-    font-size: 0.92rem;
+    font-size: 0.85rem;
+    transition: border-color 0.15s ease;
+  }
+  
+  .versionSelect:hover {
+    border-color: var(--muted-2);
   }
 
   .sidebarNav {
     overflow: auto;
     height: calc(100vh - var(--header-h) - var(--sidebar-top-h, 188px));
-    padding: 0.75rem 0.8rem 1.4rem;
+    padding: 0.5rem 1.2rem 2rem;
   }
 
   .doc-drawer-header :global(.ui-ibtn) {
@@ -158,7 +172,7 @@ const currentSlug =
     background: transparent;
     color: var(--muted);
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 6px;
   }
 
   .doc-drawer-header :global(.ui-ibtn:hover) {
@@ -171,20 +185,22 @@ const currentSlug =
   }
 
   .group {
-    margin: 0 0 0.12rem;
-    border-radius: 10px;
+    margin: 0 0 1.2rem;
+    border-radius: 0;
   }
 
   .groupTitle {
     list-style: none;
-    font-size: 12px;
-    font-weight: 620;
-    color: var(--muted);
-    padding: 0.52rem 0.65rem 0.45rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text);
+    padding: 0.2rem 0 0.5rem;
+    text-transform: capitalize;
     cursor: pointer;
     user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   details > summary::-webkit-details-marker {
@@ -193,59 +209,55 @@ const currentSlug =
 
   details > summary::after {
     content: "";
-    float: right;
-    width: 7px;
-    height: 7px;
-    margin-top: 4px;
-    margin-right: 0.35rem;
-    border-right: 1.3px solid var(--muted-2);
-    border-bottom: 1.3px solid var(--muted-2);
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid var(--muted);
+    border-bottom: 1.5px solid var(--muted);
     transform: rotate(-45deg);
-    opacity: 0.85;
-    transition:
-      transform 0.16s ease,
-      opacity 0.16s ease;
+    transition: transform 0.2s ease;
+    margin-right: 2px;
   }
 
   details[open] > summary::after {
     transform: rotate(45deg);
-    opacity: 0.9;
   }
 
   .list {
     list-style: none;
     padding: 0;
-    margin: 0.05rem 0 0.72rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
   }
 
   .item {
-    display: flex;
-    align-items: center;
-    min-height: 34px;
-    padding: 0.4rem 0.7rem;
-    border-radius: 10px;
-    color: color-mix(in srgb, var(--text), transparent 12%);
-    transition: background-color 0.16s ease;
-    font-size: 0.95rem;
-    font-weight: 500;
-    margin-bottom: 0.08rem;
+    display: block;
+    padding: 0.35rem 0.5rem;
+    border-radius: 6px;
+    color: var(--muted);
+    transition: all 0.15s ease;
+    font-size: 0.9rem;
+    font-weight: 400;
     text-decoration: none;
+    line-height: 1.4;
+    margin-left: -0.5rem;
   }
 
   .item:hover {
     color: var(--text);
-    background: color-mix(in srgb, var(--content-bg), var(--sidebar-bg) 65%);
+    background: transparent;
     text-decoration: none;
   }
 
   .active {
-    background: color-mix(in srgb, var(--content-bg), var(--sidebar-bg) 26%);
+    background: transparent;
     color: var(--text);
-    font-weight: 560;
+    font-weight: 600;
   }
-
+  
   .active:hover {
-    background: color-mix(in srgb, var(--content-bg), var(--sidebar-bg) 18%);
+    background: transparent;
   }
 
   @media (max-width: 900px) {
