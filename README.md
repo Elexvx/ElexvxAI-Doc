@@ -1,33 +1,45 @@
-# ElexvxAI Docs
+# my-app
 
-## Source Of Truth
+This is a Next.js application generated with
+[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
 
-- Docs content source: `src/content/docs/**`
-- Blog content source: `blog/**`
-
-## UI Conventions
-
-- Page/component code should not use raw `<button class="...">` outside UI primitives.
-- Reuse `src/components/ui/Button.astro` and `src/components/ui/IconButton.astro`.
-- Validate with:
+Run development server:
 
 ```bash
-npm run lint:ui-buttons
+npm run dev
+# or
+pnpm dev
+# or
+yarn dev
 ```
 
-## React Islands Conventions
+Open http://localhost:3000 with your browser to see the result.
 
-- React components must live under `src/components/ui-react/**`.
-- Default hydration strategy: `client:visible`.
-- Do not import React islands in global/docs layout layers.
-- Use `src/pages/ui.astro` as the showcase entry for interactive demos.
+## Explore
 
-## Commands
+In the project, you can see:
 
-| Command | Action |
-| :-- | :-- |
-| `npm install` | Install dependencies |
-| `npm run dev` | Run local dev server |
-| `npm run build` | Build production artifacts |
-| `npm run preview` | Preview production build |
-| `npm run lint:ui-buttons` | Enforce UI button and islands conventions |
+- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
+- `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
+
+| Route                     | Description                                            |
+| ------------------------- | ------------------------------------------------------ |
+| `app/(home)`              | The route group for your landing page and other pages. |
+| `app/docs`                | The documentation layout and pages.                    |
+| `app/api/search/route.ts` | The Route Handler for search.                          |
+
+### Fumadocs MDX
+
+A `source.config.ts` config file has been included, you can customise different options like frontmatter schema.
+
+Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
+
+## Learn More
+
+To learn more about Next.js and Fumadocs, take a look at the following
+resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
+  features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Fumadocs](https://fumadocs.dev) - learn about Fumadocs

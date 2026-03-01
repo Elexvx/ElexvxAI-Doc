@@ -1,0 +1,79 @@
+[     348ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/favicon.ico:0
+[ 1967640ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[ 3091737ms] [ERROR] ./app/layout.tsx:3:1
+Module not found: Can't resolve 'fumadocs-ui/provider'
+  1 | import { Inter } from 'next/font/google';
+  2 | import type { ReactNode } from 'react';
+> 3 | import { RootProvider } from 'fumadocs-ui/provider';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 | import './global.css';
+  5 |
+  6 | const inter = Inter({
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[ 3092592ms] [ERROR] ./app/layout.tsx:3:1
+Module not found: Can't resolve 'fumadocs-ui/provider'
+  1 | import { Inter } from 'next/font/google';
+  2 | import type { ReactNode } from 'react';
+> 3 | import { RootProvider } from 'fumadocs-ui/provider';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 | import './global.css';
+  5 |
+  6 | const inter = Inter({
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[ 3105623ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <Primitive.li.SlotClone className="list-none" ref={null}>
+      <div className="list-none" ref={null}>
+        <NavigationMenuTrigger aria-label="Toggle Menu" className={"inline-f..."} onPointerMove={function}>
+          <NavigationMenuTrigger ref={null} className={"data-[st..."} aria-label="Toggle Menu" onPointerMove={function}>
+            <NavigationMenuCollectionItemSlot scope={undefined} value="radix-_R_l...">
+              <NavigationMenuCollectionItemSlot.Slot data-radix-collection-item="" ref={function}>
+                <NavigationMenuCollectionItemSlot.SlotClone data-radix-collection-item="" ref={function}>
+                  <NavigationMenuCollectionItemSlot scope={undefined}>
+                    <NavigationMenuCollectionItemSlot.Slot data-radix-collection-item="" ref={function}>
+                      <NavigationMenuCollectionItemSlot.SlotClone data-radix-collection-item="" ref={function}>
+                        <Primitive.button asChild={true} data-radix-collection-item="" ref={function} ...>
+                          <Primitive.button.Slot data-radix-collection-item="" onKeyDown={function handleEvent} ...>
+                            <Primitive.button.SlotClone data-radix-collection-item="" onKeyDown={function handleEvent} ...>
+                              <Primitive.button id="radix-_R_2..." disabled={undefined} data-disabled={undefined} ...>
+                                <button
++                                 id="radix-_R_2itqlb_-trigger-radix-_R_leitqlb_"
+-                                 id="radix-_R_6itqlb_-trigger-radix-_R_2lmitqlb_"
+                                  disabled={undefined}
+                                  data-disabled={undefined}
+                                  data-state="closed"
+                                  aria-expanded={false}
++                                 aria-controls="radix-_R_2itqlb_-content-radix-_R_leitqlb_"
+-                                 aria-controls="radix-_R_6itqlb_-content-radix-_R_2lmitqlb_"
+                                  className={"data-[state=open]:bg-fd-accent/50 inline-flex items-center justify-cent..."}
+                                  aria-label="Toggle Menu"
+                                  onPointerMove={function handleEvent}
+                                  onPointerEnter={function handleEvent}
+                                  onPointerLeave={function handleEvent}
+                                  onClick={function handleEvent}
+                                  onKeyDown={function}
+                                  data-radix-collection-item=""
+                                  ref={function}
+                                >
+        ...
+ @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127

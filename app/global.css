@@ -1,0 +1,11 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+@layer base {
+  body {
+    background-color: var(--color-fd-background);
+    color: var(--color-fd-foreground);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
