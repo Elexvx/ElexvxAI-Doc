@@ -16,7 +16,7 @@ function isHttpLink(href: string) {
 export function HomeFooter({ lang }: { lang: string }) {
   return (
     <footer className="mt-16 sm:mt-20 md:mt-24">
-      <div className="mx-auto w-full max-w-6xl px-4 pb-10 sm:px-6 sm:pb-12 lg:px-8">
+      <div className="mx-auto w-full max-w-[var(--fd-layout-width)] px-4 pb-10 sm:pb-12">
         <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1.2fr_1fr_1fr_1fr_1fr] lg:gap-8">
           <div className="lg:pe-4">
             <h2 className="text-lg font-semibold text-zinc-900 sm:text-xl md:text-2xl dark:text-zinc-100">
@@ -62,13 +62,13 @@ export function HomeFooter({ lang }: { lang: string }) {
         </div>
       </div>
 
-      <div className="w-full overflow-hidden border-y border-zinc-200 py-7 sm:py-9 md:py-10 dark:border-zinc-800">
-        <p className="w-full select-none px-4 text-center text-[clamp(3rem,12vw,14rem)] font-black leading-[0.86] tracking-[-0.045em] text-zinc-900 sm:px-6 lg:px-8 dark:text-zinc-100">
+      <div className="w-full overflow-hidden py-7 sm:py-9 md:py-10">
+        <p className="w-full select-none whitespace-nowrap text-center text-[clamp(3.25rem,13vw,15rem)] font-black leading-[0.86] tracking-[-0.045em] text-zinc-900 dark:text-zinc-100">
           ElexvxAILab
         </p>
       </div>
 
-      <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-7 md:py-8 lg:px-8">
+      <div className="mx-auto w-full max-w-[var(--fd-layout-width)] px-4 py-6 sm:py-7 md:py-8">
         <p className="text-center text-xs text-zinc-500 sm:text-sm dark:text-zinc-400">
           Copyright © 2024 ElexvxAI Lab | 隶属于 宏翔商道（南京）科技发展有限公司 | ICP备案：苏ICP备2025160017号
         </p>

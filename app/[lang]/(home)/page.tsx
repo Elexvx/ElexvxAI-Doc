@@ -9,7 +9,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   return (
     <>
-      <main className="mx-auto w-full max-w-[var(--fd-layout-width)] px-4 pb-10 pt-3 sm:px-6 md:pt-6 lg:px-10 2xl:px-12">
+      <main className="mx-auto w-full max-w-[var(--fd-layout-width)] px-4 pb-10 pt-3 md:pt-6">
         <HeroSection />
         <CapabilitiesSection />
         <NewsSection />
