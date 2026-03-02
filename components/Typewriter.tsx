@@ -1,56 +1,31 @@
-"use client";
+import type { CSSProperties } from 'react';
+import { cn } from '@/lib/cn';
 
-import { useState, useEffect } from "react";
+const MIN_DURATION_SECONDS = 1.2;
+const MAX_DURATION_SECONDS = 3.2;
+const PER_CHAR_SECONDS = 0.09;
+
+function getDuration(steps: number) {
+  const duration = Math.min(MAX_DURATION_SECONDS, Math.max(MIN_DURATION_SECONDS, steps * PER_CHAR_SECONDS));
+  return `${duration.toFixed(2)}s`;
+}
 
 export function Typewriter({
-    text,
-    typingSpeed = 200, // Slower default base speed
-    className = ""
+  text,
+  className,
 }: {
-    text: string;
-    typingSpeed?: number;
-    className?: string;
+  text: string;
+  className?: string;
 }) {
-    const [displayedText, setDisplayedText] = useState("");
-    const [showCursor, setShowCursor] = useState(true);
+  const steps = Math.max(Array.from(text).length, 1);
+  const style = {
+    '--tw-typewriter-steps': steps,
+    '--tw-typewriter-duration': getDuration(steps),
+  } as CSSProperties;
 
-    useEffect(() => {
-        let index = 0;
-        let timeoutId: NodeJS.Timeout;
-
-        const typeNextChar = () => {
-            if (index < text.length) {
-                setDisplayedText(text.slice(0, index + 1));
-                index++;
-
-                // Add a slight random variance (-30ms to +30ms) to make it feel natural and smooth
-                const variance = Math.random() * 60 - 30;
-                const nextSpeed = typingSpeed + variance;
-
-                timeoutId = setTimeout(typeNextChar, nextSpeed);
-            }
-        };
-
-        // Initial slight delay before starting to type
-        timeoutId = setTimeout(typeNextChar, 300);
-
-        return () => clearTimeout(timeoutId);
-    }, [text, typingSpeed]);
-
-    // Cursor blinking effect
-    useEffect(() => {
-        const cursorInterval = setInterval(() => {
-            setShowCursor((v) => !v);
-        }, 500);
-        return () => clearInterval(cursorInterval);
-    }, []);
-
-    return (
-        <span className={className}>
-            {displayedText}
-            <span
-                className={`inline-block w-[3px] h-[0.9em] ml-1 bg-zinc-900 align-baseline transition-opacity duration-200 dark:bg-zinc-100 ${showCursor ? "opacity-100" : "opacity-0"}`}
-            />
-        </span>
-    );
+  return (
+    <span className={cn('typewriter', className)} style={style}>
+      <span className="typewriter__text">{text}</span>
+    </span>
+  );
 }

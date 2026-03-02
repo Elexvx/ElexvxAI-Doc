@@ -6,7 +6,7 @@ export function HeroSection() {
   return (
     <section className="mx-auto flex flex-col items-center pt-2 text-center sm:pt-4">
       <h1 className="min-h-[1.2em] max-w-5xl text-balance text-3xl font-semibold leading-[1.15] tracking-tight text-zinc-950 sm:text-4xl md:text-5xl lg:text-6xl dark:text-zinc-50">
-        <Typewriter text="推动智能技术赋能工业创新" typingSpeed={220} />
+        <Typewriter text="推动智能技术赋能工业创新" />
       </h1>
       <p className="mt-3 max-w-2xl text-sm text-zinc-500 sm:text-base md:mt-4 md:text-lg dark:text-zinc-400">
         文档和资源，帮助你在 OpenAI 上，为 OpenAI 开发和使用。

@@ -3,6 +3,7 @@ import { baseOptions } from '@/lib/layout.shared';
 import type { ReactNode } from 'react';
 import { getNavLinks } from '@/lib/nav-links';
 import type { AppLocale } from '@/lib/i18n';
+import { SiteFrameworkProvider } from '@/components/site-framework-provider';
 
 export default async function Layout({
   children,
@@ -15,13 +16,15 @@ export default async function Layout({
   const options = baseOptions(lang);
 
   return (
-    <HomeLayout
-      {...options}
-      i18n={false}
-      links={getNavLinks(lang as AppLocale, { includeLanguageToggle: true })}
-      className="[--fd-layout-width:1400px]"
-    >
-      {children}
-    </HomeLayout>
+    <SiteFrameworkProvider>
+      <HomeLayout
+        {...options}
+        i18n={false}
+        links={getNavLinks(lang as AppLocale, { includeLanguageToggle: true })}
+        className="[--fd-layout-width:1400px]"
+      >
+        {children}
+      </HomeLayout>
+    </SiteFrameworkProvider>
   );
 }

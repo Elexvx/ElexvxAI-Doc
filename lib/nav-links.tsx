@@ -33,7 +33,7 @@ export function getNavLinks(
             secondary: true,
             children: (
               <li className="-mx-1 first:ms-0 last:me-0">
-                <NavLanguageToggle />
+                <NavLanguageToggle lang={lang} />
               </li>
             ),
           },
@@ -41,7 +41,7 @@ export function getNavLinks(
             type: 'custom',
             on: 'menu',
             secondary: true,
-            children: <NavLanguageToggle showText showChevron className="w-full justify-start" />,
+            children: <NavLanguageToggle lang={lang} showText showChevron className="w-full justify-start" />,
           },
         ] as LinkItemType[])
       : []),
