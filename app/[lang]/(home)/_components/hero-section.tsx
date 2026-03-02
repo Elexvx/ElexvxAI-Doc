@@ -29,7 +29,7 @@ export function HeroSection() {
 
       <Link
         href="docs"
-        className="group mx-auto mt-7 flex w-full max-w-4xl items-start justify-between rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-4 text-left transition hover:bg-zinc-100 sm:items-center sm:px-6 sm:py-5 md:px-8 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:bg-zinc-900"
+        className="group mx-auto mt-7 flex w-full max-w-5xl items-start justify-between rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-4 text-left transition hover:bg-zinc-100 sm:items-center sm:px-6 sm:py-5 md:px-8 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:bg-zinc-900"
       >
         <div className="flex min-w-0 items-start gap-3 sm:gap-4">
           <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-500 text-sm font-semibold text-white shadow-sm dark:bg-indigo-400 dark:text-zinc-950">
