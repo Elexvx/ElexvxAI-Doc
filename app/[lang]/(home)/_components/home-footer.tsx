@@ -29,7 +29,7 @@ export function HomeFooter({ lang }: { lang: string }) {
 
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:gap-10 xl:gap-16">
             {footerColumns.map((group) => (
-              <div key={group.title}>
+              <div key={group.title} className="text-right">
                 <h3 className="text-sm font-semibold text-zinc-900 sm:text-base dark:text-zinc-100">{group.title}</h3>
                 <ul className="mt-4 space-y-2.5 sm:mt-5 sm:space-y-3">
                   {group.links.map((item) => {

@@ -19,23 +19,6 @@
   }
 }
 
-@keyframes typewriter-caret-blink {
-  0%,
-  49% {
-    opacity: 1;
-  }
-  50%,
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes typewriter-caret-hide {
-  to {
-    opacity: 0;
-  }
-}
-
 @layer components {
   .typewriter {
     --tw-typewriter-steps: 16;
@@ -56,28 +39,11 @@
     animation: typewriter-reveal var(--tw-typewriter-duration) steps(var(--tw-typewriter-steps), end) var(--tw-typewriter-delay)
       forwards;
   }
-
-  .typewriter::after {
-    content: '';
-    width: 2px;
-    height: 0.92em;
-    margin-left: 0.22em;
-    border-radius: 999px;
-    background: currentColor;
-    animation:
-      typewriter-caret-blink 0.85s steps(1, end) infinite,
-      typewriter-caret-hide 0s linear calc(var(--tw-typewriter-delay) + var(--tw-typewriter-duration)) forwards;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .typewriter__text {
     animation: none;
     clip-path: inset(0 0 0 0);
-  }
-
-  .typewriter::after {
-    animation: none;
-    opacity: 0;
   }
 }

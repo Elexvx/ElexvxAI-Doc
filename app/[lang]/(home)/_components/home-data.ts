@@ -93,6 +93,8 @@ export const footerColumns: FooterColumn[] = [
       { label: '发表论文', href: 'https://arxiv.org/search/?query=artificial+intelligence&searchtype=all' },
       { label: '开源项目', href: 'https://github.com/fuma-nama/fumadocs' },
       { label: '开放数据', href: 'https://huggingface.co/datasets' },
+      { label: '研究成果', href: '/docs' },
+      { label: '项目合作', href: '/docs/test' },
     ],
   },
   {
@@ -104,17 +106,9 @@ export const footerColumns: FooterColumn[] = [
     ],
   },
   {
-    title: '开发者',
-    links: [
-      { label: '开发者社区', href: 'https://github.com/fuma-nama/fumadocs/discussions' },
-      { label: '模型代码', href: 'https://github.com/fuma-nama/fumadocs/tree/main/examples' },
-    ],
-  },
-  {
     title: '关于',
     links: [
-      { label: '研究成果', href: '/docs' },
-      { label: '项目合作', href: '/docs/test' },
+
       { label: '联系我们', href: 'mailto:hello@elexvx.ai' },
       { label: '关于我们', href: '/docs' },
       { label: '加入我们', href: '/docs' },
