@@ -8,7 +8,7 @@ export function NewsSection() {
       <div className="mb-5 flex items-center justify-between sm:mb-7">
         <h2 className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl dark:text-zinc-100">最新消息</h2>
         <Link
-          href="/docs"
+          href="docs"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-500 transition hover:text-zinc-900 sm:text-base dark:text-zinc-400 dark:hover:text-zinc-100"
         >
           查看全部

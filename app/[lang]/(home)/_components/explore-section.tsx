@@ -11,7 +11,7 @@ export function ExploreSection() {
           const Icon = item.icon;
 
           return (
-            <Link key={item.title} href="/docs" className="rounded-2xl">
+            <Link key={item.title} href="docs" className="rounded-2xl">
               <div
                 className={`flex h-44 items-center justify-center rounded-2xl border border-zinc-200 bg-gradient-to-br ${item.tint} p-4 sm:h-52 md:h-60 dark:border-zinc-700/80`}
               >
