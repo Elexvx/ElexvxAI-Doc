@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { buttonVariants } from 'fumadocs-ui/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from 'fumadocs-ui/components/ui/popover';
@@ -40,21 +41,37 @@ export function NavLanguageToggle({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
   const currentName = localeNames[lang];
   const label = chooseLanguageLabel[lang];
+  const triggerClassName = cn(
+    buttonVariants({
+      color: 'ghost',
+      size: showText ? undefined : 'icon',
+      className: showText ? 'gap-1.5 p-1.5' : undefined,
+    }),
+    className,
+  );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <button type="button" aria-label={label} className={triggerClassName} disabled>
+        <Languages className="size-5" />
+        {showText && <span>{currentName}</span>}
+        {showChevron && <ChevronDown className="size-3 text-fd-muted-foreground" />}
+      </button>
+    );
+  }
 
   return (
     <Popover>
       <PopoverTrigger
         aria-label={label}
-        className={cn(
-          buttonVariants({
-            color: 'ghost',
-            size: showText ? undefined : 'icon',
-            className: showText ? 'gap-1.5 p-1.5' : undefined,
-          }),
-          className,
-        )}
+        className={triggerClassName}
       >
         <Languages className="size-5" />
         {showText && <span>{currentName}</span>}

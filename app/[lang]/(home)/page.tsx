@@ -12,7 +12,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <main className="mx-auto w-full max-w-[1400px] px-6 pb-10 pt-3 md:px-12 md:pt-6 lg:px-16">
         <HeroSection />
         <CapabilitiesSection />
-        <NewsSection />
+        <NewsSection lang={lang} />
         <ExploreSection />
       </main>
       <HomeFooter lang={lang} />

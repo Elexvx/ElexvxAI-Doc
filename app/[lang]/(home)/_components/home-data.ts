@@ -1,4 +1,4 @@
-import { BookOpen, Code2, Gift, Newspaper, PenTool, type LucideIcon } from 'lucide-react';
+import { BookOpen, Gift, PenTool, type LucideIcon } from 'lucide-react';
 
 export type CapabilityItem = {
   title: string;
@@ -6,13 +6,6 @@ export type CapabilityItem = {
   icon: LucideIcon;
   hoverGradient: string;
   hoverGlow: string;
-};
-
-export type PostItem = {
-  title: string;
-  description: string;
-  tag: string;
-  icon: LucideIcon;
 };
 
 export type ExploreItem = {
@@ -50,21 +43,6 @@ export const capabilities: CapabilityItem[] = [
     icon: BookOpen,
     hoverGradient: 'from-emerald-300/80 via-cyan-300/75 to-blue-400/90',
     hoverGlow: 'from-emerald-200/40 to-transparent',
-  },
-];
-
-export const posts: PostItem[] = [
-  {
-    title: '本地搜索的设计笔记',
-    description: '为什么选 Pagefind、如何过滤 Docs/Blog，以及中文检索注意事项。',
-    tag: '研究',
-    icon: Newspaper,
-  },
-  {
-    title: '我们为什么要把 Blog 独立出来',
-    description: '文档与博客的边界、写作节奏与内容复用方式。',
-    tag: '工程',
-    icon: Code2,
   },
 ];
 

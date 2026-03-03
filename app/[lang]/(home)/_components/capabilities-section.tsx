@@ -11,7 +11,7 @@ export function CapabilitiesSection() {
     window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
   return (
-    <section className="mt-8 grid gap-4 sm:grid-cols-2 md:mt-10 md:gap-6 lg:grid-cols-3">
+    <section className="mt-8 grid gap-4 sm:grid-cols-2 md:mt-10 md:grid-cols-3 md:gap-6">
       {capabilities.map((cap, index) => {
         const Icon = cap.icon;
         const isActive = activeIndex === index;

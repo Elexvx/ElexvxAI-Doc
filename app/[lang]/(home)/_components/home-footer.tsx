@@ -13,12 +13,17 @@ function isHttpLink(href: string) {
   return href.startsWith('http://') || href.startsWith('https://');
 }
 
-export function HomeFooter({ lang }: { lang: string }) {
+export function HomeFooter({ lang, layout = 'home' }: { lang: string; layout?: 'home' | 'blog' }) {
+  const containerClassName =
+    layout === 'blog'
+      ? 'mx-auto w-full max-w-[1460px] px-8 md:px-12 lg:px-20'
+      : 'mx-auto w-full max-w-[1400px] px-6 md:px-12 lg:px-16';
+
   return (
-    <footer className="mt-16 sm:mt-20 md:mt-24">
-      <div className="mx-auto w-full max-w-[1400px] px-6 pb-10 sm:pb-12 md:px-12 lg:px-8">
-        <div className="flex flex-col gap-8 sm:gap-10 lg:flex-row lg:items-start lg:gap-12">
-          <div className="lg:max-w-[16rem] lg:pe-4 xl:max-w-sm">
+    <footer className="mt-8 sm:mt-10 md:mt-12">
+      <div className={`${containerClassName} pb-8 sm:pb-10`}>
+        <div className="flex flex-col gap-6 sm:gap-8 md:flex-row md:items-start md:justify-between md:gap-10">
+          <div className="md:max-w-[16rem] md:pe-4 xl:max-w-sm">
             <h2 className="text-lg font-semibold text-zinc-900 sm:text-xl md:text-2xl dark:text-zinc-100">
               探索智能边界
             </h2>
@@ -27,9 +32,9 @@ export function HomeFooter({ lang }: { lang: string }) {
             </p>
           </div>
 
-          <div className="grid w-full grid-cols-2 justify-items-end gap-8 sm:grid-cols-4 lg:ms-auto lg:w-auto lg:gap-10 xl:gap-16">
+          <div className="grid w-full grid-cols-2 justify-items-start gap-x-8 gap-y-6 sm:grid-cols-3 sm:gap-x-10 md:ms-auto md:w-auto md:grid-cols-3 md:justify-items-end md:gap-x-12 lg:gap-8 xl:gap-14">
             {footerColumns.map((group) => (
-              <div key={group.title} className="text-right">
+              <div key={group.title} className="text-left md:text-right">
                 <h3 className="text-sm font-semibold text-zinc-900 sm:text-base dark:text-zinc-100">{group.title}</h3>
                 <ul className="mt-4 space-y-2.5 sm:mt-5 sm:space-y-3">
                   {group.links.map((item) => {
@@ -70,7 +75,7 @@ export function HomeFooter({ lang }: { lang: string }) {
         </p>
       </div>
 
-      <div className="mx-auto w-full max-w-[1400px] px-6 py-6 sm:py-7 md:px-12 md:py-8 lg:px-8">
+      <div className={`${containerClassName} py-6 sm:py-7 md:py-8`}>
         <p className="text-center text-xs text-zinc-500 sm:text-sm dark:text-zinc-400">
           Copyright © 2024 ElexvxAI Lab | 隶属于 宏翔商道（南京）科技发展有限公司 | ICP备案：苏ICP备2025160017号
         </p>
