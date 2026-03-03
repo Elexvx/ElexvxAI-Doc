@@ -26,6 +26,12 @@ export function getNavLinks(
       active: 'nested-url',
       on: 'nav',
     },
+    {
+      text: lang === 'zh' ? '赞助商' : 'Sponsors',
+      url: `/${lang}/sponsors`,
+      active: 'nested-url',
+      on: 'nav',
+    },
     ...(includeLanguageToggle
       ? ([
           {
