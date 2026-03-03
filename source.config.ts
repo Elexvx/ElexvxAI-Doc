@@ -28,7 +28,7 @@ const blogSchema = z.object({
     z.string(),
   ),
   category: z.union([z.string(), z.array(z.string()).min(1)]),
-  summary: z.string().optional(),
+  summary: z.string(),
   cover: z.string(),
   featured: z.boolean().default(false),
 });

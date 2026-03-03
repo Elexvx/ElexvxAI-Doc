@@ -9,7 +9,7 @@ type BlogEntriesExport =
       title: string;
       date: string;
       category: BlogCategory;
-      summary?: string;
+      summary: string;
       cover: string;
       featured: boolean;
       body: unknown;
@@ -21,7 +21,7 @@ type BlogEntriesExport =
         title: string;
         date: string;
         category: BlogCategory;
-        summary?: string;
+        summary: string;
         cover: string;
         featured: boolean;
         body: unknown;
@@ -34,7 +34,7 @@ type BlogCollectionEntry = {
   title: string;
   date: string;
   category: BlogCategory;
-  summary?: string;
+  summary: string;
   cover: string;
   featured: boolean;
   body: unknown;
@@ -48,7 +48,7 @@ type BlogPostBase = {
   formattedDate: string;
   category: string;
   categories: string[];
-  summary?: string;
+  summary: string;
   cover: string;
   featured: boolean;
   timestamp: number;

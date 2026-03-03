@@ -21,7 +21,7 @@ export default async function BlogPostPage({
   const MDX = post.body;
   const displayCategory =
     categoryParam && categoryParam.trim().length > 0 ? categoryParam : post.categories.join(' · ');
-  const summaryText = post.summary?.trim() || '文章详情';
+  const summaryText = post.summary;
 
   return (
     <DocsPage
