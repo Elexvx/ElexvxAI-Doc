@@ -1,0 +1,18 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1200" height="800" rx="64" fill="#080B10"/>
+<circle cx="338" cy="580" r="280" fill="url(#paint0_radial_31_4)"/>
+<circle cx="860" cy="250" r="230" fill="url(#paint1_radial_31_4)"/>
+<path d="M470 270C470 213.667 515.667 168 572 168H616C672.333 168 718 213.667 718 270V456C718 485.333 694.333 509 665 509H523C493.667 509 470 485.333 470 456V270Z" fill="#FDE68A"/>
+<path d="M635 309C635 286.909 652.909 269 675 269H704C726.091 269 744 286.909 744 309V456C744 484.719 720.719 508 692 508H687C658.281 508 635 484.719 635 456V309Z" fill="#F59E0B"/>
+<text x="94" y="126" fill="#F8FAFC" font-size="58" font-family="Inter, system-ui, sans-serif" font-weight="600">Nano Banana Pro</text>
+<defs>
+<radialGradient id="paint0_radial_31_4" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(338 580) rotate(90) scale(280)">
+<stop stop-color="#22C55E"/>
+<stop offset="1" stop-color="#22C55E" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="paint1_radial_31_4" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(860 250) rotate(90) scale(230)">
+<stop stop-color="#60A5FA"/>
+<stop offset="1" stop-color="#60A5FA" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>

@@ -16,8 +16,8 @@ function isHttpLink(href: string) {
 export function HomeFooter({ lang }: { lang: string }) {
   return (
     <footer className="mt-16 sm:mt-20 md:mt-24">
-      <div className="mx-auto w-full max-w-[1400px] px-6 pb-10 sm:pb-12 md:px-12 lg:px-16">
-        <div className="flex flex-col gap-8 sm:gap-10 lg:flex-row lg:justify-between lg:gap-12">
+      <div className="mx-auto w-full max-w-[1400px] px-6 pb-10 sm:pb-12 md:px-12 lg:px-8">
+        <div className="flex flex-col gap-8 sm:gap-10 lg:flex-row lg:items-start lg:gap-12">
           <div className="lg:max-w-[16rem] lg:pe-4 xl:max-w-sm">
             <h2 className="text-lg font-semibold text-zinc-900 sm:text-xl md:text-2xl dark:text-zinc-100">
               探索智能边界
@@ -27,7 +27,7 @@ export function HomeFooter({ lang }: { lang: string }) {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:gap-10 xl:gap-16">
+          <div className="grid w-full grid-cols-2 justify-items-end gap-8 sm:grid-cols-4 lg:ms-auto lg:w-auto lg:gap-10 xl:gap-16">
             {footerColumns.map((group) => (
               <div key={group.title} className="text-right">
                 <h3 className="text-sm font-semibold text-zinc-900 sm:text-base dark:text-zinc-100">{group.title}</h3>
@@ -70,7 +70,7 @@ export function HomeFooter({ lang }: { lang: string }) {
         </p>
       </div>
 
-      <div className="mx-auto w-full max-w-[1400px] px-6 py-6 sm:py-7 md:px-12 md:py-8 lg:px-16">
+      <div className="mx-auto w-full max-w-[1400px] px-6 py-6 sm:py-7 md:px-12 md:py-8 lg:px-8">
         <p className="text-center text-xs text-zinc-500 sm:text-sm dark:text-zinc-400">
           Copyright © 2024 ElexvxAI Lab | 隶属于 宏翔商道（南京）科技发展有限公司 | ICP备案：苏ICP备2025160017号
         </p>

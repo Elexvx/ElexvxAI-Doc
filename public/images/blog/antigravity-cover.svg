@@ -1,0 +1,19 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1200" height="800" rx="72" fill="#0A0A0A"/>
+<circle cx="935" cy="210" r="220" fill="url(#paint0_radial_12_19)"/>
+<circle cx="270" cy="620" r="260" fill="url(#paint1_radial_12_19)"/>
+<path d="M154 202C276 131 447 114 612 168C777 222 917 343 1012 505" stroke="#FAFAFA" stroke-opacity="0.22" stroke-width="2"/>
+<path d="M209 312C323 251 470 241 609 286C748 331 866 425 949 546" stroke="#FAFAFA" stroke-opacity="0.32" stroke-width="2"/>
+<path d="M248 430C352 381 476 378 593 414C710 450 809 524 879 620" stroke="#FAFAFA" stroke-opacity="0.42" stroke-width="2"/>
+<text x="120" y="140" fill="#F4F4F5" font-size="56" font-family="Inter, system-ui, sans-serif" font-weight="600">Google Antigravity</text>
+<defs>
+<radialGradient id="paint0_radial_12_19" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(935 210) rotate(90) scale(220)">
+<stop stop-color="#60A5FA"/>
+<stop offset="1" stop-color="#60A5FA" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="paint1_radial_12_19" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(270 620) rotate(90) scale(260)">
+<stop stop-color="#FDE68A"/>
+<stop offset="1" stop-color="#FDE68A" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>

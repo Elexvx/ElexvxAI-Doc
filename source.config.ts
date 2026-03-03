@@ -1,4 +1,4 @@
-import { defineConfig, defineDocs } from 'fumadocs-mdx/config';
+import { defineCollections, defineConfig, defineDocs } from 'fumadocs-mdx/config';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 import { z } from 'zod';
 
@@ -19,6 +19,23 @@ export const docs = defineDocs({
   meta: {
     schema: metaSchema,
   },
+});
+
+const blogSchema = z.object({
+  title: z.string(),
+  date: z.preprocess(
+    (value) => (value instanceof Date ? value.toISOString().slice(0, 10) : value),
+    z.string(),
+  ),
+  category: z.union([z.string(), z.array(z.string()).min(1)]),
+  cover: z.string(),
+  featured: z.boolean().default(false),
+});
+
+export const blog = defineCollections({
+  type: 'doc',
+  dir: 'content/blog',
+  schema: blogSchema,
 });
 
 export default defineConfig({
