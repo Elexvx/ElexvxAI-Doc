@@ -1,10 +1,14 @@
 import Link from 'next/link';
-import type { AppLocale } from '@/lib/i18n';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { isLocale, type AppLocale } from '@/lib/i18n';
+import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 import { HomeFooter } from '../_components/home-footer';
 import { getSponsorItems, getSponsorsPageCopy } from '@/lib/sponsors';
 
 export default async function SponsorsPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
+  if (!isLocale(lang)) notFound();
   const locale = lang as AppLocale;
   const copy = await getSponsorsPageCopy(locale);
   const sponsorItems = await getSponsorItems();
@@ -77,4 +81,35 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
       <HomeFooter lang={locale} layout="blog" />
     </>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  const copy = await getSponsorsPageCopy(lang);
+  const canonical = buildAbsoluteUrl(buildLocalePath(lang, '/sponsors'));
+
+  return {
+    title: copy.title,
+    description: copy.description,
+    alternates: {
+      canonical,
+      languages: buildLocaleAlternates('/sponsors'),
+    },
+    openGraph: {
+      type: 'website',
+      url: canonical,
+      title: copy.title,
+      description: copy.description,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: copy.title,
+      description: copy.description,
+    },
+  };
 }

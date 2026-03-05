@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Check, ChevronDown, Copy, ExternalLinkIcon, TextIcon } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { useCopyButton } from 'fumadocs-ui/utils/use-copy-button';
@@ -8,6 +8,30 @@ import { Popover, PopoverContent, PopoverTrigger } from 'fumadocs-ui/components/
 import { useI18n } from 'fumadocs-ui/contexts/i18n';
 
 const cache = new Map<string, string>();
+const copyByLocale = {
+  zh: {
+    copyMarkdown: '复制 Markdown',
+    open: '打开',
+    openInGithub: '在 GitHub 中打开',
+    viewMarkdown: '查看 Markdown',
+    openInScira: '在 Scira AI 中打开',
+    openInChatGPT: '在 ChatGPT 中打开',
+    openInClaude: '在 Claude 中打开',
+    openInCursor: '在 Cursor 中打开',
+    promptBuilder: (url: string) => `阅读 ${url}，我想围绕这页内容提问。`,
+  },
+  en: {
+    copyMarkdown: 'Copy Markdown',
+    open: 'Open',
+    openInGithub: 'Open in GitHub',
+    viewMarkdown: 'View as Markdown',
+    openInScira: 'Open in Scira AI',
+    openInChatGPT: 'Open in ChatGPT',
+    openInClaude: 'Open in Claude',
+    openInCursor: 'Open in Cursor',
+    promptBuilder: (url: string) => `Read ${url}, I want to ask questions about it.`,
+  },
+} as const;
 
 export function LLMCopyButton({
   /**
@@ -18,7 +42,7 @@ export function LLMCopyButton({
   markdownUrl: string;
 }) {
   const { locale } = useI18n();
-  const isZh = locale === 'zh';
+  const text = locale === 'zh' ? copyByLocale.zh : copyByLocale.en;
   const [isLoading, setLoading] = useState(false);
   const [checked, onClick] = useCopyButton(async () => {
     const cached = cache.get(markdownUrl);
@@ -55,7 +79,7 @@ export function LLMCopyButton({
       onClick={onClick}
     >
       {checked ? <Check /> : <Copy />}
-      {isZh ? '复制 Markdown' : 'Copy Markdown'}
+      {text.copyMarkdown}
     </button>
   );
 }
@@ -75,14 +99,19 @@ export function ViewOptions({
   githubUrl: string;
 }) {
   const { locale } = useI18n();
-  const isZh = locale === 'zh';
+  const text = locale === 'zh' ? copyByLocale.zh : copyByLocale.en;
+  const [pageUrl, setPageUrl] = useState('');
+
+  useEffect(() => {
+    setPageUrl(window.location.href);
+  }, []);
+
   const items = useMemo(() => {
-    const pageUrl = typeof window !== 'undefined' ? window.location.href : 'loading';
-    const q = isZh ? `阅读 ${pageUrl}，我想围绕这页内容提问。` : `Read ${pageUrl}, I want to ask questions about it.`;
+    const q = text.promptBuilder(pageUrl || markdownUrl);
 
     return [
       {
-        title: isZh ? '在 GitHub 中打开' : 'Open in GitHub',
+        title: text.openInGithub,
         href: githubUrl,
         icon: (
           <svg fill="currentColor" role="img" viewBox="0 0 24 24">
@@ -92,12 +121,12 @@ export function ViewOptions({
         ),
       },
       {
-        title: isZh ? '查看 Markdown' : 'View as Markdown',
+        title: text.viewMarkdown,
         href: markdownUrl,
         icon: <TextIcon />,
       },
       {
-        title: isZh ? '在 Scira AI 中打开' : 'Open in Scira AI',
+        title: text.openInScira,
         href: `https://scira.ai/?${new URLSearchParams({
           q,
         })}`,
@@ -161,7 +190,7 @@ export function ViewOptions({
         ),
       },
       {
-        title: isZh ? '在 ChatGPT 中打开' : 'Open in ChatGPT',
+        title: text.openInChatGPT,
         href: `https://chatgpt.com/?${new URLSearchParams({
           hints: 'search',
           q,
@@ -179,7 +208,7 @@ export function ViewOptions({
         ),
       },
       {
-        title: isZh ? '在 Claude 中打开' : 'Open in Claude',
+        title: text.openInClaude,
         href: `https://claude.ai/new?${new URLSearchParams({
           q,
         })}`,
@@ -196,7 +225,7 @@ export function ViewOptions({
         ),
       },
       {
-        title: isZh ? '在 Cursor 中打开' : 'Open in Cursor',
+        title: text.openInCursor,
         icon: (
           <svg
             fill="currentColor"
@@ -213,7 +242,7 @@ export function ViewOptions({
         })}`,
       },
     ];
-  }, [githubUrl, isZh, markdownUrl]);
+  }, [githubUrl, markdownUrl, pageUrl, text]);
 
   return (
     <Popover>
@@ -226,7 +255,7 @@ export function ViewOptions({
           }),
         )}
       >
-        {isZh ? '打开' : 'Open'}
+        {text.open}
         <ChevronDown className="size-3.5 text-fd-muted-foreground" />
       </PopoverTrigger>
       <PopoverContent className="flex flex-col">

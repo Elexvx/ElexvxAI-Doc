@@ -35,7 +35,7 @@ items:
     description:
       zh: 专注于高性能组件编译与渐进式渲染。
       en: Focused on high-performance component compilation and progressive rendering.
-    href: https://example.com/axionjs
+    href: https://www.elexvx.com/
     accent: from-indigo-500/20 via-sky-400/15 to-cyan-300/20
   - name: NeuroDB
     category:
@@ -44,7 +44,7 @@ items:
     description:
       zh: 分布式数据库引擎，提供毫秒级查询能力。
       en: A distributed database engine with millisecond-level query performance.
-    href: https://example.com/neurodb
+    href: https://www.elexvx.com/
     accent: from-emerald-500/25 via-teal-400/15 to-cyan-300/15
   - name: CloudNest
     category:
@@ -53,7 +53,7 @@ items:
     description:
       zh: 帮助团队快速搭建稳定、可观测的云原生环境。
       en: Helps teams build stable and observable cloud-native environments.
-    href: https://example.com/cloudnest
+    href: https://www.elexvx.com/
     accent: from-violet-500/25 via-fuchsia-400/15 to-indigo-300/20
   - name: TypeFlow
     category:
@@ -62,7 +62,7 @@ items:
     description:
       zh: 提供类型安全的 API 工作流与调试体验。
       en: Provides type-safe API workflows and debugging experiences.
-    href: https://example.com/typeflow
+    href: https://www.elexvx.com/
     accent: from-blue-500/20 via-indigo-300/15 to-purple-300/15
   - name: Kibo UI
     category:
@@ -71,7 +71,7 @@ items:
     description:
       zh: 面向中后台场景的企业级组件与设计规范。
       en: Enterprise-ready components and design standards for admin products.
-    href: https://example.com/kibo-ui
+    href: https://www.elexvx.com/
     accent: from-orange-500/20 via-amber-300/15 to-rose-300/15
   - name: MintOps
     category:
@@ -80,7 +80,7 @@ items:
     description:
       zh: 统一日志、指标与追踪，支持问题快速定位。
       en: Unifies logs, metrics, and tracing for faster issue diagnosis.
-    href: https://example.com/mintops
+    href: https://www.elexvx.com/
     accent: from-lime-500/20 via-emerald-300/15 to-teal-300/15
   - name: OpenPart
     category:
@@ -89,7 +89,7 @@ items:
     description:
       zh: 持续赞助文档基础设施与开发者活动。
       en: Continuously sponsors docs infrastructure and developer events.
-    href: https://example.com/openpart
+    href: https://www.elexvx.com/
     accent: from-cyan-500/20 via-sky-300/15 to-blue-300/15
   - name: ZenBrowser
     category:
@@ -98,7 +98,7 @@ items:
     description:
       zh: 围绕开发者效率打造更快、更轻的浏览器体验。
       en: Builds a faster and lighter browser experience for developers.
-    href: https://example.com/zenbrowser
+    href: https://www.elexvx.com/
     accent: from-rose-500/20 via-orange-300/15 to-yellow-300/15
   - name: Yecord
     category:
@@ -107,7 +107,7 @@ items:
     description:
       zh: 将知识库、任务和沟通整合到一个工作流中。
       en: Combines docs, tasks, and communication into one workflow.
-    href: https://example.com/yecord
+    href: https://www.elexvx.com/
     accent: from-slate-500/20 via-zinc-300/10 to-sky-300/10
   - name: Laminex
     category:
@@ -116,7 +116,7 @@ items:
     description:
       zh: 提供跨框架的高速构建链路与缓存能力。
       en: Delivers cross-framework fast builds with smart caching.
-    href: https://example.com/laminex
+    href: https://www.elexvx.com/
     accent: from-fuchsia-500/20 via-violet-300/15 to-indigo-300/15
   - name: SwiftLyn
     category:
@@ -125,7 +125,7 @@ items:
     description:
       zh: 通过平台化能力提升团队交付效率。
       en: Improves delivery speed through platform engineering capabilities.
-    href: https://example.com/swiftlyn
+    href: https://www.elexvx.com/
     accent: from-red-500/20 via-rose-300/15 to-orange-300/15
   - name: Nextra Docs
     category:
@@ -134,7 +134,7 @@ items:
     description:
       zh: 支持结构化内容管理与团队协同写作。
       en: Supports structured content management and team co-authoring.
-    href: https://example.com/nextra-docs
+    href: https://www.elexvx.com/
     accent: from-sky-500/20 via-cyan-300/15 to-teal-300/15
   - name: Codify
     category:
@@ -143,7 +143,7 @@ items:
     description:
       zh: 为开发团队提供代码生成与重构辅助。
       en: Provides code generation and refactoring assistance for teams.
-    href: https://example.com/codify
+    href: https://www.elexvx.com/
     accent: from-violet-500/20 via-purple-300/15 to-pink-300/15
   - name: TarotStarter
     category:
@@ -152,7 +152,7 @@ items:
     description:
       zh: 提供可开箱即用的全栈模板与最佳实践。
       en: Offers production-ready full-stack templates and best practices.
-    href: https://example.com/tarotstarter
+    href: https://www.elexvx.com/
     accent: from-indigo-500/20 via-blue-300/15 to-cyan-300/15
   - name: Rehooks
     category:
@@ -161,7 +161,7 @@ items:
     description:
       zh: 聚焦可复用 Hook 与状态管理模式。
       en: Focuses on reusable hooks and state management patterns.
-    href: https://example.com/rehooks
+    href: https://www.elexvx.com/
     accent: from-emerald-500/20 via-green-300/15 to-lime-300/15
   - name: DirStarter
     category:
@@ -170,5 +170,5 @@ items:
     description:
       zh: 通过脚手架提升项目初始化与规范落地效率。
       en: Speeds up project bootstrapping and standards adoption.
-    href: https://example.com/dirstarter
+    href: https://www.elexvx.com/
     accent: from-zinc-500/20 via-slate-300/10 to-blue-300/10

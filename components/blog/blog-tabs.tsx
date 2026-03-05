@@ -5,19 +5,24 @@ export function BlogTabs({
   lang,
   categories,
   activeCategory,
+  allLabel,
+  navAriaLabel,
 }: {
   lang: string;
   categories: string[];
-  activeCategory: string;
+  activeCategory: string | null;
+  allLabel: string;
+  navAriaLabel: string;
 }) {
-  const tabs = ['All', ...categories];
+  const tabs = [allLabel, ...categories];
 
   return (
-    <nav className="mt-14 border-b border-zinc-200 dark:border-zinc-800" aria-label="Blog categories">
+    <nav className="mt-14 border-b border-zinc-200 dark:border-zinc-800" aria-label={navAriaLabel}>
       <ul className="flex items-center gap-7 overflow-x-auto">
         {tabs.map((tab) => {
-          const href = tab === 'All' ? `/${lang}/blog` : `/${lang}/blog?category=${encodeURIComponent(tab)}`;
-          const isActive = tab === activeCategory;
+          const isAllTab = tab === allLabel;
+          const href = isAllTab ? `/${lang}/blog` : `/${lang}/blog?category=${encodeURIComponent(tab)}`;
+          const isActive = isAllTab ? activeCategory == null : tab === activeCategory;
 
           return (
             <li key={tab}>

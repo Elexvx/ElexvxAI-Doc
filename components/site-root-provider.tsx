@@ -7,6 +7,7 @@ import type { TagItem } from 'fumadocs-ui/contexts/search';
 import { DocsSearchDialog } from '@/components/search/docs-search-dialog';
 import { i18n, isLocale, type AppLocale } from '@/lib/i18n';
 import type { I18nUIText } from '@/lib/i18n-ui';
+import { localeDisplayNames } from '@/lib/locale-labels';
 
 function replaceLocale(pathname: string, nextLocale: string) {
   const segments = pathname.split('/');
@@ -33,7 +34,7 @@ export function SiteRootProvider({
   const pathname = usePathname();
   const locales = i18n.languages.map((item) => ({
     locale: item,
-    name: item === 'zh' ? '中文' : 'English',
+    name: localeDisplayNames[item],
   }));
 
   return (

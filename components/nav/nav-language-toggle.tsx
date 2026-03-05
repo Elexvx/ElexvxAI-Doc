@@ -7,16 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from 'fumadocs-ui/components/
 import { cn } from '@/lib/cn';
 import { Languages, ChevronDown } from 'lucide-react';
 import { i18n, isLocale, type AppLocale } from '@/lib/i18n';
-
-const localeNames: Record<AppLocale, string> = {
-  zh: '中文',
-  en: 'English',
-};
-
-const chooseLanguageLabel: Record<AppLocale, string> = {
-  zh: '选择语言',
-  en: 'Choose language',
-};
+import { chooseLanguageLabels, localeDisplayNames } from '@/lib/locale-labels';
 
 function replaceLocale(pathname: string, nextLocale: AppLocale) {
   const segments = pathname.split('/');
@@ -42,8 +33,8 @@ export function NavLanguageToggle({
   const router = useRouter();
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
-  const currentName = localeNames[lang];
-  const label = chooseLanguageLabel[lang];
+  const currentName = localeDisplayNames[lang];
+  const label = chooseLanguageLabels[lang];
   const triggerClassName = cn(
     buttonVariants({
       color: 'ghost',
@@ -95,7 +86,7 @@ export function NavLanguageToggle({
               router.push(nextPath);
             }}
           >
-            {localeNames[locale]}
+            {localeDisplayNames[locale]}
           </button>
         ))}
       </PopoverContent>

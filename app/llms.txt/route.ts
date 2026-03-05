@@ -12,7 +12,7 @@ export async function GET(req: Request) {
   const locale = localeParam && isLocale(localeParam) ? localeParam : i18n.defaultLanguage;
 
   const lines: string[] = [];
-  lines.push('# Documentation');
+  lines.push(locale === 'zh' ? '# 文档' : '# Documentation');
   lines.push('');
 
   for (const page of source.getPages(locale)) {

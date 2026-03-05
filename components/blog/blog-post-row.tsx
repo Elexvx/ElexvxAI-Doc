@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import type { BlogPostListItem } from '@/lib/blog';
 
@@ -17,8 +18,14 @@ export function BlogPostRow({ post, lang }: { post: BlogPostListItem; lang: stri
           {post.formattedDate} · {categoryText}
         </p>
       </div>
-      <div className="h-[124px] w-[124px] shrink-0 overflow-hidden rounded-2xl bg-black sm:h-[132px] sm:w-[132px]">
-        <img src={post.cover} alt={post.title} className="h-full w-full object-contain object-center p-2.5 sm:p-3" />
+      <div className="relative h-[124px] w-[124px] shrink-0 overflow-hidden rounded-2xl bg-black sm:h-[132px] sm:w-[132px]">
+        <Image
+          src={post.cover}
+          alt={post.title}
+          fill
+          className="object-contain object-center p-2.5 sm:p-3"
+          sizes="132px"
+        />
       </div>
     </article>
   );

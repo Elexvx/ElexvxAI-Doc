@@ -59,19 +59,19 @@ exploreItems:
       en: Blog
     icon: PenTool
     tint: from-indigo-200 via-violet-300 to-sky-300
-    href: docs
+    href: /{lang}/blog
   - title:
       zh: 资源
       en: Resources
     icon: Gift
     tint: from-cyan-100 via-sky-200 to-indigo-200
-    href: docs
+    href: /{lang}/docs
   - title:
       zh: 使用手册
       en: User Guide
     icon: BookOpen
     tint: from-cyan-300 via-emerald-200 to-blue-300
-    href: docs
+    href: /{lang}/docs
 footer:
   zh:
     title: 探索智能边界

@@ -3,6 +3,7 @@ import { i18n, isLocale } from '@/lib/i18n';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from '@takumi-rs/image-response';
 import { generate as DefaultImage } from 'fumadocs-ui/og/takumi';
+import { siteConfig } from '@/lib/site';
 
 export const runtime = 'nodejs';
 export const revalidate = false;
@@ -23,7 +24,7 @@ export async function GET(
   if (!page) notFound();
 
   return new ImageResponse(
-    <DefaultImage title={page.data.title} description={page.data.description} site="My App" />,
+    <DefaultImage title={page.data.title} description={page.data.description} site={siteConfig.name} />,
     {
       width: 1200,
       height: 630,

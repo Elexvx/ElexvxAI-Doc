@@ -27,10 +27,11 @@ export function DocsLanguageSwitcher({
   const params = useParams<{ slug?: string | string[] }>();
   const currentSlug = slugFromParams(params.slug);
   const slugKey = currentSlug.join('/');
+  const label = lang === 'zh' ? '语言' : 'Language';
 
   return (
     <div className="rounded-xl border bg-fd-card px-4 py-3">
-      <p className="mb-2 text-xs font-medium uppercase tracking-wide text-fd-muted-foreground">Language</p>
+      <p className="mb-2 text-xs font-medium uppercase tracking-wide text-fd-muted-foreground">{label}</p>
       <div className="flex flex-wrap gap-2">
         {locales.map((localeItem) => {
           const isCurrent = localeItem.locale === lang;

@@ -7,6 +7,7 @@ import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { LLMCopyButton, ViewOptions } from '@/components/ai/page-actions';
 import { gitConfig } from '@/lib/layout.shared';
 import { isLocale } from '@/lib/i18n';
+import { buildAbsoluteUrl, buildLocalePath } from '@/lib/site';
 
 export default async function Page({ params }: { params: Promise<{ lang: string; slug?: string[] }> }) {
   const { lang, slug } = await params;
@@ -54,12 +55,28 @@ export async function generateMetadata({
 
   const page = source.getPage(slug, lang);
   if (!page) notFound();
+  const canonical = buildAbsoluteUrl(page.url);
+  const languages = {
+    zh: buildAbsoluteUrl(source.getPage(slug, 'zh')?.url ?? buildLocalePath('zh', '/docs')),
+    en: buildAbsoluteUrl(source.getPage(slug, 'en')?.url ?? buildLocalePath('en', '/docs')),
+  };
+  const image = getPageImage(page).url;
 
   return {
     title: page.data.title,
     description: page.data.description,
+    alternates: {
+      canonical,
+      languages,
+    },
     openGraph: {
-      images: getPageImage(page).url,
+      type: 'article',
+      url: canonical,
+      images: image,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      images: image,
     },
   };
 }

@@ -5,6 +5,8 @@ import { getMDXComponents } from '@/mdx-components';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
+import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 import { HomeFooter } from '../../_components/home-footer';
 
 export default async function BlogPostPage({
@@ -43,8 +45,8 @@ export default async function BlogPostPage({
             {summaryText}
           </DocsDescription>
         </div>
-        <div className="mt-8 overflow-hidden rounded-xl border bg-fd-card">
-          <img src={post.cover} alt={post.title} className="aspect-[16/9] w-full object-cover" />
+        <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-xl border bg-fd-card">
+          <Image src={post.cover} alt={post.title} fill className="object-cover" sizes="(min-width: 1024px) 960px, 100vw" />
         </div>
         <DocsBody>
           <MDX components={getMDXComponents()} />
@@ -64,17 +66,29 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ lang: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { lang, slug } = await params;
   const post = await getPostBySlug(slug);
 
   if (!post) notFound();
+  const canonicalPath = buildLocalePath((i18n.languages.includes(lang as AppLocale) ? (lang as AppLocale) : 'zh'), `/blog/${slug}`);
+  const canonical = buildAbsoluteUrl(canonicalPath);
 
   return {
     title: post.title,
     description: `${post.categories.join(' · ')} · ${post.formattedDate}`,
+    alternates: {
+      canonical,
+      languages: buildLocaleAlternates(`/blog/${slug}`),
+    },
     openGraph: {
+      type: 'article',
+      url: canonical,
+      images: post.cover,
+    },
+    twitter: {
+      card: 'summary_large_image',
       images: post.cover,
     },
   };

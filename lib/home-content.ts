@@ -106,7 +106,7 @@ export async function getHomeExploreItems(locale: AppLocale): Promise<HomeExplor
     title: item.title[locale],
     icon: item.icon,
     tint: item.tint,
-    href: item.href,
+    href: item.href.replace('{lang}', locale),
   }));
 }
 
