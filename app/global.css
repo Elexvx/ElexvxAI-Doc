@@ -10,26 +10,52 @@
   }
 }
 
-@keyframes typewriter-reveal-lines {
+@keyframes typewriter-reveal {
   from {
-    max-height: 0;
+    clip-path: inset(0 100% 0 0);
   }
   to {
-    max-height: calc(var(--tw-typewriter-lines) * 1lh);
+    clip-path: inset(0 0 0 0);
   }
 }
 
 @layer components {
   .typewriter {
-    --tw-typewriter-lines: 1;
-    --tw-typewriter-duration: 1.8s;
-    --tw-typewriter-delay: 180ms;
-
-    display: inline-block;
+    position: relative;
+    display: block;
+    width: 100%;
     max-width: 100%;
   }
 
-  .typewriter__text {
+  .typewriter__measure {
+    position: absolute;
+    left: 0;
+    top: 0;
+    visibility: hidden;
+    pointer-events: none;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    text-wrap: balance;
+  }
+
+  .typewriter__content {
+    display: block;
+    max-width: 100%;
+  }
+
+  .typewriter__content--hidden {
+    visibility: hidden;
+  }
+
+  .typewriter__line {
+    --tw-typewriter-steps: 16;
+    --tw-typewriter-duration: 1.8s;
+    --tw-typewriter-delay: 180ms;
+
     display: block;
     max-width: 100%;
     white-space: normal;
@@ -37,15 +63,15 @@
     word-break: break-word;
     text-wrap: balance;
     overflow: hidden;
-    max-height: 0;
-    animation: typewriter-reveal-lines var(--tw-typewriter-duration) steps(var(--tw-typewriter-lines), end)
-      var(--tw-typewriter-delay) forwards;
+    clip-path: inset(0 100% 0 0);
+    animation: typewriter-reveal var(--tw-typewriter-duration) steps(var(--tw-typewriter-steps), end) var(--tw-typewriter-delay)
+      forwards;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .typewriter__text {
+  .typewriter__line {
     animation: none;
-    max-height: none;
+    clip-path: inset(0 0 0 0);
   }
 }
