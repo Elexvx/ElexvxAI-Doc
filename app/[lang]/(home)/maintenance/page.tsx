@@ -53,10 +53,14 @@ const maintenanceCopy: Record<
   },
 };
 
+async function validateLocale(lang: string): Promise<AppLocale> {
+  if (!isLocale(lang)) notFound();
+  return lang as AppLocale;
+}
+
 export default async function MaintenancePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  if (!isLocale(lang)) notFound();
-  const locale = lang as AppLocale;
+  const locale = await validateLocale(lang);
   const copy = maintenanceCopy[locale];
 
   return (
@@ -111,9 +115,9 @@ export async function generateMetadata({
   params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  if (!isLocale(lang)) notFound();
-  const copy = maintenanceCopy[lang];
-  const canonical = buildAbsoluteUrl(buildLocalePath(lang, '/maintenance'));
+  const locale = await validateLocale(lang);
+  const copy = maintenanceCopy[locale];
+  const canonical = buildAbsoluteUrl(buildLocalePath(locale, '/maintenance'));
 
   return {
     title: copy.title,
