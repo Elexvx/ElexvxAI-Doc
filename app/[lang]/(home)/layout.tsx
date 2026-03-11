@@ -22,7 +22,7 @@ export default async function Layout({
         {...options}
         i18n={false}
         links={links}
-        className="[--fd-layout-width:1400px]"
+        className="[--fd-layout-width:min(1880px,92vw)]"
       >
         {children}
       </HomeLayout>

@@ -21,7 +21,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   return (
     <>
-      <main className="mx-auto w-full max-w-[1400px] px-6 pb-10 pt-3 md:px-12 md:pt-6 lg:px-16">
+      <main className="mx-auto w-full max-w-[var(--fd-layout-width)] px-4 pb-10 pt-3 md:pt-6">
         <HeroSection lang={locale} copy={copy.hero} />
         <CapabilitiesSection capabilities={capabilities} />
         <NewsSection lang={lang} copy={copy.news} />
