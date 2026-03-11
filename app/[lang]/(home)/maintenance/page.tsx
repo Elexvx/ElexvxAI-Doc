@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { isLocale, type AppLocale } from '@/lib/i18n';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 import { HomeFooter } from '../_components/home-footer';
+import { SITE_SECTION_MAIN_CLASS } from '@/lib/responsive-layout';
 
 const maintenanceCopy: Record<
   AppLocale,
@@ -65,7 +66,7 @@ export default async function MaintenancePage({ params }: { params: Promise<{ la
 
   return (
     <>
-      <main className="mx-auto w-full max-w-[1460px] px-6 pb-10 pt-6 md:px-12 md:pb-12 md:pt-10 lg:px-20">
+      <main className={SITE_SECTION_MAIN_CLASS}>
         <section className="rounded-2xl border border-zinc-200 bg-zinc-50/60 px-5 py-6 sm:px-7 sm:py-8 dark:border-zinc-800 dark:bg-zinc-900/40">
           <p className="text-xs font-medium tracking-[0.16em] text-zinc-500 uppercase dark:text-zinc-400">{copy.eyebrow}</p>
           <h1 className="mt-3 text-3xl leading-tight font-semibold tracking-[-0.02em] text-zinc-900 sm:text-4xl dark:text-zinc-100">

@@ -3,7 +3,7 @@ copy:
     headline: 以智能技术赋能数字化未来
     description: 欢迎访问宏翔商道 (Elexvx Inc) 创新产业研发中心。我们致力于将前沿的 AI 算法能力与坚实的底层架构相融合，把创新技术转化为企业服务的澎湃动力。
     primaryCta: 我们的项目
-    primaryCtaHref: /{lang}/researchers
+    primaryCtaHref: /{lang}/docs
     secondaryCta: 查看文档
     secondaryCtaHref: /{lang}/docs
     promoTitle: 尝试我们最新的脚手架系统
@@ -37,10 +37,6 @@ exploreItems:
     icon: PenTool
     tint: from-indigo-200 via-violet-300 to-sky-300
     href: /{lang}/blog
-  - title: 研发人员
-    icon: Gift
-    tint: from-cyan-100 via-sky-200 to-indigo-200
-    href: /{lang}/researchers
   - title: 赞助商
     icon: BookOpen
     tint: from-cyan-300 via-emerald-200 to-blue-300
@@ -69,4 +65,3 @@ footer:
           href: https://www.elexvx.com/company/about
         - label: 加入我们
           href: https://www.elexvx.com/company/careers
-

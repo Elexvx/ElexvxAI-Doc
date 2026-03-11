@@ -3,7 +3,7 @@ copy:
     headline: Empower Industrial Innovation with Intelligent Technology
     description: Docs and resources to help you build and use OpenAI on OpenAI.
     primaryCta: Our Projects
-    primaryCtaHref: /{lang}/researchers
+    primaryCtaHref: /{lang}/docs
     secondaryCta: View Docs
     secondaryCtaHref: /{lang}/docs
     promoTitle: Build Faster with Codex Apps

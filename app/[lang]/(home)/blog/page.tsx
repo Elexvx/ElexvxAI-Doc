@@ -7,6 +7,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 import { HomeFooter } from '../_components/home-footer';
+import { SITE_BLOG_MAIN_CLASS } from '@/lib/responsive-layout';
 
 const blogPageCopy: Record<AppLocale, { featuredLabel: string; allLabel: string; tabsAriaLabel: string; title: string; description: string }> = {
   zh: {
@@ -50,7 +51,7 @@ export default async function BlogPage({
 
   return (
     <>
-      <main className="mx-auto w-full max-w-[var(--fd-layout-width)] px-8 pb-10 pt-8 md:px-12 md:pb-12 md:pt-12 lg:px-20">
+      <main className={SITE_BLOG_MAIN_CLASS}>
         {displayFeatured ? <BlogFeatured post={displayFeatured} lang={lang} badgeLabel={copy.featuredLabel} /> : null}
 
         <BlogTabs

@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { getNavLinks } from '@/lib/nav-links';
 import type { AppLocale } from '@/lib/i18n';
 import { SiteFrameworkProvider } from '@/components/site-framework-provider';
+import { SITE_LAYOUT_WIDTH_CLASS } from '@/lib/responsive-layout';
 
 export default async function Layout({
   children,
@@ -22,7 +23,7 @@ export default async function Layout({
         {...options}
         i18n={false}
         links={links}
-        className="[--fd-layout-width:min(1880px,92vw)]"
+        className={SITE_LAYOUT_WIDTH_CLASS}
       >
         {children}
       </HomeLayout>

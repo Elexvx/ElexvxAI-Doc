@@ -11,10 +11,6 @@ main:
     url: /{lang}/blog
     active: nested-url
     on: all
-  - text: R&D Team
-    url: /{lang}/researchers
-    active: nested-url
-    on: all
   - text: Sponsors
     url: /{lang}/sponsors
     active: nested-url

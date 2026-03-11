@@ -13,6 +13,7 @@ import { getI18nUIText } from '@/lib/i18n-ui';
 import { NavLanguageToggle } from '@/components/nav/nav-language-toggle';
 import { SidebarThemeToggle } from '@/components/nav/sidebar-theme-toggle';
 import { cn } from '@/lib/cn';
+import { SITE_LAYOUT_WIDTH_CLASS } from '@/lib/responsive-layout';
 
 function normalizeTagName(tag: string) {
   return tag
@@ -84,7 +85,7 @@ export default async function Layout({
         themeSwitch={{ enabled: false }}
         links={mobileOnlyLinks}
         containerProps={{
-          className: '[--fd-layout-width:min(2200px,96vw)]',
+          className: SITE_LAYOUT_WIDTH_CLASS,
         }}
         sidebar={{
           footer: (

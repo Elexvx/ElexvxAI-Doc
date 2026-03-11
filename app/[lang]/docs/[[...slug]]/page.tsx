@@ -8,6 +8,7 @@ import { LLMCopyButton, ViewOptions } from '@/components/ai/page-actions';
 import { gitConfig } from '@/lib/layout.shared';
 import { isLocale } from '@/lib/i18n';
 import { buildAbsoluteUrl, buildLocalePath } from '@/lib/site';
+import { DOCS_PAGE_MAX_WIDTH_CLASS } from '@/lib/responsive-layout';
 
 export default async function Page({ params }: { params: Promise<{ lang: string; slug?: string[] }> }) {
   const { lang, slug } = await params;
@@ -22,7 +23,7 @@ export default async function Page({ params }: { params: Promise<{ lang: string;
     <DocsPage
       toc={page.data.toc}
       full={page.data.full}
-      className="max-w-[980px] 2xl:max-w-[1180px] [@media(min-width:2100px)]:max-w-[1320px]"
+      className={DOCS_PAGE_MAX_WIDTH_CLASS}
     >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">{page.data.description}</DocsDescription>

@@ -5,6 +5,7 @@ import { isLocale, type AppLocale } from '@/lib/i18n';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 import { HomeFooter } from '../_components/home-footer';
 import { getSponsorItems, getSponsorsPageCopy } from '@/lib/sponsors';
+import { SITE_SECTION_MAIN_CLASS } from '@/lib/responsive-layout';
 
 export default async function SponsorsPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -17,7 +18,7 @@ export default async function SponsorsPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <main className="mx-auto w-full max-w-[var(--fd-layout-width)] px-6 pb-10 pt-6 md:px-12 md:pb-12 md:pt-10 lg:px-20">
+      <main className={SITE_SECTION_MAIN_CLASS}>
         <section className="rounded-2xl border border-zinc-200 px-5 py-6 sm:px-7 sm:py-8 dark:border-zinc-800">
           <div className="grid gap-6 md:grid-cols-[1fr_minmax(260px,320px)] md:items-center md:gap-10">
             <div className="space-y-3">

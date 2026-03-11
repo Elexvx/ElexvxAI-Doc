@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Logo } from '@/components/logo';
+import { SITE_STANDALONE_CONTAINER_CLASS } from '@/lib/responsive-layout';
 
 const content = {
   zh: {
@@ -28,8 +29,8 @@ export function SiteNotFound() {
   const base = `/${locale}`;
 
   return (
-    <main className="mx-auto flex w-full max-w-[1400px] flex-1 items-center px-6 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20">
-      <section className="w-full rounded-3xl bg-zinc-50/80 p-8 text-center shadow-sm backdrop-blur-sm md:p-12 dark:bg-zinc-900/60">
+    <main className={`${SITE_STANDALONE_CONTAINER_CLASS} flex flex-1 items-center py-12 md:py-16 lg:py-20`}>
+      <section className="w-full rounded-3xl bg-zinc-50/80 p-8 text-center backdrop-blur-sm md:p-12 dark:bg-zinc-900/60">
         <div className="mx-auto flex w-fit items-center justify-center rounded-full bg-white px-4 py-2 dark:bg-zinc-900">
           <Logo />
         </div>

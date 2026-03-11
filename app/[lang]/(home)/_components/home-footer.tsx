@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { getHomeFooterContent } from '@/lib/home-content';
 import type { AppLocale } from '@/lib/i18n';
+import { SITE_CONTAINER_CLASS } from '@/lib/responsive-layout';
+import { FooterWordmark } from '@/components/footer-wordmark';
 
 function isHttpLink(href: string) {
   return href.startsWith('http://') || href.startsWith('https://');
@@ -8,7 +10,7 @@ function isHttpLink(href: string) {
 
 export async function HomeFooter({ lang }: { lang: AppLocale }) {
   const footerContent = await getHomeFooterContent(lang);
-  const containerClassName = 'mx-auto w-full max-w-[var(--fd-layout-width)] px-4';
+  const containerClassName = SITE_CONTAINER_CLASS;
 
   return (
     <footer className="mt-8 sm:mt-10 md:mt-12">
@@ -60,10 +62,8 @@ export async function HomeFooter({ lang }: { lang: AppLocale }) {
         </div>
       </div>
 
-      <div className="w-full overflow-hidden px-4 py-7 sm:px-0 sm:py-9 md:py-10">
-        <p className="w-full select-none whitespace-nowrap text-center text-[clamp(2.3rem,15vw,3.2rem)] font-black leading-[0.9] tracking-[-0.035em] text-zinc-900 sm:text-[clamp(3.2rem,15vw,8rem)] md:text-[clamp(4.5rem,15vw,22rem)] md:tracking-[-0.045em] dark:text-zinc-100">
-          ElexvxAILab
-        </p>
+      <div className={containerClassName}>
+        <FooterWordmark text="ElexvxAILab" />
       </div>
 
       <div className={`${containerClassName} py-6 sm:py-7 md:py-8`}>

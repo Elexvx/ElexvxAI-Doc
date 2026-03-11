@@ -8,6 +8,7 @@ import { isLocale, type AppLocale } from '@/lib/i18n';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
+import { SITE_HOME_MAIN_CLASS } from '@/lib/responsive-layout';
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -21,7 +22,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   return (
     <>
-      <main className="mx-auto w-full max-w-[var(--fd-layout-width)] px-4 pb-10 pt-3 md:pt-6">
+      <main className={SITE_HOME_MAIN_CLASS}>
         <HeroSection lang={locale} copy={copy.hero} />
         <CapabilitiesSection capabilities={capabilities} />
         <NewsSection lang={lang} copy={copy.news} />
