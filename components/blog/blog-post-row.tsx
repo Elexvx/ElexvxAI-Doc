@@ -26,7 +26,7 @@ export function BlogPostRow({ post, lang }: { post: BlogPostListItem; lang: stri
           alt={post.title}
           fill
           unoptimized={coverIsSvg}
-          className={coverIsSvg ? 'object-contain p-2' : 'object-cover object-center'}
+          className="object-cover object-center"
           sizes="132px"
         />
       </div>

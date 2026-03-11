@@ -27,7 +27,7 @@ export function BlogFeatured({ post, lang, badgeLabel }: { post: BlogPostListIte
           alt={post.title}
           fill
           unoptimized={coverIsSvg}
-          className={coverIsSvg ? 'object-contain p-4' : 'object-cover'}
+          className="object-cover object-center"
           sizes="(min-width: 1920px) 680px, (min-width: 1280px) 42vw, (min-width: 1024px) 46vw, 100vw"
         />
       </div>
