@@ -50,7 +50,7 @@ export default async function BlogPage({
 
   return (
     <>
-      <main className="mx-auto w-full max-w-[1460px] px-8 pb-10 pt-8 md:px-12 md:pb-12 md:pt-12 lg:px-20">
+      <main className="mx-auto w-full max-w-[var(--fd-layout-width)] px-8 pb-10 pt-8 md:px-12 md:pb-12 md:pt-12 lg:px-20">
         {displayFeatured ? <BlogFeatured post={displayFeatured} lang={lang} badgeLabel={copy.featuredLabel} /> : null}
 
         <BlogTabs

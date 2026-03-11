@@ -13,7 +13,7 @@ copy:
   sectionTitle: 合作品牌
 
 items:
-  - name: Elexvx Inc
+  - name: 宏翔商道 - Elexvx Inc
     category: 主要投资方、发起方
     description: 2025年科技型中小企业，AAA级信用，专注于 AI 产品与服务。
     href: https://www.elexvx.com/
@@ -21,7 +21,7 @@ items:
 
   - name: 桐谷霁屿 - Jadeisle
     category: 战略合作伙伴
-    description: 提供类型安全的 API 工作流与调试体验。
+    description: 科研型企业，专注于 AI 产品与服务。
     href: https://www.tongujiyu.cn/
     accent: from-blue-500/20 via-indigo-300/15 to-purple-300/15
   
