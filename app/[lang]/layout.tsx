@@ -1,4 +1,6 @@
 import { i18n, isLocale } from '@/lib/i18n';
+import type { AppLocale } from '@/lib/i18n';
+import { getSeoSite } from '@/lib/seo-content';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
@@ -24,11 +26,28 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
+  const locale = lang as AppLocale;
+  const siteSeo = await getSeoSite(locale);
 
   return {
+    title: {
+      default: siteSeo.title,
+      template: `%s | ${siteSeo.title}`,
+    },
+    description: siteSeo.description,
     alternates: {
       canonical: buildAbsoluteUrl(buildLocalePath(lang)),
       languages: buildLocaleAlternates(),
+    },
+    openGraph: {
+      type: 'website',
+      title: siteSeo.title,
+      description: siteSeo.description,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: siteSeo.title,
+      description: siteSeo.description,
     },
     other: {
       'html-lang': getHtmlLang(lang),

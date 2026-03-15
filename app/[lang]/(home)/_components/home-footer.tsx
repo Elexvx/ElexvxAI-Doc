@@ -20,7 +20,7 @@ export async function HomeFooter({ lang }: { lang: AppLocale }) {
             <h2 className="text-lg font-semibold text-zinc-900 sm:text-xl md:text-2xl dark:text-zinc-100">
               {footerContent.title}
             </h2>
-            <p className="mt-3 max-w-xs text-sm text-zinc-500 sm:text-base dark:text-zinc-400">
+            <p className="mt-3 max-w-xs text-sm text-zinc-600 sm:text-base dark:text-zinc-400">
               {footerContent.description}
             </p>
           </div>
@@ -40,7 +40,7 @@ export async function HomeFooter({ lang }: { lang: AppLocale }) {
                             href={href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-xs text-zinc-500 transition hover:text-zinc-900 sm:text-sm lg:text-base dark:text-zinc-400 dark:hover:text-zinc-100"
+                            className="text-xs text-zinc-600 transition hover:text-zinc-900 sm:text-sm lg:text-base dark:text-zinc-400 dark:hover:text-zinc-100"
                           >
                             {item.label}
                           </a>
@@ -48,7 +48,7 @@ export async function HomeFooter({ lang }: { lang: AppLocale }) {
                           <Link
                             href={href}
                             prefetch={false}
-                            className="text-xs text-zinc-500 transition hover:text-zinc-900 sm:text-sm lg:text-base dark:text-zinc-400 dark:hover:text-zinc-100"
+                            className="text-xs text-zinc-600 transition hover:text-zinc-900 sm:text-sm lg:text-base dark:text-zinc-400 dark:hover:text-zinc-100"
                           >
                             {item.label}
                           </Link>
@@ -68,7 +68,7 @@ export async function HomeFooter({ lang }: { lang: AppLocale }) {
       </div>
 
       <div className={`${containerClassName} py-6 sm:py-7 md:py-8`}>
-        <p className="text-center text-xs text-zinc-500 sm:text-sm dark:text-zinc-400">
+        <p className="text-center text-xs text-zinc-600 sm:text-sm dark:text-zinc-400">
           {footerContent.copyright}
         </p>
       </div>

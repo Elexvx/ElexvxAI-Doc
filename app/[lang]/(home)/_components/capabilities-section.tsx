@@ -36,7 +36,7 @@ export function CapabilitiesSection({ capabilities }: { capabilities: HomeCapabi
                 {cap.title}
               </h2>
               <p
-                className="mt-2.5 text-sm leading-6 text-zinc-500 transition-colors duration-300 group-hover:text-white/90 sm:text-base dark:text-zinc-400"
+                className="mt-2.5 text-sm leading-6 text-zinc-600 transition-colors duration-300 group-hover:text-white/90 sm:text-base dark:text-zinc-400"
               >
                 {cap.description}
               </p>

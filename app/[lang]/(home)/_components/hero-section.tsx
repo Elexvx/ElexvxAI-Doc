@@ -9,7 +9,7 @@ export function HeroSection({ lang, copy }: { lang: AppLocale; copy: HomeHeroCop
       <h1 className="min-h-[1.2em] max-w-5xl text-balance text-3xl font-semibold leading-[1.15] tracking-tight text-zinc-950 sm:text-4xl md:text-5xl lg:text-6xl dark:text-zinc-50">
         {copy.headline}
       </h1>
-      <p className="mt-3 max-w-2xl text-sm text-zinc-500 sm:text-base md:mt-4 md:text-lg dark:text-zinc-400">
+      <p className="mt-3 max-w-2xl text-sm text-zinc-600 sm:text-base md:mt-4 md:text-lg dark:text-zinc-400">
         {copy.description}
       </p>
 
@@ -41,12 +41,12 @@ export function HeroSection({ lang, copy }: { lang: AppLocale; copy: HomeHeroCop
           </span>
           <div>
             <p className="text-base font-semibold text-zinc-900 sm:text-lg md:text-xl dark:text-zinc-100">{copy.promoTitle}</p>
-            <p className="mt-1 text-xs text-zinc-500 sm:text-sm md:text-base dark:text-zinc-400">
+            <p className="mt-1 text-xs text-zinc-600 sm:text-sm md:text-base dark:text-zinc-400">
               {copy.promoDescription}
             </p>
           </div>
         </div>
-        <ChevronRight className="mt-1 hidden h-5 w-5 shrink-0 text-zinc-400 transition group-hover:translate-x-1 sm:block dark:text-zinc-500" />
+        <ChevronRight className="mt-1 hidden h-5 w-5 shrink-0 text-zinc-400 transition group-hover:translate-x-1 sm:block dark:text-zinc-600" />
       </Link>
     </section>
   );

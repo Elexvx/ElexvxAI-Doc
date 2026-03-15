@@ -8,5 +8,6 @@ Directory convention:
 - `data/content/navigation/<locale>.yaml`
 - `data/content/i18n/<locale>.yaml`
 - `data/content/sponsors/<locale>.yaml`
+- `data/content/seo/<locale>.yaml`
 
 Locale filenames are unified as `en.yaml` and `zh.yaml`.

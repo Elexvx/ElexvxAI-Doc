@@ -1,0 +1,20 @@
+site:
+  title: ElexvxAI Lab
+  description: ElexvxAI Lab 官方网站，聚焦 AI 研究、工程实践与产业落地。
+
+pages:
+  home:
+    title: 以智能技术赋能数字化未来
+    description: 欢迎访问 ElexvxAI Lab，了解我们的 AI 研究进展、工程能力与产业实践。
+  blog:
+    title: 博客
+    description: ElexvxAI Lab 的最新动态、研究进展与工程实践。
+  sponsors:
+    title: 同行计划
+    description: 了解 ElexvxAI Lab 的合作伙伴与开源生态共建计划。
+  maintenance:
+    title: 系统维护中
+    description: ElexvxAI Lab 页面维护中，服务升级完成后将恢复访问。
+  docs:
+    title: 技术文档
+    description: 浏览 ElexvxAI Lab 文档，查看产品能力与技术说明。

@@ -13,7 +13,7 @@ export async function NewsSection({ lang, copy }: { lang: string; copy: { title:
         <Link
           href={`/${lang}/blog`}
           prefetch={false}
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-500 transition hover:text-zinc-900 sm:text-base dark:text-zinc-400 dark:hover:text-zinc-100"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 transition hover:text-zinc-900 sm:text-base dark:text-zinc-400 dark:hover:text-zinc-100"
         >
           {copy.viewAll}
           <ArrowRight className="h-4 w-4" />

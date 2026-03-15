@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { isLocale, type AppLocale } from '@/lib/i18n';
+import { getSeoPage } from '@/lib/seo-content';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 import { HomeFooter } from '../_components/home-footer';
 import { SITE_SECTION_MAIN_CLASS } from '@/lib/responsive-layout';
@@ -20,7 +21,6 @@ const maintenanceCopy: Record<
     impactValue: string;
     homeCta: string;
     docsCta: string;
-    metadataDescription: string;
   }
 > = {
   zh: {
@@ -35,7 +35,6 @@ const maintenanceCopy: Record<
     impactValue: '部分页面访问与交互可能受限。',
     homeCta: '返回首页',
     docsCta: '查看文档',
-    metadataDescription: 'ElexvxAI Lab 页面维护中，服务升级完成后将恢复访问。',
   },
   en: {
     eyebrow: 'Maintenance In Progress',
@@ -50,7 +49,6 @@ const maintenanceCopy: Record<
     impactValue: 'Some page access and interactions may be limited.',
     homeCta: 'Back to Home',
     docsCta: 'Browse Docs',
-    metadataDescription: 'ElexvxAI Lab page is under maintenance and will be back online after service upgrades.',
   },
 };
 
@@ -117,12 +115,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   const locale = await validateLocale(lang);
-  const copy = maintenanceCopy[locale];
+  const seo = await getSeoPage(locale, 'maintenance');
   const canonical = buildAbsoluteUrl(buildLocalePath(locale, '/maintenance'));
 
   return {
-    title: copy.title,
-    description: copy.metadataDescription,
+    title: seo.title,
+    description: seo.description,
     alternates: {
       canonical,
       languages: buildLocaleAlternates('/maintenance'),
@@ -130,13 +128,13 @@ export async function generateMetadata({
     openGraph: {
       type: 'website',
       url: canonical,
-      title: copy.title,
-      description: copy.metadataDescription,
+      title: seo.title,
+      description: seo.description,
     },
     twitter: {
       card: 'summary_large_image',
-      title: copy.title,
-      description: copy.metadataDescription,
+      title: seo.title,
+      description: seo.description,
     },
   };
 }

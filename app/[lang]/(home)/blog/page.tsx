@@ -1,6 +1,7 @@
 import { BlogIndexClient } from '@/components/blog/blog-index-client';
 import { getAllPosts } from '@/lib/blog';
 import { isLocale, type AppLocale } from '@/lib/i18n';
+import { getSeoPage } from '@/lib/seo-content';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
@@ -8,20 +9,16 @@ import { HomeFooter } from '../_components/home-footer';
 import { SITE_BLOG_MAIN_CLASS } from '@/lib/responsive-layout';
 import { Suspense } from 'react';
 
-const blogPageCopy: Record<AppLocale, { featuredLabel: string; allLabel: string; tabsAriaLabel: string; title: string; description: string }> = {
+const blogPageCopy: Record<AppLocale, { featuredLabel: string; allLabel: string; tabsAriaLabel: string }> = {
   zh: {
     featuredLabel: '精选内容',
     allLabel: '全部',
     tabsAriaLabel: '博客分类',
-    title: '博客',
-    description: 'ElexvxAI Lab 的最新动态、研究进展与工程实践。',
   },
   en: {
     featuredLabel: 'Featured',
     allLabel: 'All',
     tabsAriaLabel: 'Blog categories',
-    title: 'Blog',
-    description: 'Latest updates, research progress, and engineering practices from ElexvxAI Lab.',
   },
 };
 
@@ -64,12 +61,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  const copy = blogPageCopy[lang];
+  const seo = await getSeoPage(lang, 'blog');
   const canonical = buildAbsoluteUrl(buildLocalePath(lang, '/blog'));
 
   return {
-    title: copy.title,
-    description: copy.description,
+    title: seo.title,
+    description: seo.description,
     alternates: {
       canonical,
       languages: buildLocaleAlternates('/blog'),
@@ -77,13 +74,13 @@ export async function generateMetadata({
     openGraph: {
       type: 'website',
       url: canonical,
-      title: copy.title,
-      description: copy.description,
+      title: seo.title,
+      description: seo.description,
     },
     twitter: {
       card: 'summary_large_image',
-      title: copy.title,
-      description: copy.description,
+      title: seo.title,
+      description: seo.description,
     },
   };
 }

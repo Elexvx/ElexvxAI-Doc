@@ -5,7 +5,7 @@ const normalizedSiteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.elex
 export const siteConfig = {
   name: 'ElexvxAI Lab',
   url: normalizedSiteUrl,
-  description: 'ElexvxAI Lab 的官方文档与工程资源中心。',
+  description: 'Official website of ElexvxAI Lab.',
 };
 
 export function buildAbsoluteUrl(pathname: string) {

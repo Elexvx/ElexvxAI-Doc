@@ -5,6 +5,7 @@ import { HomeFooter } from './_components/home-footer';
 import { NewsSection } from './_components/news-section';
 import { getHomeCapabilities, getHomeExploreItems, getHomePageCopy } from '@/lib/home-content';
 import { isLocale, type AppLocale } from '@/lib/i18n';
+import { getSeoPage } from '@/lib/seo-content';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
@@ -40,12 +41,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  const copy = await getHomePageCopy(lang);
+  const seo = await getSeoPage(lang, 'home');
   const canonical = buildAbsoluteUrl(buildLocalePath(lang));
 
   return {
-    title: copy.hero.headline,
-    description: copy.hero.description,
+    title: seo.title,
+    description: seo.description,
     alternates: {
       canonical,
       languages: buildLocaleAlternates(),
@@ -53,13 +54,13 @@ export async function generateMetadata({
     openGraph: {
       type: 'website',
       url: canonical,
-      title: copy.hero.headline,
-      description: copy.hero.description,
+      title: seo.title,
+      description: seo.description,
     },
     twitter: {
       card: 'summary_large_image',
-      title: copy.hero.headline,
-      description: copy.hero.description,
+      title: seo.title,
+      description: seo.description,
     },
   };
 }

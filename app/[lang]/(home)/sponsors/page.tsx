@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { isLocale, type AppLocale } from '@/lib/i18n';
+import { getSeoPage } from '@/lib/seo-content';
 import { buildAbsoluteUrl, buildLocaleAlternates, buildLocalePath } from '@/lib/site';
 import { HomeFooter } from '../_components/home-footer';
 import { getSponsorItems, getSponsorsPageCopy } from '@/lib/sponsors';
@@ -93,12 +94,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  const copy = await getSponsorsPageCopy(lang);
+  const seo = await getSeoPage(lang, 'sponsors');
   const canonical = buildAbsoluteUrl(buildLocalePath(lang, '/sponsors'));
 
   return {
-    title: copy.title,
-    description: copy.description,
+    title: seo.title,
+    description: seo.description,
     alternates: {
       canonical,
       languages: buildLocaleAlternates('/sponsors'),
@@ -106,13 +107,13 @@ export async function generateMetadata({
     openGraph: {
       type: 'website',
       url: canonical,
-      title: copy.title,
-      description: copy.description,
+      title: seo.title,
+      description: seo.description,
     },
     twitter: {
       card: 'summary_large_image',
-      title: copy.title,
-      description: copy.description,
+      title: seo.title,
+      description: seo.description,
     },
   };
 }
