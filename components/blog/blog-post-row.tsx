@@ -1,12 +1,9 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import type { BlogPostListItem } from '@/lib/blog';
-import { isSvgImage } from '@/lib/image-utils';
 
 export function BlogPostRow({ post, lang, prefetch = true }: { post: BlogPostListItem; lang: string; prefetch?: boolean }) {
   const href = `/${lang}/blog/${post.slug}`;
-  const categoryText = post.categories.join(' · ');
-  const coverIsSvg = isSvgImage(post.cover);
+  const categoryText = post.categories.join(' | ');
 
   return (
     <article className="flex items-center justify-between gap-5 border-b border-zinc-200 py-7 dark:border-zinc-800 sm:gap-6">
@@ -17,17 +14,15 @@ export function BlogPostRow({ post, lang, prefetch = true }: { post: BlogPostLis
           </Link>
         </h2>
         <p className="mt-3 text-[13px] text-zinc-500 dark:text-zinc-400">
-          {post.formattedDate} · {categoryText}
+          {post.formattedDate} | {categoryText}
         </p>
       </div>
       <div className="relative h-[124px] w-[124px] shrink-0 overflow-hidden rounded-2xl bg-black sm:h-[132px] sm:w-[132px]">
-        <Image
+        <img
           src={post.cover}
           alt={post.title}
-          fill
-          unoptimized={coverIsSvg}
-          className="object-cover object-center"
-          sizes="132px"
+          loading="lazy"
+          className="h-full w-full object-cover object-center"
         />
       </div>
     </article>

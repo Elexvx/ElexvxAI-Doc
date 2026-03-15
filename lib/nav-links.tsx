@@ -1,7 +1,6 @@
 import type { LinkItemType } from 'fumadocs-ui/layouts/shared';
 import type { AppLocale } from '@/lib/i18n';
 import { Github, Globe } from 'lucide-react';
-import { NavLanguageToggle } from '@/components/nav/nav-language-toggle';
 import { readLocaleYaml } from '@/lib/content-yaml';
 
 type NavMainItem = {
@@ -39,6 +38,16 @@ export async function getNavLinks(
   { includeLanguageToggle = false }: { includeLanguageToggle?: boolean } = {},
 ): Promise<LinkItemType[]> {
   const navData = await readNavLinksYaml(lang);
+  const languageToggleLinks: LinkItemType[] = [];
+
+  if (includeLanguageToggle) {
+    const { NavLanguageToggle } = await import('@/components/nav/nav-language-toggle');
+    languageToggleLinks.push({
+      type: 'custom',
+      secondary: true,
+      children: <NavLanguageToggle lang={lang} showText showChevron className="-mx-1 first:ms-0 last:me-0" />,
+    });
+  }
 
   return [
     ...navData.main.map((item) => ({
@@ -47,15 +56,7 @@ export async function getNavLinks(
       active: item.active,
       on: item.on ?? 'all',
     })),
-    ...(includeLanguageToggle
-      ? ([
-          {
-            type: 'custom',
-            secondary: true,
-            children: <NavLanguageToggle lang={lang} showText showChevron className="-mx-1 first:ms-0 last:me-0" />,
-          },
-        ] as LinkItemType[])
-      : []),
+    ...languageToggleLinks,
     ...navData.icons.map((item) => ({
       type: 'icon' as const,
       text: item.text,
